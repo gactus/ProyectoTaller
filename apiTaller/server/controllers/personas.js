@@ -66,20 +66,23 @@ function crearPersona(req,res){
     }
 }
 /* Updateamos los datos de persona */
-function actualizarPersona(req, res){
+function editarPersona(req, res){
     try{
-        const existe = personas.findByPk(req.body.personaId)
-        if (existe){
-            personas.update(req.body)
-            .then(persona=>{
+        var id = req.params.id;
+        var body = req.body;
+        personas.findByPk(id)
+        .then(persona=>{
+            persona.update(body)
+            .then(()=>{
                 res.status(200).send({persona});
             })
             .catch(err=>{
                 res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
-            });
-        }else{
-            res.status(200).send({mesage:"no existen datos para ser actualizados."});
-        }
+            }); 
+        })
+        .catch(err=>{
+            res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+        });
     }catch(err) {
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
@@ -89,5 +92,5 @@ module.exports = {
     listarPersonas,
     buscarPersona,
     crearPersona,
-    actualizarPersona
+    editarPersona
 }

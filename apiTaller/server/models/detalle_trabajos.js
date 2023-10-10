@@ -5,27 +5,15 @@ module.exports=(sequelize,DataTypes)=>{
             primaryKey: true,
             autoIncrement: true,
         },
-        detalle:{
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        fecha_trabajo:{
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        fecha_prox_mantencion:{
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
-        requiere_notificacion:{
+        insumo_id:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        costo_mano_obra:{
+        trabajo_id:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        estado_trabajo_id:{
+        costo:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
