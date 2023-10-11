@@ -7,7 +7,7 @@ const tipo_perfiles = require('./models').tipo_perfiles;
 personas.hasOne(usuarios);
 personas.hasOne(perfiles)
 usuarios.belongsTo(personas);
-trabajos.hasOne(personas);
+trabajos.belongsTo(personas);
 perfiles.belongsTo(personas);
 perfiles.belongsTo(tipo_perfiles);
 tipo_perfiles.hasOne(perfiles);

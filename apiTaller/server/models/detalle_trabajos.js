@@ -5,11 +5,11 @@ module.exports=(sequelize,DataTypes)=>{
             primaryKey: true,
             autoIncrement: true,
         },
-        insumo_id:{
+        insumoId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        trabajo_id:{
+        trabajoId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },

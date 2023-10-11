@@ -9,11 +9,11 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        persona_id:{
+        personaId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        modelo_id:{
+        modeloId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },

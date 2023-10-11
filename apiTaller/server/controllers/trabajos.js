@@ -44,8 +44,8 @@ function crearDetalleTrabajo(req,res){
         const existe = detalle_trabajos.findOne(
             {
                 where: {
-                    insumo_id: req.body.idInsumo,
-                    trabajo_id: req.body.idTrabajo
+                    insumoId: req.body.idInsumo,
+                    trabajoId: req.body.idTrabajo
                 }
             })
         .then(existe=>{
@@ -71,7 +71,7 @@ function listarDetalleTrabajos(req,res){
         detalle_trabajos.findOne(
         {
             where: {
-            trabajo_id: req.params.idTrabajo,
+            trabajoId: req.params.idTrabajo,
             }
         })
         .then(detalle_trabajo =>{

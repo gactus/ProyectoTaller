@@ -25,7 +25,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        tipo_insumos_id:{
+        tipoInsumoId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },

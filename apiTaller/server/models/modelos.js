@@ -9,7 +9,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        marca_id:{
+        marcaId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },

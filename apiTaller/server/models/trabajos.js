@@ -25,7 +25,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        estado_trabajo_id:{
+        estadoTrabajoId:{
             type: DataTypes.INTEGER,
             allowNull: true,
         },

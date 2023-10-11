@@ -40,7 +40,7 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.INTEGER,
             allowNull:true,
         },
-        insumos_id:{
+        insumoId:{
             type: DataTypes.INTEGER,
             allowNull: true,
         },
