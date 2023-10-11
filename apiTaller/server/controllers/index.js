@@ -10,6 +10,7 @@ const tipo_perfiles = require('./tipo_perfiles');
 const registro_logs = require('./registro_logs');
 const estados_trabajos = require('./estados_trabajos');
 const trabajos = require('./trabajos');
+const perfiles = require('./perfiles');
 
 module.exports ={
     personas,
@@ -23,5 +24,6 @@ module.exports ={
     tipo_perfiles,
     registro_logs,
     estados_trabajos,
-    trabajos
+    trabajos,
+    perfiles
 }

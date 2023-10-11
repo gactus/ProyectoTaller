@@ -5,11 +5,11 @@ module.exports=(sequelize,DataTypes)=>{
             primaryKey: true,
             autoIncrement: true,
         },
-        persona_id:{
+        personaId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        tipo_perfil_id:{
+        tipoPerfileId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },

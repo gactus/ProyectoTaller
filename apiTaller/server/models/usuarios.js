@@ -1,3 +1,4 @@
+'use strict';
 module.exports=(sequelize,DataTypes)=>{
     const usuarios=sequelize.define('usuarios',{
         id:{
@@ -5,7 +6,7 @@ module.exports=(sequelize,DataTypes)=>{
             primaryKey: true,
             autoIncrement: true,
         },
-        persona_id:{
+        personaId:{
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -16,7 +17,7 @@ module.exports=(sequelize,DataTypes)=>{
         estado:{
             type: DataTypes.INTEGER,
             allowNull: false,
-        }
+        },
     });
     return usuarios;
 }

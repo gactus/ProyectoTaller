@@ -25,7 +25,6 @@ function buscarTipoInsumo(req,res){
         tipo_insumos.findOne(
         {
             where: {
-            estado: 1,
             id: req.params.id,
             }
         })

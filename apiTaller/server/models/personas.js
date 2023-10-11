@@ -1,9 +1,10 @@
+'use strict';
 module.exports=(sequelize,DataTypes)=>{
     const personas=sequelize.define('personas',{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
-            autoIncrement: true,
+            autoIncrement: true
         },
         rut: {
             type: DataTypes.STRING,
