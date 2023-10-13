@@ -10,7 +10,7 @@ function listarPersonas(req,res){
                 }
             })
             .then(persona =>{
-                res.status(200).send({persona});
+                if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: existen registros."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -26,11 +26,11 @@ function buscarPersona(req,res){
             {
                 where: {
                     estado: 1,
-                    rut: req.params.rut,
+                    id: req.params.id,
             }
             })
             .then(persona =>{
-                res.status(200).send({persona});
+                if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

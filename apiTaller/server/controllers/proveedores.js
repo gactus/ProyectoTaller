@@ -1,16 +1,24 @@
-const proveedores = require('../models').proveedores;
+const {proveedores,insumos} = require('../models');
 
 function listarProveedores(req, res){
     try{
         proveedores.findAll(
         {
+            attributes: ['id','rut','razon_social','direccion','telefono','email','banco','numero_cuenta','tipo_cuenta','insumoId'],
             where: {
                 estado: 1,
+            },
+            include:{
+                model: insumos,
+                attributes: ['descripcion'],
+                where:{
+                    estado: 1
+                }
             }
         })
         .then(proveedor=>
             {
-                res.status(200).send({proveedor});
+                if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -23,13 +31,21 @@ function buscarProveedor(req,res){
     try{
         proveedores.findOne(
         {
+            attributes: ['id','rut','razon_social','direccion','telefono','email','banco','numero_cuenta','tipo_cuenta','insumoId'],
             where: {
-            estado: 1,
-            id: req.params.id,
+                estado: 1,
+                id: req.params.id,
+            },
+            include:{
+                model: insumos,
+                attributes: ['descripcion'],
+                where:{
+                    estado: 1
+                }
             }
         })
         .then(proveedor =>{
-            res.status(200).send({proveedor});
+            if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

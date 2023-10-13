@@ -6,9 +6,8 @@ const proveedores = require('./proveedores');
 const insumos = require('./insumos');
 const login = require('./login');
 const tipo_insumos = require('./tipo_insumos');
-const tipo_perfiles = require('./tipo_perfiles');
 const registro_logs = require('./registro_logs');
-const estados_trabajos = require('./estados_trabajos');
+const estado_trabajos = require('./estado_trabajos');
 const trabajos = require('./trabajos');
 const perfiles = require('./perfiles');
 
@@ -21,9 +20,8 @@ module.exports ={
     insumos,
     login,
     tipo_insumos,
-    tipo_perfiles,
     registro_logs,
-    estados_trabajos,
+    estado_trabajos,
     trabajos,
     perfiles
 }

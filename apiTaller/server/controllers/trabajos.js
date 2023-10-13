@@ -1,5 +1,4 @@
-const trabajos = require('../models').trabajos;
-const detalle_trabajos = require('../models').detalle_trabajos;
+const {trabajos, detalle_trabajos,insumos, estado_trabajos} = require('../models');
 
 /* Sección Trabajos */
 function crearTrabajo(req,res){
@@ -70,12 +69,37 @@ function listarDetalleTrabajos(req,res){
     try{
         detalle_trabajos.findOne(
         {
+            attributes: ['costo','cantidad_insumos'],
             where: {
             trabajoId: req.params.idTrabajo,
+            },
+            include:
+            {
+                model: insumos,
+                where:{
+                    estado: 1
+                },
+                required: false
+            },
+            include:
+            {
+                attributes: ['detalle','fecha_trabajo','fecha_prox_mantencion','requere_notificacion','costo_mano_obra'],
+                model: trabajos,
+                where:{
+                    estado: 1
+                },
+                include:
+                {
+                    attributes: ['descripcion'],
+                    model: estado_trabajos,
+                    where:{
+                        estado: 1
+                    }
+                }
             }
         })
         .then(detalle_trabajo =>{
-            res.status(200).send({detalle_trabajo});
+            if (detalle_trabajo ? res.status(200).send({detalle_trabajo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
