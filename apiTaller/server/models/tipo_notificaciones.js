@@ -10,7 +10,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull: false,
         },
         estado:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         }
     });

@@ -1,9 +1,9 @@
 const {perfiles,tipo_perfiles, personas, perfil_rutas} = require('../models');
 
 /* Listo los tipos de perfiles activos */
-function listarTiposPerfiles(req,res){
+const listarTiposPerfiles = async(req,res) =>{
     try{
-        tipo_perfiles.findAll(
+        await tipo_perfiles.findAll(
             {
                 attributes: 
                 [
@@ -24,16 +24,17 @@ function listarTiposPerfiles(req,res){
     }
 }
 /**/
-function perfilUsuario(req,res){
+const perfilUsuario = async(req,res) =>{
     try{
-        perfiles.findOne(
+        const idPerfil = req.params.id;
+        await perfiles.findOne(
             {
                 attributes:         
                 [
                     ['id','idPerfil']
                 ],
                 where:{
-                    personaId: req.params.id,
+                    personaId: idPerfil,
                     estado: 1
                 },
                 include:
@@ -71,10 +72,10 @@ function perfilUsuario(req,res){
     }
 }
 /*Obtengo las rutas, dependiendo del tipo de perfil*/
-function rutasTipoPerfil(req,res){
+const rutasTipoPerfil = async(req,res) =>{
     try{
         const idTipoPerfil = req.params.id;
-        perfil_rutas.findAll(
+        await perfil_rutas.findAll(
         {
             attributes: 
             [

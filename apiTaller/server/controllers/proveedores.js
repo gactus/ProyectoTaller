@@ -1,9 +1,9 @@
 const {proveedores,insumos, bancos, tipo_cuentas} = require('../models');
 
 /* Listamos los proveedores activos */
-function listarProveedores(req, res){
+const listarProveedores = async(req, res) =>{
     try{
-        proveedores.findAll(
+        await proveedores.findAll(
         {
             attributes: 
             [
@@ -61,9 +61,9 @@ function listarProveedores(req, res){
     }
 }
 /*  Buscamos un proveedor especifico y su respectivo insumo*/
-function buscarProveedor(req,res){
+const buscarProveedor = async(req,res) =>{
     try{
-        proveedores.findOne(
+        await proveedores.findOne(
         {
             attributes: 
             [
@@ -98,51 +98,73 @@ function buscarProveedor(req,res){
     }
 }
 /* Creamos un proveedor */
-function crearProveedor(req,res){
+const crearProveedor = async(req,res) =>{
     try{
-        const existe = proveedores.findOne(
+        const datosProveedor = {
+            rut: req.body.rut,
+            razon_social: req.body.razonSocial,
+            direccion: req.body.direccion,
+            telefono: req.body.telefono,
+            email: req.body.email,
+            numero_cuenta: req.body.numeroCuenta,
+            insumoId: req.body.IdInsumo,
+            bancoId: req.body.idBanco,
+            tipoCuentaId: req.body.idTipoCuenta,
+            estado: 1
+        }
+        await proveedores.findOne(
             {
                 where: {
-                    rut: req.body.rut,
+                    rut: datosProveedor.rut,
                 }
             })
         .then(existe=>{
             if (!existe){
-                proveedores.create(req.body)
-                .then(proveedor=>{
-                    res.status(200).send({proveedor});
+                proveedores.create(datosProveedor)
+                .then(()=>{
+                    res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true})
                 })
                 .catch(err=>{
-                    res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
+                    res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro",registroCreado:false})
                 });
             }else{
-                res.status(200).send({message: "El proveedor ya existe."});
+                res.status(200).send({message:"Atención: el registro ya existe.",registroCreado:false})
             }
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
 /* Editamos un proveedor */
-function editarProveedor(req, res){
+const editarProveedor = async(req, res) =>{
     try{
-        var id = req.params.id;
-        var body = req.body;
-        proveedores.findByPk(id)
+        const idProveedor = req.params.id;
+        const datosProveedor = {
+            rut: req.body.rut,
+            razon_social: req.body.razonSocial,
+            direccion: req.body.direccion,
+            telefono: req.body.telefono,
+            email: req.body.email,
+            numero_cuenta: req.body.numeroCuenta,
+            insumoId: req.body.IdInsumo,
+            bancoId: req.body.idBanco,
+            tipoCuentaId: req.body.idTipoCuenta
+        }
+        await proveedores.findByPk(idProveedor)
         .then(proveedor=>{
-            proveedor.update(body)
+            proveedor.update(datosProveedor)
             .then(()=>{
-                res.status(200).send({proveedor});
+                res.status(200).send({registroActualizado: true});
             })
             .catch(err=>{
-                res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+                res.status(500).send({registroActualizado: false});
             }); 
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+            res.status(500).send({registroActualizado: false});;
         });
     }catch(err) {
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
 

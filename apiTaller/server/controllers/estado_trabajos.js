@@ -1,8 +1,8 @@
 const estado_trabajos = require('../models').estado_trabajos;
 
-function listarEstadosTrabajos(req,res){
+const listarEstadosTrabajos = async(req,res) =>{
     try{
-        estado_trabajos.findAll(
+        await estado_trabajos.findAll(
         {
             attributes: [['id', 'idEstadoTrabajo'],['descripcion','estadoTrabajo']],
             where: {
@@ -20,26 +20,30 @@ function listarEstadosTrabajos(req,res){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
-
-function crearEstadoTrabajo(req,res){
+/* Creamos un nuevo estado */
+const crearEstadoTrabajo = async(req,res) =>{
     try{
-        const existe = estado_trabajos.findOne(
+        const datosEstado = { //Guardamos los datos recibidos en un objeto
+            descripcion: req.body.descripcion,
+            estado: 1
+        }
+        const existe = await estado_trabajos.findOne(
             {
                 where: {
-                    descripcion: req.body.descripcion,
+                    descripcion: datosEstado.descripcion, //Como los estados no tienen un código único, se compara por descripción
                 }
             })
         .then(existe=>{
             if (!existe){
-                estados_trabajos.create(req.body)
+                estado_trabajos.create(datosEstado)
                 .then(estado_trabajo=>{
-                    res.status(200).send({estado_trabajo});
+                    res.status(200).send({registroCreado: true});
                 })
                 .catch(err=>{
-                    res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
+                    res.status(500).send({registroCreado: false});
                 });
             }else{
-                res.status(200).send({message: "El estado ya existe."});
+                res.status(200).send({message: "El estado ya existe.",registroCreado: false});
             }
         })
     }catch(err){

@@ -1,8 +1,8 @@
 const marcas = require('../models').marcas;
 
-function listarMarcas(req,res){
+const listarMarcas = async(req,res) =>{
     try{
-        marcas.findAll(
+        await marcas.findAll(
             {
                 attributes: ['id','descripcion'],
                 where: {
@@ -20,9 +20,9 @@ function listarMarcas(req,res){
     }
 
 }
-function buscarMarca(req,res){
+const buscarMarca = async(req,res) =>{
     try{
-        marcas.findOne(
+        await marcas.findOne(
             {
                 attributes: ['id','descripcion'],
                 where: {

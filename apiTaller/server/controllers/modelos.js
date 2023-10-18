@@ -1,8 +1,8 @@
 const {modelos,marcas} = require('../models');
 
-function listarModelos(req,res){
+const listarModelos = async(req,res) =>{
     try{
-        modelos.findAll(
+        await modelos.findAll(
             {
                 attributes: 
                 [
@@ -30,9 +30,10 @@ function listarModelos(req,res){
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
-function buscarModelo(req,res){
+const buscarModelo = async(req,res) =>{
     try{
-        modelos.findOne(
+        const idModelo = req.params.id;
+        await modelos.findOne(
             {
                 attributes: 
                 [
@@ -40,7 +41,7 @@ function buscarModelo(req,res){
                 ],
                 where: {
                 estado: 1,
-                id: req.params.id,
+                id: idModelo,
                 },
                 include:
                 [{

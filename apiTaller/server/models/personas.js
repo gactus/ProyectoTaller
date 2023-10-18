@@ -29,7 +29,10 @@ module.exports=(sequelize,DataTypes)=>{
             },
             allowNull: true
         },
-        estado:DataTypes.INTEGER
+        estado:{
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        }
     });
     return personas;
 }

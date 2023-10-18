@@ -10,6 +10,7 @@ const registro_logs = require('./registro_logs');
 const estado_trabajos = require('./estado_trabajos');
 const trabajos = require('./trabajos');
 const perfiles = require('./perfiles');
+const bancos = require('./bancos');
 
 module.exports ={
     personas,
@@ -23,5 +24,6 @@ module.exports ={
     registro_logs,
     estado_trabajos,
     trabajos,
-    perfiles
+    perfiles,
+    bancos
 }

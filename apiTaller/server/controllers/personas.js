@@ -1,9 +1,9 @@
 const personas = require('../models').personas;
 
 /* Listamos todos las personas */
-function listarPersonas(req,res){
+const listarPersonas = async(req,res) =>{
     try{
-        personas.findAll(
+        await personas.findAll(
             {
                 attributes:
                     [
@@ -25,9 +25,10 @@ function listarPersonas(req,res){
     }
 }
 /* Buscamos una persona en especifico */
-function buscarPersona(req,res){
+const buscarPersona = async(req,res) =>{
     try{
-        personas.findOne(
+        const idPersona = req.params.id;
+        await personas.findOne(
             {
                 attributes:
                     [
@@ -36,7 +37,7 @@ function buscarPersona(req,res){
                     ],
                 where: {
                     estado: 1,
-                    id: req.params.id,
+                    id: idPersona,
             }
             })
             .then(persona =>{
@@ -50,25 +51,34 @@ function buscarPersona(req,res){
     }
 }
 /* Creamos a una persona */
-function crearPersona(req,res){
+const crearPersona = async(req,res) =>{
+    const rutPersona = req.body.rut;
+    const datosPersona = {
+        rutPersona: req.body.rut,
+        nombresPersona: req.body.nombres,
+        apellidosPersona: req.body.apellidos,
+        telefonoPersona: req.body.telefono,
+        emailPersona: req.body.email,
+        estado: 1
+    }
     try{
-        const existe = personas.findOne( //verifico si el registro ya existe
-            {
-                where: {
-                    rut: req.body.rut,
-                }
-            })
+        await personas.findOne( //verifico si el registro ya existe
+        {
+            where: {
+                rut: rutPersona,
+            }
+        })
         .then(existe=>{
             if (!existe){ //En caso de no existir, se procede a crear el registro
-                personas.create(req.body)
-                .then(personas=>{
-                    res.status(200).send({personas});
+                personas.create(datosPersona)
+                .then(()=>{
+                    res.status(200).send({message: "Atención: Registro creado con éxito", registroCreado: true});
                 })
                 .catch(err=>{
                     res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
                 });
             }else{
-                res.status(200).send({message: "La persona ya existe."});
+                res.status(200).send({message: "Atención: el registro ya existe.",registroCreado: false});
             }
         })
     }catch(err){
@@ -76,25 +86,31 @@ function crearPersona(req,res){
     }
 }
 /* Updateamos los datos de persona */
-function editarPersona(req, res){
+const editarPersona = async(req, res) =>{
     try{
-        var id = req.params.id;
-        var body = req.body;
-        personas.findByPk(id)
+        var idPersona = req.params.id;
+        const datosPersona = {
+            rutPersona: req.body.rut,
+            nombresPersona: req.body.nombres,
+            apellidosPersona: req.body.apellidos,
+            telefonoPersona: req.body.telefono,
+            emailPersona: req.body.email
+        }
+        await personas.findByPk(idPersona)
         .then(persona=>{
-            persona.update(body)
+            persona.update(datosPersona)
             .then(()=>{
-                res.status(200).send({persona});
+                res.status(200).send({registroActualizado: true});
             })
             .catch(err=>{
-                res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+                res.status(500).send({registroActualizado: false});
             }); 
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+            res.status(500).send({message:"Atención: el registro no pudo ser actualizado."});
         });
     }catch(err) {
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
 
