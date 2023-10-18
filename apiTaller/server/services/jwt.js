@@ -1,6 +1,5 @@
 var njwt = require('njwt');
 var config = require('../config/config');
-const { DATE } = require('sequelize');
 var secret = config.token_secret;
 
 exports.createToken=(usuario)=>{

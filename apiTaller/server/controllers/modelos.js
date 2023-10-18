@@ -4,14 +4,17 @@ function listarModelos(req,res){
     try{
         modelos.findAll(
             {
-                attributes: ['id','descripcion'],
+                attributes: 
+                [
+                    ['id','idModelo'],['descripcion','nombreModelo']
+                ],
                 where: {
                 estado: 1,
                 },
                 include:
                 [{
                     model: marcas,
-                    attributes: ['descripcion'],
+                    attributes: [['descripcion','nombreMarca']],
                     where: {
                         estado: 1,
                       }
@@ -31,7 +34,10 @@ function buscarModelo(req,res){
     try{
         modelos.findOne(
             {
-                attributes: ['id','descripcion'],
+                attributes: 
+                [
+                    ['id','idModelo'],['descripcion','nombreModelo']
+                ],
                 where: {
                 estado: 1,
                 id: req.params.id,
@@ -39,7 +45,7 @@ function buscarModelo(req,res){
                 include:
                 [{
                     model: marcas,
-                    attributes: ['descripcion'],
+                    attributes: [['descripcion','nombreMarca']],
                     where: {
                         estado: 1,
                       }

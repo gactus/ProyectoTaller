@@ -4,13 +4,21 @@ function listarInsumos(req,res){
     try{
         insumos.findAll(
         {
-            attributes: ['id','descripcion','cantidad','precio_compra','precio_venta','tipoInsumoId','estado'],
+            attributes: 
+                [
+                    ['id','idInsumo'],['descripcion', 'nombreInsumo'],['cantidad', 'cantidadInsumos'],
+                    ['precio_compra','precioCompra'],['precio_venta','precioVenta'],['tipoInsumoId','idTipoInsumo'],
+                    ['estado', 'estadoInsumo']
+                ],
             where: {
                 estado: 1,
             },
             include:{
                 model: tipo_insumos,
-                attributes: ['descripcion'],
+                attributes: 
+                    [
+                        ['descripcion','tipoInsumo']
+                    ],
                 where: {
                     estado: 1
                 }
@@ -31,7 +39,12 @@ function buscarInsumo(req,res){
     try{
         insumos.findOne(
         {
-            attributes: ['id','descripcion','cantidad','precio_compra','precio_venta','tipoInsumoId','estado'],
+            attributes: 
+                [
+                    ['id','idInsumo'],['descripcion', 'nombreInsumo'],['cantidad', 'cantidadInsumos'],
+                    ['precio_compra','precioCompra'],['precio_venta','precioVenta'],['tipoInsumoId','idTipoInsumo'],
+                    ['estado', 'estadoInsumo']
+                ],
             where: {
                 estado: 1,
                 id: req.params.id

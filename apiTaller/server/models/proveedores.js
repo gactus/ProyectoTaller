@@ -28,21 +28,21 @@ module.exports=(sequelize,DataTypes)=>{
                 isEmail: true, // Validar que el campo sea un correo electrónico válido
             },
         },
-        banco:{
-            type: DataTypes.STRING,
-            allowNull:true,
+        insumoId:{
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        bancoId:{
+            type: DataTypes.INTEGER,
+            allowNull:false,
         },
         numero_cuenta:{
             type: DataTypes.STRING,
             allowNull:true,
         },
-        tipo_cuenta:{
+        tipoCuentaId:{
             type: DataTypes.INTEGER,
-            allowNull:true,
-        },
-        insumoId:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull:false,
         },
         estado:{
             type: DataTypes.INTEGER,

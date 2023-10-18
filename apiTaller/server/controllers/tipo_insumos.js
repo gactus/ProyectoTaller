@@ -4,6 +4,7 @@ function listarTiposInsumos(req,res){
     try{
         tipo_insumos.findAll(
         {
+            attributes: ['id','descripcion'],
             where: {
                 estado: 1,
             }
@@ -24,6 +25,7 @@ function buscarTipoInsumo(req,res){
     try{
         tipo_insumos.findOne(
         {
+            attributes: ['id','descripcion'],
             where: {
             id: req.params.id,
             }

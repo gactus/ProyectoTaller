@@ -5,7 +5,10 @@ const {perfiles,tipo_perfiles, personas} = require('../models');
 function listarTiposPerfiles(req,res){
     tipo_perfiles.findAll(
     {
-        attributes: ['id','descripcion'],
+        attributes: 
+        [
+            ['id','idPerfil'],['descripcion','nombrePerfil']
+        ],
         where:{
             estado: 1
         }
@@ -21,7 +24,10 @@ function listarTiposPerfiles(req,res){
 function perfilUsuario(req,res){
     perfiles.findOne(
     {
-        attributes: ['personaId','tipoPerfileId'],
+        attributes:         
+        [
+            ['id','idPerfil']
+        ],
         where:{
             personaId: req.params.id,
             estado: 1
@@ -30,19 +36,25 @@ function perfilUsuario(req,res){
         [
             {
                 model: personas,
-                attributes: ['nombres','apellidos'],
+                attributes: 
+                [
+                    ['nombres','nombreUsuario'],['apellidos','apellidosUsuario']
+                ],
                 where: {
                     estado: 1
                   }
             },
             {
             model: tipo_perfiles,
-            attributes: ['descripcion'],
+            attributes: 
+            [
+                ['descripcion','tipoPerfil']
+            ],
             where: {
                 estado: 1
               }
-        }
-]
+            }
+        ]
     })
     .then(perfiles =>{
         if (perfiles ? res.status(200).send({perfiles}) : res.status(200).send({message:"Atención: no existen registros asociados."}));

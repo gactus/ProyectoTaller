@@ -4,7 +4,10 @@ const jwt = require('../services/jwt');
 function loginUsuario(req,res){
     usuarios.findOne(
     {
-        attributes: ['personaId'],
+        attributes: 
+            [
+                ['personaId','idPersona']
+            ],
         where:{
             contrasena: req.body.contrasena,
             estado: 1
@@ -12,7 +15,10 @@ function loginUsuario(req,res){
         include:
         [{
             model: personas,
-            attributes: ['nombres','apellidos'],
+            attributes: 
+                [
+                    ['nombres','nombresPersona'],['apellidos','apellidosPersona']
+                ],
             where: {
                 estado: 1,
                 rut: req.body.rut,
@@ -20,12 +26,13 @@ function loginUsuario(req,res){
         }]
     })
     .then(usuario =>{
-        if (usuario ? res.status(200).send({usuario:usuario, token:jwt.createToken(usuario)}) : res.status(200).send({message:"Error: usuario/contraseña incorrectos."}));
+        if (usuario ? res.status(200).send({usuario:usuario, token:jwt.createToken(usuario)}) : res.status(401).send({message:"Error: Acceso no autorizado."},));
     })
     .catch(err =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     });
 }
+
  module.exports = {
     loginUsuario,
  }

@@ -4,20 +4,20 @@ function listarEstadosTrabajos(req,res){
     try{
         estado_trabajos.findAll(
         {
-            attributes: ['descripcion'],
+            attributes: [['id', 'idEstadoTrabajo'],['descripcion','estadoTrabajo']],
             where: {
                 estado: 1,
             }
         })
         .then(estado_trabajo=>
             {
-                if (estado_trabajo ? res.status(200).send({estado_trabajo}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (estado_trabajo ? res.status(200).json({estado_trabajo}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
 

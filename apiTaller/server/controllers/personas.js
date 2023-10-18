@@ -5,6 +5,11 @@ function listarPersonas(req,res){
     try{
         personas.findAll(
             {
+                attributes:
+                    [
+                        ['id','idPersona'],['rut','rutPersona'],['nombres','nombrePersona'],['apellidos','apellidoPersona'],
+                        ['telefono','telefonoPersona'],['email','emailPersona'],['estado','estadoPersona']
+                    ],
                 where: {
                     estado: 1,
                 }
@@ -24,6 +29,11 @@ function buscarPersona(req,res){
     try{
         personas.findOne(
             {
+                attributes:
+                    [
+                        ['id','idPersona'],['rut','rutPersona'],['nombres','nombrePersona'],['apellidos','apellidoPersona'],
+                        ['telefono','telefonoPersona'],['email','emailPersona'],['estado','estadoPersona']
+                    ],
                 where: {
                     estado: 1,
                     id: req.params.id,
