@@ -27,4 +27,5 @@ module.exports=(app)=>{
     app.post('/api/estadoTrabajos',mdAuth.auth,estadoTrabajosController.crearEstadoTrabajo);
     app.get('/api/perfil/:id',mdAuth.auth,perfilesController.perfilUsuario);
     app.get('/api/datosDashBoard/:id',mdAuth.auth,trabajosController.datosDashBoard);
+    app.get('/api/rutasPerfil/:id',mdAuth.auth,perfilesController.rutasTipoPerfil);
 }
