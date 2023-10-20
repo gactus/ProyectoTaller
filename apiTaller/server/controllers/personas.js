@@ -10,9 +10,7 @@ const listarPersonas = async(req,res) =>{
                         ['id','idPersona'],['rut','rutPersona'],['nombres','nombrePersona'],['apellidos','apellidoPersona'],
                         ['telefono','telefonoPersona'],['email','emailPersona'],['estado','estadoPersona']
                     ],
-                where: {
-                    estado: 1,
-                }
+                where: {estado: 1}
             })
             .then(persona =>{
                 if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: existen registros."}));   
@@ -35,10 +33,11 @@ const buscarPersona = async(req,res) =>{
                         ['id','idPersona'],['rut','rutPersona'],['nombres','nombrePersona'],['apellidos','apellidoPersona'],
                         ['telefono','telefonoPersona'],['email','emailPersona'],['estado','estadoPersona']
                     ],
-                where: {
+                where: 
+                {
                     estado: 1,
                     id: idPersona,
-            }
+                }
             })
             .then(persona =>{
                 if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
@@ -52,7 +51,6 @@ const buscarPersona = async(req,res) =>{
 }
 /* Creamos a una persona */
 const crearPersona = async(req,res) =>{
-    const rutPersona = req.body.rut;
     const datosPersona = {
         rutPersona: req.body.rut,
         nombresPersona: req.body.nombres,
@@ -64,9 +62,7 @@ const crearPersona = async(req,res) =>{
     try{
         await personas.findOne( //verifico si el registro ya existe
         {
-            where: {
-                rut: rutPersona,
-            }
+            where: {rut: datosPersona.rutPersona}
         })
         .then(existe=>{
             if (!existe){ //En caso de no existir, se procede a crear el registro

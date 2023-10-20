@@ -1,4 +1,4 @@
-const {usuarios, personas} = require('../models');
+const loginVw = require('../models').loginVw;
 const jwt = require('../services/jwt');
 const {compare} = require('../services/handleBcrypt');
 
@@ -8,35 +8,20 @@ const loginUsuario = async(req,res) =>{
         contrasena: req.body.contrasena
     }
     try{
-        await usuarios.findOne(
-            {
-                attributes: 
-                    [
-                        ['personaId','idPersona']
-                    ],
-                where:{
-                    contrasena: datosLogin.contrasena,
-                    estado: 1
-                },
-                include:
-                [{
-                    model: personas,
-                    attributes: 
-                        [
-                            ['nombres','nombresPersona'],['apellidos','apellidosPersona']
-                        ],
-                    where: {
-                        estado: 1,
-                        rut: datosLogin.usuario,
-                      }
-                }]
-            })
-            .then(usuario =>{
-                if (usuario ? res.status(200).send({usuario:usuario, token:jwt.createToken(usuario)}) : res.status(401).send({message:"Error: Acceso no autorizado."},));
-            })
-            .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
-            });
+        await loginVw.findOne({
+            attributes: [['id','idUsuario']],
+            where:{
+                rutUsuario: datosLogin.usuario,
+                contrasenaUsuario: datosLogin.contrasena
+            },
+        })
+        .then(login =>{
+            if (login ? res.status(200).send({login, token:jwt.createToken(login)}) : res.status(401).send({message:"Error: Acceso no autorizado."},));
+        })
+        .catch(err =>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        });
+            //const chkContrasena = await compare(datosLogin.contrasena,usuario.contrasena);;
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }

@@ -1,52 +1,14 @@
-const {proveedores,insumos, bancos, tipo_cuentas} = require('../models');
+const {proveedores,proveedoresVw} = require('../models');
 
 /* Listamos los proveedores activos */
 const listarProveedores = async(req, res) =>{
     try{
-        await proveedores.findAll(
+        await proveedoresVw.findAll(
         {
             attributes: 
             [
-                ['id','idProveedor'],['rut','rutProveedor'],['razon_social','razonSocial'],
-                ['direccion','direccionProveedor'],['telefono','telefonoProveedor'],
-                ['email','emailProveedor'],['bancoId','idBanco'],['numero_cuenta','nroCuenta'],
-                ['tipoCuentaId','idtipoCuenta']
-            ],
-            where: {
-                estado: 1,
-            },
-            include:
-            [
-                {
-                    model: insumos,
-                    attributes: 
-                    [
-                        ['id','idinsumo'],['descripcion','detalleInsumo']
-                    ],
-                    where:{
-                        estado: 1
-                    }
-                },
-                {
-                    model: bancos,
-                    attributes: 
-                    [
-                        ['nombre','nombreBanco']
-                    ],
-                    where:{
-                        estado: 1
-                    }
-                },
-                {
-                    model: tipo_cuentas,
-                    attributes: 
-                    [
-                        ['nombre','tipoCuenta']
-                    ],
-                    where:{
-                        estado: 1
-                    }
-                },
+                ['id','idProveedor'],'rutProveedor','razonSocial','direccionProveedor','telefonoProveedor','emailProveedor',
+                'idBanco','nombreBanco','idTipoCuenta','tipoCuentaBancaria','numeroCuenta','idInsumo','nombreInsumo'
             ]
         })
         .then(proveedor=>
@@ -57,35 +19,21 @@ const listarProveedores = async(req, res) =>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos." + err});
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
 }
 /*  Buscamos un proveedor especifico y su respectivo insumo*/
 const buscarProveedor = async(req,res) =>{
     try{
-        await proveedores.findOne(
+        const idProveedor = req.params.id;
+        await proveedoresVw.findOne(
         {
             attributes: 
             [
-                ['id','idProveedor'],['rut','rutProveedor'],['razon_social','razonSocial'],
-                ['direccion','direccionProveedor'],['telefono','telefonoProveedor'],
-                ['email','emailProveedor'],['bancoId','idBanco'],['numero_cuenta','nroCuenta'],
-                ['tipoCuentaId','idtipoCuenta']
+                ['id','idProveedor'],'rutProveedor','razonSocial','direccionProveedor','telefonoProveedor','emailProveedor',
+                'idBanco','nombreBanco','idTipoCuenta','tipoCuentaBancaria','numeroCuenta','idInsumo','nombreInsumo'
             ],
-            where: {
-                estado: 1,
-                id: req.params.id,
-            },
-            include:{
-                model: insumos,
-                attributes: 
-                [
-                    ['id','idinsumo'],['descripcion','detalleInsumo']
-                ],
-                where:{
-                    estado: 1
-                }
-            }
+            where: {id: idProveedor}
         })
         .then(proveedor =>{
             if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros asociados."}));

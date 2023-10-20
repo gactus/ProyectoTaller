@@ -39,9 +39,10 @@ const buscarModelo = async(req,res) =>{
                 [
                     ['id','idModelo'],['descripcion','nombreModelo']
                 ],
-                where: {
-                estado: 1,
-                id: idModelo,
+                where: 
+                {
+                    estado: 1,
+                    id: idModelo,
                 },
                 include:
                 [{

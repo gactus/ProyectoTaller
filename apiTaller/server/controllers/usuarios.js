@@ -1,4 +1,4 @@
-const {usuarios,personas, perfiles, tipo_perfiles} = require('../models');
+const {usuarios,personaPerfilVw} = require('../models');
 const {encrypt} = require('../services/handleBcrypt');
 
 /* Creo un registro de nuevo usuario */
@@ -6,7 +6,7 @@ const crearUsuario = async(req,res) =>{
     try{
         const datosUsuario = {
             personaId: req.body.idPersona,
-            contrasena: await encrypt(req.body.contrasena), //Encripto la contraseña del usuario
+            contrasena: req.body.contrasena, //Encripto la contraseña del usuario //await encrypt(
             estado: 1
         }
         await usuarios.findOne({
@@ -36,7 +36,7 @@ const editarUsuario = async(req,res)=>{
     try{
         const idUsuario = req.params.id;
         const datosUsuario = {
-            contrasena: await encrypt(req.body.contrasena), //Encripto la contraseña del usuario
+            contrasena: req.body.contrasena, //Encripto la contraseña del usuario //await encrypt(
             estado: req.body.estado
         }
         await usuarios.findByPk(idUsuario) //Verificamos si el registro existe
@@ -57,39 +57,24 @@ const editarUsuario = async(req,res)=>{
 const buscarUsuario = async(req,res)=>{
     try{
         const idUsuario = req.params.id;
-        await usuarios.findOne(
+        await personaPerfilVw.findOne(
             {
                 attributes:         
-                [
-                    ['id','idUsuario'],['personaId','idPersona']
-                ],
-                where:{
-                    id: idUsuario,
-                },
-                include:
-                [
-                    {
-                        model: personas,
-                        attributes: 
-                        [
-                            ['nombres','nombreUsuario'],['apellidos','apellidosUsuario']
-                        ],
-                        where: {
-                            estado: 1
-                          }
-                    }
-                ]
+                [['id','idPerfil'],'idPersona','rutUsuario','tipoPerfil'],
+                where:{idUsuario: idUsuario}
             })
-            .then(perfiles =>{
-                if (perfiles ? res.status(200).send({perfiles}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+            .then(personaPerfil =>{
+                if (personaPerfil ? res.status(200).send({personaPerfil}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
             });
     }catch(err){
-
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
+
+/* ObteNgo el perfil de un usuario, en base al id. de la persona */
 module.exports = {
     crearUsuario,
     editarUsuario,

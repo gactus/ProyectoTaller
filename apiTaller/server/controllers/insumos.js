@@ -1,33 +1,18 @@
-const {insumos, tipo_insumos} = require('../models');
+const {insumos, insumosVw} = require('../models');
 
 /*  Listamos todos los insumos activos */
 const listarInsumos = async(req,res) =>{
     try{
-        await insumos.findAll(
+        await insumosVw.findAll(
         {
             attributes: 
                 [
-                    ['id','idInsumo'],['codigo','codigoInsumo'],['descripcion', 'nombreInsumo'],['cantidad', 'cantidadInsumos'],
-                    ['precio_compra','precioCompra'],['precio_venta','precioVenta'],['tipoInsumoId','idTipoInsumo'],
-                    ['estado', 'estadoInsumo']
-                ],
-            where: {
-                estado: 1,
-            },
-            include:{
-                model: tipo_insumos,
-                attributes: 
-                    [
-                        ['descripcion','tipoInsumo']
-                    ],
-                where: {
-                    estado: 1
-                }
-            }
+                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                ]
         })
-        .then(insumo=>
+        .then(insumoVw=>
             {
-                if (insumo ? res.status(200).send({insumo}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -40,29 +25,20 @@ const listarInsumos = async(req,res) =>{
 const buscarInsumo = async(req,res) =>{
     try{
         const idInsumo = req.params.id;
-        await insumos.findOne(
+        await insumosVw.findOne(
         {
             attributes: 
                 [
-                    ['id','idInsumo'],['codigo','codigoInsumo'],['descripcion', 'nombreInsumo'],['cantidad', 'cantidadInsumos'],
-                    ['precio_compra','precioCompra'],['precio_venta','precioVenta'],['tipoInsumoId','idTipoInsumo'],
-                    ['estado', 'estadoInsumo']
+                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
                 ],
             where: {
                 estado: 1,
                 id: idInsumo
-            },
-            include:{
-                model: tipo_insumos,
-                attributes: ['descripcion'],
-                where: {
-                    estado: 1
-                }
             }
         })
-        .then(insumo=>
+        .then(insumoVw=>
             {
-                if (insumo ? res.status(200).send({insumo}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});

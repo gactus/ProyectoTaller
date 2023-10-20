@@ -5,9 +5,7 @@ const listarEstadosTrabajos = async(req,res) =>{
         await estado_trabajos.findAll(
         {
             attributes: [['id', 'idEstadoTrabajo'],['descripcion','estadoTrabajo']],
-            where: {
-                estado: 1,
-            }
+            where: {estado: 1}
         })
         .then(estado_trabajo=>
             {
@@ -36,7 +34,7 @@ const crearEstadoTrabajo = async(req,res) =>{
         .then(existe=>{
             if (!existe){
                 estado_trabajos.create(datosEstado)
-                .then(estado_trabajo=>{
+                .then(()=>{
                     res.status(200).send({registroCreado: true});
                 })
                 .catch(err=>{

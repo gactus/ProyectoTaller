@@ -1,12 +1,12 @@
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
-const {trabajos, detalle_trabajos,insumos, estado_trabajos, perfiles, personas} = require('../models');
+const {trabajos, detalle_trabajos,insumos, estado_trabajos, perfiles, personas, trabajosVw} = require('../models');
 
 /* Sección Trabajos */
 /* Creamos el metodo para registrar un trabajo */
-function crearTrabajo(req,res){
+const crearTrabajo = async(req,res) =>{
     try{
-        trabajos.create(req.body)
+        await trabajos.create(req.body)
         .then(trabajo=>{
             res.status(200).send({trabajo});
         })
@@ -18,11 +18,11 @@ function crearTrabajo(req,res){
     }
 }
 /* Editamos los datos asociados a un trabajo */
-function editarTrabajo(req, res){
+const editarTrabajo = async(req, res) =>{
     try{
         var id = req.params.id;
         var body = req.body;
-        trabajos.findByPk(id)
+        await trabajos.findByPk(id)
         .then(trabajo=>{
             trabajo.update(body)
             .then(()=>{
@@ -41,45 +41,16 @@ function editarTrabajo(req, res){
 }
 //Listados
 //Listamos los trabajos asociados a un mecánico (utilizado tanto por un mecánico, como el admin)
-function ListarTrabajosMecanico(req, res){
+const listarTrabajosMecanico = async(req, res) =>{
     try{
-        const idPerfil = req.params.id;
-        trabajos.findAll({
+        const idUsuario = req.params.id;
+        trabajosVw.findAll({
             attributes: 
                 [
-                    ['detalle', 'detalleTrabajo'],['fecha_trabajo','fechaTrabajo'],['fecha_prox_mantencion','proximaMantencion'],
-                    ['requere_notificacion', 'requiereNotificacion'],['costo_mano_obra','manoObra']
+                    ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
+                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil'
                 ],
-            where:{
-                estado: 1
-            },
-            include:
-            [
-                {
-                    model: estado_trabajos,
-                    attributes: [['descripcion','estadoTrabajo']], //Obtenemos el estado del trabajo
-                    where:{
-                        estado: 1
-                    },
-                    required: true
-                },
-                {
-                    model: perfiles,
-                    attributes: [['id','idPerfil']], //Obtenemos el perfil del mecanico
-                    where:{
-                        estado: 1,
-                        tipoPerfileId: idPerfil
-                    },
-                    include:{
-                        model: personas,
-                        attributes: [['nombres','nombreMcanico'],['apellidos','apellidoMecanico']], //Obtenemos los datos del mecanico quién realizó el trabajo
-                        where:{
-                            estado: 1
-                        },
-                        required: true
-                    }                  
-                }
-            ],
+            where:{idUsuario: idUsuario},
         })
         .then(listadoTrabajos =>{
             if (listadoTrabajos ? res.status(200).send({listadoTrabajos}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
@@ -88,48 +59,18 @@ function ListarTrabajosMecanico(req, res){
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
         });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + + err});
     }
 }
 //Listamos los trabajos asociados a todos los perfiles (mecanico/admin) (utilizado solo por el admin)
-function ListarTrabajosAdmin(req, res){
+const listarTrabajosAdmin = async(req, res) =>{
     try{
-        const idPerfil = req.params.id;
-        trabajos.findAll({
+        await trabajosVw.findAll({
             attributes: 
                 [
-                    ['detalle', 'detalleTrabajo'],['fecha_trabajo','fechaTrabajo'],['fecha_prox_mantencion','proximaMantencion'],
-                    ['requere_notificacion', 'requiereNotificacion'],['costo_mano_obra','manoObra']
-                ],
-            where:{
-                estado: 1
-            },
-            include:
-            [
-                {
-                    model: estado_trabajos,
-                    attributes: [['descripcion','estadoTrabajo']], //Obtenemos el estado del trabajo
-                    where:{
-                        estado: 1
-                    },
-                    required: true
-                },
-                {
-                    model: perfiles,
-                    attributes: [['id','idPerfil']], //Obtenemos el perfil del mecanico
-                    where:{
-                        estado: 1
-                    },
-                    include:{
-                        model: personas,
-                        attributes: [['nombres','nombreMcanico'],['apellidos','apellidoMecanico']], //Obtenemos los datos del mecanico quién realizó el trabajo
-                        where:{
-                            estado: 1
-                        },
-                        required: true
-                    }                  
-                }
-            ],
+                    ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
+                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil'
+                ]
         })
         .then(listadoTrabajos =>{
             if (listadoTrabajos ? res.status(200).send({listadoTrabajos}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
@@ -143,9 +84,9 @@ function ListarTrabajosAdmin(req, res){
 }
 /*  Sección Detalle del Trabajo */
 /* Creamos el detalle de un trabajo */
-function crearDetalleTrabajo(req,res){
+const crearDetalleTrabajo = async(req,res) =>{
     try{
-        const existe = detalle_trabajos.findOne(
+        const existe = await detalle_trabajos.findOne(
             {
                 where: {
                     insumoId: req.body.idInsumo,
@@ -170,9 +111,9 @@ function crearDetalleTrabajo(req,res){
     }
 }
 //Este apartado se refiere a los insumos asociados al trabajo
-function listarDetalleTrabajos(req,res){
+const listarDetalleTrabajos = async(req,res) =>{
     try{
-        detalle_trabajos.findAll(
+        await detalle_trabajos.findAll(
         {
             attributes: [['costo','costoTrabajo'],['cantidad_insumos', 'cantidadInsumos']],
             where: {
@@ -203,13 +144,13 @@ function listarDetalleTrabajos(req,res){
 }
 //DashhBorad de trabajos
 //Realizo la consulta para mostrar los datos en el Dashboard
-function datosDashBoard(req,res){
+const datosDashBoard = async(req,res) =>{
     try{
         const idEstadoTrabajo = req.params.id;
         const fechaActual = new Date();
         const fechaConsulta = new Date();
         fechaConsulta.setDate(fechaActual.getDate() - 7); //últimos 7 días, pero puede ampliarse
-        trabajos.findAll({
+        await trabajos.findAll({
             attributes:[ [sequelize.fn('COUNT', '*'), 'totalRegistros']],
             where: {
                 fecha_trabajo: {
@@ -235,6 +176,6 @@ module.exports = {
     editarTrabajo,
     listarDetalleTrabajos,
     datosDashBoard,
-    ListarTrabajosMecanico,
-    ListarTrabajosAdmin
+    listarTrabajosMecanico,
+    listarTrabajosAdmin
 }

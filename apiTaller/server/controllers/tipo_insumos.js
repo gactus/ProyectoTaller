@@ -1,13 +1,11 @@
 const tipo_insumos = require('../models').tipo_insumos;
 
-function listarTiposInsumos(req,res){
+const listarTiposInsumos = async(req,res) =>{
     try{
-        tipo_insumos.findAll(
+        await tipo_insumos.findAll(
         {
             attributes: ['id','descripcion'],
-            where: {
-                estado: 1,
-            }
+            where: {estado: 1}
         })
         .then(tipo_insumo=>
             {
@@ -21,14 +19,13 @@ function listarTiposInsumos(req,res){
     }
 }
 
-function buscarTipoInsumo(req,res){
+const buscarTipoInsumo = async(req,res) =>{
     try{
-        tipo_insumos.findOne(
+        const idTipoInsumo = req.params.id;
+        await tipo_insumos.findOne(
         {
             attributes: ['id','descripcion'],
-            where: {
-            id: req.params.id,
-            }
+            where: {id: idTipoInsumo}
         })
         .then(tipo_insumo =>{
             if (tipo_insumo ? res.status(200).send({tipo_insumo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));

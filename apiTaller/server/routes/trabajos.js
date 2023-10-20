@@ -7,6 +7,6 @@ module.exports=(app)=>{
     app.put('/api/trabajos',mdAuth.auth,trabajosController.editarTrabajo);
     app.post('/api/detalleTrabajos',mdAuth.auth,trabajosController.crearDetalleTrabajo);
     app.get('/api/detalleTrabajos/:id',mdAuth.auth,trabajosController.listarDetalleTrabajos);
-    app.get('/api/listadoTrabajosMecanico/:id',mdAuth.auth,trabajosController.ListarTrabajosMecanico);
-    app.get('/api/listadoTrabajosAdmin',mdAuth.auth,trabajosController.ListarTrabajosAdmin);
+    app.get('/api/listadoTrabajosMecanico/:id',mdAuth.auth,trabajosController.listarTrabajosMecanico);
+    app.get('/api/listadoTrabajosAdmin',mdAuth.auth,trabajosController.listarTrabajosAdmin);
 }

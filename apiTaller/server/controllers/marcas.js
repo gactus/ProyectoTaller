@@ -4,7 +4,7 @@ const listarMarcas = async(req,res) =>{
     try{
         await marcas.findAll(
             {
-                attributes: ['id','descripcion'],
+                attributes: [['id','idMarca'],['descripcion','nombreMarca']],
                 where: {
                   estado: 1,
                 }
@@ -24,10 +24,11 @@ const buscarMarca = async(req,res) =>{
     try{
         await marcas.findOne(
             {
-                attributes: ['id','descripcion'],
-                where: {
-                estado: 1,
-                id:req.params.id
+                attributes: [['id','idMarca'],['descripcion','nombreMarca']],
+                where: 
+                {
+                    estado: 1,
+                    id:req.params.id
                 }
             })
             .then(marca =>{
