@@ -8,6 +8,28 @@ const listarInsumos = async(req,res) =>{
             attributes: 
                 [
                     ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                ],
+            where:{estadoInsumo: 1}
+        })
+        .then(insumoVw=>
+            {
+                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+            })
+        .catch(err=>{
+            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
+        })
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+    }
+}
+/*  Listamos todos los insumos (Usado en matnedor de Insumos) */
+const listarInsumosGeneral = async(req,res) =>{
+    try{
+        await insumosVw.findAll(
+        {
+            attributes: 
+                [
+                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
                 ]
         })
         .then(insumoVw=>
@@ -28,10 +50,11 @@ const buscarInsumo = async(req,res) =>{
         await insumosVw.findOne(
         {
             attributes: 
-                [
-                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
-                ],
-            where: {
+            [
+                ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+            ],
+            where: 
+            {
                 estado: 1,
                 id: idInsumo
             }
@@ -107,9 +130,36 @@ const editarInsumo = async(req,res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
+/* Damos de baja un insumo (eliminación lógica) */
+const eliminarInsumo = async(req,res) =>{
+    try{
+        const idInsumo = req.params.id;
+        await insumos.findByPk(idInsumo)
+        .then(insumo=>{
+            const datosInsumo = { //Cambiamos el estado del Insumo
+                estado: 0
+            }
+            insumo.update(datosInsumo)
+            .then(()=>{
+                res.status(200).send({message:"Atención: Registro dado de baja"});
+            })
+            .catch(err=>{
+                res.status(200).send({message:"Atención: El registro no pudo ser dado de baja"});
+            }) 
+        })
+        .catch(err=>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error al buscar los datos." + err});
+        })
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+    }
+}
+
 module.exports ={
     listarInsumos,
     buscarInsumo,
     crearInsumo,
-    editarInsumo
+    editarInsumo,
+    listarInsumosGeneral,
+    eliminarInsumo
 }

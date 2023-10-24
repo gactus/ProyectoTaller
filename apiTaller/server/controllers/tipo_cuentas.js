@@ -1,15 +1,15 @@
-const bancos = require('../models').bancos;
-/* Listo solo los bancos activos */
-const listarBancos = async(req,res)=>{
+const tipo_cuentas = require('../models').tipo_cuentas;
+/* Listo solo los Tipos de Cuentas activos */
+const listarTipoCuentas = async(req,res)=>{
     try{
-        await bancos.findAll(
+        await tipo_cuentas.findAll(
             {
-                attributes: [['id', 'idBanco'],['nombre','nombreBanco']],
+                attributes: [['id', 'idTipoCuenta'],['nombre','tipoCuenta']],
                 where: {estado: 1}
             })
-            .then(banco=>
+            .then(tipo_cuenta=>
                 {
-                    if (banco ? res.status(200).json({banco}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (tipo_cuenta ? res.status(200).json({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -18,16 +18,16 @@ const listarBancos = async(req,res)=>{
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
-/* Listo todos los bancos */
-const listarBancosGeneral = async(req,res)=>{
+/* Listo todos los Tipos de Cuenta (incluye Inactivas) */
+const listarTipoCuentasGeneral = async(req,res)=>{
     try{
-        await bancos.findAll(
+        await tipo_cuentas.findAll(
             {
-                attributes: [['id', 'idBanco'],['nombre','nombreBanco'],'estado'],
+                attributes: [['id', 'idTipoCuenta'],['nombre','tipoCuenta'],'estado'],
             })
-            .then(banco=>
+            .then(tipo_cuenta=>
                 {
-                    if (banco ? res.status(200).json({banco}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (tipo_cuenta ? res.status(200).json({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -37,19 +37,19 @@ const listarBancosGeneral = async(req,res)=>{
     }
 }
 /* Buscamos un banco especifico */
-const buscarBanco = async(req,res) =>{
+const buscarTipoCuenta = async(req,res) =>{
     try{
-        const idBanco = req.params.id;
-        await bancos.findOne(
+        const idTipoCuenta = req.params.id;
+        await tipo_cuentas.findOne(
         {
             attributes: 
             [
-                ['id','idBanco'],['nombre','NombreBanco'],'estado'
+                ['id','idTipoCuenta'],['nombre','tipoCuenta'],'estado'
             ],
-            where: {id: idBanco}
+            where: {id: idTipoCuenta}
         })
-        .then(banco =>{
-            if (banco ? res.status(200).send({banco}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+        .then(tipo_cuenta =>{
+            if (tipo_cuenta ? res.status(200).send({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -59,18 +59,18 @@ const buscarBanco = async(req,res) =>{
     }
 }
 /* creamos un nuevo banco */
-const crearBanco = async(req,res)=>{
+const crearTipoCuenta = async(req,res)=>{
     try{
-        const datosBanco = {
+        const datosTipoCuenta = {
             nombre: req.body.nombre,
             estado: 1
         }
-        const existe = await bancos.finOne(
+        const existe = await tipo_cuentas.finOne(
             {
-                where:{descripcion: datosBanco.nombre}
+                where:{descripcion: datosTipoCuenta.nombre}
             })
         if (!existe){
-            bancos.create(datosBanco)
+            tipo_cuentas.create(datosTipoCuenta)
             .then(()=>{
                 res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true})
             })
@@ -83,16 +83,16 @@ const crearBanco = async(req,res)=>{
     }
 }
 /* Editamos un banco */
-const editarBanco = async(req, res) =>{
+const editarTipoCuenta = async(req, res) =>{
     try{
-        const idBanco = req.params.id;
-        const datosBanco = {
+        const idTipoCuenta = req.params.id;
+        const datosTipoCuenta = {
             nombre: req.body.nombre,
             estado: req.body.estado
         }
-        await bancos.findByPk(idBanco)
-        .then(banco=>{
-            banco.update(datosBanco)
+        await tipo_cuentas.findByPk(idTipoCuenta)
+        .then(tipo_cuenta=>{
+            tipo_cuenta.update(datosTipoCuenta)
             .then(()=>{
                 res.status(200).send({registroActualizado: true});
             })
@@ -108,15 +108,15 @@ const editarBanco = async(req, res) =>{
     }
 }
 /* Damos de baja un banco */
-const eliminarBanco = async(req,res) =>{
+const eliminarTipoCuenta = async(req,res) =>{
     try{
-        const idBanco = req.params.id;
-        await bancos.findByPk(idBanco)
-        .then(banco=>{
-            const datosBanco = { //Cambiamos el estado del Banco
+        const idTipoCuenta = req.params.id;
+        await tipo_cuentas.findByPk(idTipoCuenta)
+        .then(tipo_cuenta=>{
+            const datosTipoCuenta = { //Cambiamos el estado del Banco
                 estado: 0
             }
-            banco.update(datosBanco)
+            tipo_cuenta.update(datosTipoCuenta)
             .then(()=>{
                 res.status(200).send({message:"Atención: Registro dado de baja"});
             })
@@ -125,7 +125,7 @@ const eliminarBanco = async(req,res) =>{
             }) 
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: Ha ocurrido un error al buscar los datos." + err});
+            res.status(500).send({message:"Atención: Ha ocurrido un error al buscar los datos."});
         })
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -133,10 +133,10 @@ const eliminarBanco = async(req,res) =>{
 }
 
 module.exports={
-    listarBancos,
-    listarBancosGeneral,
-    buscarBanco,
-    crearBanco,
-    editarBanco,
-    eliminarBanco
+    listarTipoCuentas,
+    listarTipoCuentasGeneral,
+    buscarTipoCuenta,
+    crearTipoCuenta,
+    editarTipoCuenta,
+    eliminarTipoCuenta
 }

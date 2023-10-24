@@ -28,6 +28,8 @@ require('./server/routes/trabajos')(app);
 require('./server/routes/login')(app);
 require('./server/routes/insumos')(app);
 require('./server/routes/usuarios')(app);
+require('./server/routes/clientes')(app);
+require('./server/routes/proveedores')(app);
 app.get('*',(req,res)=>{
     res.status(200).send({message: "Bienvenido al server Node.js"})
 });

@@ -62,9 +62,7 @@ const crearProveedor = async(req,res) =>{
         }
         await proveedores.findOne(
             {
-                where: {
-                    rut: datosProveedor.rut,
-                }
+                where: {rut: datosProveedor.rut}
             })
         .then(existe=>{
             if (!existe){
@@ -115,10 +113,35 @@ const editarProveedor = async(req, res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
+/* Damos de baja un proveedor (eliminación lógica) */
+const eliminarProveedor = async(req,res) =>{
+    try{
+        const idProveedor = req.params.id;
+        await proveedores.findByPk(idProveedor)
+        .then(proveedor=>{
+            const datosProveedor = { //Cambiamos el estado del proveedor
+                estado: 0
+            }
+            proveedor.update(datosProveedor)
+            .then(()=>{
+                res.status(200).send({message:"Atención: Registro dado de baja"});
+            })
+            .catch(err=>{
+                res.status(200).send({message:"Atención: El registro no pudo ser dado de baja"});
+            }) 
+        })
+        .catch(err=>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        })
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+    }
+}
 
 module.exports = {
     listarProveedores,
     buscarProveedor,
     crearProveedor,
-    editarProveedor
+    editarProveedor,
+    eliminarProveedor
 }

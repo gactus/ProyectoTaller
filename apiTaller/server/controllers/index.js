@@ -11,7 +11,9 @@ const estado_trabajos = require('./estado_trabajos');
 const trabajos = require('./trabajos');
 const perfiles = require('./perfiles');
 const bancos = require('./bancos');
-
+const clientes = require('./clientes');
+const tipo_cuentas = require('./tipo_cuentas');
+const notificaciones = require('./notificaciones');
 module.exports ={
     personas,
     marcas, 
@@ -25,5 +27,8 @@ module.exports ={
     estado_trabajos,
     trabajos,
     perfiles,
-    bancos
+    bancos,
+    clientes,
+    tipo_cuentas,
+    notificaciones
 }

@@ -52,11 +52,11 @@ const buscarPersona = async(req,res) =>{
 /* Creamos a una persona */
 const crearPersona = async(req,res) =>{
     const datosPersona = {
-        rutPersona: req.body.rut,
-        nombresPersona: req.body.nombres,
-        apellidosPersona: req.body.apellidos,
-        telefonoPersona: req.body.telefono,
-        emailPersona: req.body.email,
+        rut: req.body.rut,
+        nombres: req.body.nombres,
+        apellidos: req.body.apellidos,
+        telefono: req.body.telefono,
+        email: req.body.email,
         estado: 1
     }
     try{
@@ -86,11 +86,12 @@ const editarPersona = async(req, res) =>{
     try{
         var idPersona = req.params.id;
         const datosPersona = {
-            rutPersona: req.body.rut,
-            nombresPersona: req.body.nombres,
-            apellidosPersona: req.body.apellidos,
-            telefonoPersona: req.body.telefono,
-            emailPersona: req.body.email
+            rut: req.body.rut,
+            nombres: req.body.nombres,
+            apellidos: req.body.apellidos,
+            telefono: req.body.telefono,
+            email: req.body.email,
+            estado: req.body.estado
         }
         await personas.findByPk(idPersona)
         .then(persona=>{
@@ -109,10 +110,16 @@ const editarPersona = async(req, res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
+/* Damos de baja una persona (eliminación lógica) y de paso, desactivamos su perfil*/
+const eliminarPersona = async(req,res) =>{
+
+}
+
 
 module.exports = {
     listarPersonas,
     buscarPersona,
     crearPersona,
-    editarPersona
+    editarPersona,
+    eliminarPersona
 }
