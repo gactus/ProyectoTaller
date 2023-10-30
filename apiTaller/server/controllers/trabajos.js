@@ -1,17 +1,28 @@
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
-const {trabajos, detalle_trabajos,insumos, estado_trabajos, perfiles, personas, trabajosVw} = require('../models');
+const {trabajos, detalle_trabajos,insumos, trabajosVw} = require('../models');
 
 /* Sección Trabajos */
 /* Creamos el metodo para registrar un trabajo */
 const crearTrabajo = async(req,res) =>{
     try{
-        await trabajos.create(req.body)
-        .then(trabajo=>{
-            res.status(200).send({trabajo});
+        const datosTrabajo = {
+            detalle: req.body.descripcionTrabajo,
+            fecha_trabajo: req.body.fechaTrabajo,
+            fecha_proxima_mantencion: req.body.proximaMantencion,
+            requiere_notificacion: req.body.requiereNotificacion,
+            conto_mano_obra: req.body.costoManoObra,
+            vehiculoId: req.body.idVehiculo,
+            estadoTrabajoId: req.body.idEstadoTrabajo,
+            perfileId: req.body.idPerfil,
+            estado: 1
+        }
+        await trabajos.create(datosTrabajo)
+        .then(()=>{
+            res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true});
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
+            res.status(500).send({message:"Atención: Ocurrió un error al crear el registro.", registroCreado:false});
         });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
@@ -21,19 +32,29 @@ const crearTrabajo = async(req,res) =>{
 const editarTrabajo = async(req, res) =>{
     try{
         var id = req.params.id;
-        var body = req.body;
+        const datosTrabajo = {
+            detalle: req.body.descripcionTrabajo,
+            fecha_trabajo: req.body.fechaTrabajo,
+            fecha_proxima_mantencion: req.body.proximaMantencion,
+            requiere_notificacion: req.body.requiereNotificacion,
+            conto_mano_obra: req.body.costoManoObra,
+            vehiculoId: req.body.idVehiculo,
+            estadoTrabajoId: req.body.idEstadoTrabajo,
+            perfileId: req.body.idPerfil,
+            estado: req.body.idEstadoTrabajo
+        }
         await trabajos.findByPk(id)
         .then(trabajo=>{
-            trabajo.update(body)
+            trabajo.update(datosTrabajo)
             .then(()=>{
-                res.status(200).send({trabajo});
+                res.status(200).send({message: "Atención Registro Actualizado con éxito.", registroActualizado: true});
             })
             .catch(err=>{
-                res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+                res.status(500).send({message:"Atención: el registro no pudo ser actualizado.", registroActualizado: false});
             }); 
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: el registro no pudo ser actualizado." + err});
+            res.status(500).send({message:"Atención: ocurrió un problema al consultar el registro.", registroActualizado: false});
         });
     }catch(err) {
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -87,25 +108,23 @@ const listarTrabajosAdmin = async(req, res) =>{
 const crearDetalleTrabajo = async(req,res) =>{
     try{
         const existe = await detalle_trabajos.findOne(
-            {
-                where: {
-                    insumoId: req.body.idInsumo,
-                    trabajoId: req.body.idTrabajo
-                }
-            })
-        .then(existe=>{
-            if (!existe){
-                detalle_trabajo.create(req.body)
-                .then(detalle_trabajo=>{
-                    res.status(200).send({detalle_trabajo});
-                })
-                .catch(err=>{
-                    res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
-                });
-            }else{
-                res.status(200).send({message: "El proveedor ya existe."});
+        {
+            where: {
+                insumoId: req.body.idInsumo,
+                trabajoId: req.body.idTrabajo
             }
         })
+        if (!existe){
+            detalle_trabajo.create(req.body)
+            .then(detalle_trabajo=>{
+                res.status(200).send({detalle_trabajo});
+            })
+            .catch(err=>{
+                res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
+            });
+        }else{
+            res.status(200).send({message: "El proveedor ya existe."});
+        }
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
     }

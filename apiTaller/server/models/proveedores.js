@@ -1,3 +1,4 @@
+'use strict';
 module.exports=(sequelize,DataTypes)=>{
     const proveedores=sequelize.define('proveedores',{
         id:{
@@ -27,10 +28,6 @@ module.exports=(sequelize,DataTypes)=>{
             validate: {
                 isEmail: true, // Validar que el campo sea un correo electrónico válido
             },
-        },
-        insumoId:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
         },
         bancoId:{
             type: DataTypes.INTEGER,

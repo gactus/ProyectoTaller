@@ -1,6 +1,29 @@
 const {clientesVw, perfiles, personas} = require('../models');
-/* Listamos los clientes creados */
+/* Listamos los clientes activos */
 const listarClientes = async(req,res) =>{
+    try{
+        await clientesVw.findAll(
+        {
+            attributes: 
+            [
+                ['id','idCliente'],'rutCliente','nombreCliente','apellidoCliente','nombreCompletoCliente','telefonoCliente',
+                'emailCliente','estadoCliente'
+            ],
+            where: {estadoCliente:1}
+        })
+        .then(clienteVw=>
+            {
+                if (clienteVw ? res.status(200).json({clienteVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+            })
+        .catch(err=>{
+            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
+        })
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
+    }
+}
+/* Listamos todos clientes */
+const listarClientesGeneral = async(req,res) =>{
     try{
         await clientesVw.findAll(
         {
@@ -140,11 +163,39 @@ const buscarCliente = async(req,res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
 }
+/* Buscamos los datos de un cliente específico */
+const buscarClienteRut = async(req,res) =>{
+    try{
+        const rutCliente = req.params.rut;
+        await clientesVw.findOne(
+            {
+                attributes:
+                    [
+                        ['id','idCliente'],'rutCliente','nombreCliente','apellidoCliente','nombreCompletoCliente','telefonoCliente',
+                        'emailCliente','estadoCliente'
+                    ],
+                where: 
+                {
+                    rutCliente: rutCliente
+                }
+            })
+            .then(cliente =>{
+                if (cliente ? res.status(200).send({cliente}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
+            })
+            .catch(err =>{
+                res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+            });
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+    }
+}
 
 module.exports = {
     listarClientes,
+    listarClientesGeneral,
     crearCliente,
     editarCliente,
     eliminarCliente,
-    buscarCliente
+    buscarCliente,
+    buscarClienteRut
 }

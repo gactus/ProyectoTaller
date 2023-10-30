@@ -14,12 +14,16 @@ const bancos = require('./bancos');
 const clientes = require('./clientes');
 const tipo_cuentas = require('./tipo_cuentas');
 const notificaciones = require('./notificaciones');
+const vehiculos = require('./vehiculos');
+const ventas = require('./ventas');
+const proveedor_insumos = require('./proveedor_insumos');
 module.exports ={
     personas,
     marcas, 
     modelos,
     usuarios,
     proveedores,
+    proveedor_insumos,
     insumos,
     login,
     tipo_insumos,
@@ -30,5 +34,7 @@ module.exports ={
     bancos,
     clientes,
     tipo_cuentas,
-    notificaciones
+    notificaciones,
+    vehiculos,
+    ventas
 }

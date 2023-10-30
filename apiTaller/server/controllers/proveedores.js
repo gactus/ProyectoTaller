@@ -16,10 +16,10 @@ const listarProveedores = async(req, res) =>{
                 if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
         .catch(err=>{
-            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos." + err});
+            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno." });
     }
 }
 /*  Buscamos un proveedor especifico y su respectivo insumo*/
@@ -55,7 +55,6 @@ const crearProveedor = async(req,res) =>{
             telefono: req.body.telefono,
             email: req.body.email,
             numero_cuenta: req.body.numeroCuenta,
-            insumoId: req.body.IdInsumo,
             bancoId: req.body.idBanco,
             tipoCuentaId: req.body.idTipoCuenta,
             estado: 1
@@ -92,7 +91,6 @@ const editarProveedor = async(req, res) =>{
             telefono: req.body.telefono,
             email: req.body.email,
             numero_cuenta: req.body.numeroCuenta,
-            insumoId: req.body.IdInsumo,
             bancoId: req.body.idBanco,
             tipoCuentaId: req.body.idTipoCuenta
         }

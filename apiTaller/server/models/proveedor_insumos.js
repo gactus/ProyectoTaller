@@ -1,42 +1,42 @@
 module.exports=(sequelize,DataTypes)=>{
-    const trabajos=sequelize.define('trabajos',{
+    const proveedor_insumos=sequelize.define('proveedor_insumos',{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        detalle:{
-            type: DataTypes.STRING,
+        nro_documento:{
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        proveedoreId:{
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
-        fecha_trabajo:{
+        insumoId:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        cantidad:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        precio_compra:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        precio_venta:{
+            type: DataTypes.INTEGER,
+            allowNull:false,
+        },
+        fecha:{
             type: DataTypes.DATE,
-            allowNull: false,
-        },
-        fecha_prox_mantencion:{
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        requere_notificacion:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        costo_mano_obra:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        vehiculoId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        estadoTrabajoId:{
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull:true,
         },
         estado:{
             type: DataTypes.BOOLEAN,
             allowNull: false,
         }
     });
-    return trabajos;
+    return proveedor_insumos;
 }
