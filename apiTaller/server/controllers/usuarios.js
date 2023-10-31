@@ -4,9 +4,10 @@ const {encrypt} = require('../services/handleBcrypt');
 /* Creamos un registro de nuevo usuario */
 const crearUsuario = async(req,res) =>{
     try{
+        const contrasenaUsuario = await encrypt(req.body.contrasena);
         const datosPersona = {
-            rut: req.body.idPersona,
-            nombres: req.body.nombres, //Encripto la contraseña del usuario //await encrypt(
+            rut: req.body.rut,
+            nombres: req.body.nombres, 
             apellidos: req.body.apellidos,
             telefono: req.body.telefono,
             email: req.body.email,
@@ -14,7 +15,7 @@ const crearUsuario = async(req,res) =>{
         }
         const existe = await personas.findOne({
             where:{
-                personaId: datosUsuario.personaId
+                rut: datosPersona.rut
             }
         })
         if (!existe){
@@ -29,7 +30,7 @@ const crearUsuario = async(req,res) =>{
                 .then(() =>{
                     const datosUsuario = {
                         personaId: persona.id,
-                        contrasena: req.body.contrasena,
+                        contrasena: contrasenaUsuario,
                         estado: 1
                     }
                     usuarios.create(datosUsuario)
@@ -55,12 +56,16 @@ const crearUsuario = async(req,res) =>{
 const editarUsuario = async(req,res)=>{
     try{
         const idPersona = req.params.id;
+        const contrasenaUsuario = await encrypt(req.body.contrasena); //Encripto la contraseña del usuario //
         const datosPersona = {
             nombres: req.body.nombre,
             apellidos: req.body.apellidos,
             telefono: req.body.telefono,
             email: req.body.email,
             estado: req.body.estado
+        }
+        const datosUsuario = {
+            contrasena: contrasenaUsuario 
         }
         await personas.findByPk(idPersona) //Verificamos si el registro existe
         .then(persona=>{
@@ -80,26 +85,26 @@ const editarUsuario = async(req,res)=>{
                             where: {personaId: persona.id}
                         })
                         .then(usuario=>{
-                            const datosUsuario = {
-                                contrasena: req.body.contrasena
-                            }
                             usuario.update(datosUsuario)
                             .then(()=>{
-                                res.status(200).send({message:"Atención: Registro actulizado con éxito.",registroActualizado:true})
+                                res.status(200).send({message:"Atención: Registro actualizado con éxito.",registroActualizado:true})
                             })
                             .catch(err=>{
-                                res.status(500).send({message:"Atención: El registro no pudo ser actulizado.",registroActualizado: false});
+                                res.status(500).send({message:"Atención: El registro no pudo ser actualizado.",registroActualizado: false});
                             })
                         })
                     })
                 })
             })
             .catch(err=>{
-                res.status(500).send({registroActualizado: false, err});
+                res.status(500).send({message: "Atención: El registro no pudo ser actualizado."});
             })
         })
+        .catch(err=>{
+            res.status(500).send({message: "Atención: No existen registros para ser actualizados."});
+        })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        res.status(500).send({message: "Atención: El registro no pudo ser actualizado."});
     }
 }
 /*  Buscamos a un usuario especificio, y obtengo todos sus datos (excepto la contraseña) */
@@ -109,7 +114,7 @@ const buscarUsuario = async(req,res)=>{
         await usuariosVw.findOne(
         {
             attributes:         
-            [['id','idPersona'],'nombreUsario','apellidoUsuario','nombreCompletoUsario','telefonoUsuario','emailUsuario','estadoUsario','idTipoPerfil'],
+            [['id','idPersona'],'nombreUsuario','apellidoUsuario','nombreCompletoUsuario','telefonoUsuario','emailUsuario','estadoUsuario','idTipoPerfil'],
             where:{idUsuario: idUsuario}
         })
         .then(usuarioVw =>{
