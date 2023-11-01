@@ -1,0 +1,18 @@
+.datos-proveedores{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.datos-proveedores input {
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.datos-proveedores button{
+    border-radius: 5px;
+}

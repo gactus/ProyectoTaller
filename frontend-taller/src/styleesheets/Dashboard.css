@@ -1,0 +1,194 @@
+.dashboard-container {
+    display: flex;
+ /*   width: 80%; */
+    height: 100vh;
+    font-family: 'tahoma';
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    font-size: 1rem; 
+        margin: 0;
+    padding: 0; 
+    
+}
+
+.dashboard-container button, 
+.dashboard-container h1, 
+.dashboard-container p,
+.dashboard-container li {
+    font-size: 0.9  rem; 
+    justify-content: center;
+    align-items: center; 
+    padding-left: 10px;
+}
+.sidebar {
+    width: 13%;
+    background-color: #1E1B1B;
+    min-height: 100vh;
+    overflow-y: auto;
+    border-radius: 0 15px 0 0;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.15);
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar li {
+    /*display: flex;*/
+    align-items: center;
+    margin: 1rem 0;
+    justify-content: left;
+    align-items: left;
+}
+.bgAvatar{
+    background-color: #F69100;
+    height: 105px;
+    padding: 15px 0px 15px 5px;
+    text-align: center;
+}
+.sidebar img {
+    width: 100px; /* Esto definirá un ancho fijo para la imagen. */
+    height: 100px; /* Esto definirá un alto fijo para la imagen. */
+    margin-right: 1rem;
+    vertical-align: middle; /* Asegura que la imagen esté centrada verticalmente al lado del texto o botón. */
+    border-radius:50%;
+    border-style: solid;
+    border-color: #1E1B1B;
+    border: 1 1 1 1;
+    filter: drop-shadow(4px 6px 12px #000);
+}
+hr{
+    width: 50%;
+}
+
+button {
+    background-color: #1b1b1b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem; /* Ajusta estos valores según lo que necesites */
+    font-family: 'Verdana';
+    color: #FFF;
+    font-size: 0.8rem;
+    text-align: center;
+    text-decoration: none;
+    display: flex; /* Cambiado a flex */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    line-height: 1.2; /* Ajusta según lo que necesites */
+    margin: 0.5rem 0.25rem;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    width: 140px;  
+    height: 40px;
+}
+
+
+main {
+    flex: 1;
+    padding: 2rem;
+    background-color: #F5F5F5;
+}
+
+.dashboard-titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6rem;
+}
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+    }
+}
+footer {
+    height: 5px;  /* Esto establece una altura fija */
+    line-height: 10px;  /* Esto asegura que el texto se centre verticalmente en el espacio */
+    font-size: 12px;  /* Disminuye el tamaño de la fuente */
+    background-color: #F69100;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
+.textos{
+    font-family: Verdana;
+    color: #1b1b1b;
+    font-size: 12px;
+}
+.textosBlanco{
+    font-family: 'Verdana';
+    color: #FFF;
+    font-size: 1rem;
+}
+.linksDashboard{
+    font-family: Verdana, Geneva, 'Tahoma', sans-serif;
+    color: #FFF;
+    font-size: 10px;
+}
+.linksDashboard:hover{
+    font-family: Verdana, Geneva, 'Tahoma', sans-serif;
+    color: #e5e5e5;
+    font-size: 10px;
+}
+.padding{
+    padding-bottom: 1000px;;
+}
+link{
+    font-family: 'Verdana';
+    color: #FFF;
+    font-size: 1rem;
+}
+link:hover{
+    font-family: 'Verdana';
+    color: #FFF;
+    font-size: 1rem;
+}
+
+.enlaces{
+    padding: 2px 1px 0;
+    font-size: 0.9rem;;
+}
+.enlaces:link {
+    font-family: 'Tahoma';
+    color: #FFF;
+    text-decoration: none;
+    outline: none;
+}
+.enlaces:visited {
+    color: #FFF;
+    text-decoration: none;
+    outline: none;
+}
+.enlaces:focus {
+    border-bottom: 1px solid;
+    text-decoration: none;
+    outline: none;
+}
+.enlaces:hover {
+    border-bottom: 1px solid;
+    color: #F69100;
+    text-decoration: none;
+    outline: none;
+}
+.enlaces:active {
+    background: #e5e5e5;
+    color: #cdfeaa;
+    text-decoration: none;
+    outline: none;
+}
+.divUsuario{
+    padding-top: 15px;
+    padding-bottom: 10px;
+    justify-content: center;
+    align-items: center; 
+}
+.copyRight{
+    font-family: Verdana;
+    color: #FFF;
+    size: 9px;
+    justify-content: justify;
+    align-items: justify; 
+    padding: 5px 10px 5px 10px;
+}

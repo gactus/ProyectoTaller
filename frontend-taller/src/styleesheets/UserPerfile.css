@@ -1,0 +1,21 @@
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: 1rem auto;
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Aquí agregamos la fuente */
+}
+  
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+  
+.user-details p {
+    margin: 0;
+}
