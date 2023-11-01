@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const handleErrors = require('./server/services/md_error');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,13 +15,6 @@ app.use((req, res, next)=>{
     next();
 });
 
-function handleErrors(err,req,res,next){
-    console.log(err);
-    res.status(500).send('Atención: Ha ocurrido un error.');
-}
-
-app.use(handleErrors);
-
 //Rutas
 require('./server/routes/personas')(app);
 require('./server/routes/utiles')(app);
@@ -34,5 +28,7 @@ require('./server/routes/ventas')(app);
 app.get('*',(req,res)=>{
     res.status(200).send({message: "Bienvenido al server Node.js"})
 });
+
+app.use(handleErrors);
 
 module.exports = app;
