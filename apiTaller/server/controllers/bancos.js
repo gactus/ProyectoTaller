@@ -9,7 +9,7 @@ const listarBancos = async(req,res)=>{
             })
             .then(banco=>
                 {
-                    if (banco ? res.status(200).json({banco}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (banco ? res.status(200).json(banco) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});

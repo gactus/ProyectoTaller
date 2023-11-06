@@ -39,6 +39,12 @@ module.exports=(sequelize,DataTypes)=>{
         },
         tipoPerfil:{
             type: DataTypes.STRING,
+        },
+        idEstadoTrabajo:{
+            type: DataTypes.INTEGER,
+        },
+        estadoTrabajo:{
+            type: DataTypes.STRING,
         }
     });
     return trabajosVw;

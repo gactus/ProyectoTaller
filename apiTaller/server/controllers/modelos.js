@@ -12,7 +12,7 @@ const listarModelos = async(req,res) =>{
                 where:{estado: 1}
             })
             .then(modelo =>{
-                if (modelo ? res.status(200).send({modelo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (modelo ? res.status(200).send(modelo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -34,7 +34,7 @@ const listarModelosGeneral = async(req,res) =>{
                 where:{marcaId: idMarca}
             })
             .then(modelo =>{
-                if (modelo ? res.status(200).send({modelo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (modelo ? res.status(200).send(modelo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -60,7 +60,7 @@ const buscarModelo = async(req,res) =>{
                 }
             })
             .then(modelo =>{
-                if (modelo ? res.status(200).send({modelo}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (modelo ? res.status(200).send(modelo) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

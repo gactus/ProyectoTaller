@@ -13,7 +13,7 @@ const listarPersonas = async(req,res) =>{
                 where: {estado: 1}
             })
             .then(persona =>{
-                if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: existen registros."}));   
+                if (persona ? res.status(200).send(persona) : res.status(200).send({message:"Atención: existen registros."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -40,7 +40,7 @@ const buscarPersona = async(req,res) =>{
                 }
             })
             .then(persona =>{
-                if (persona ? res.status(200).send({persona}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
+                if (persona ? res.status(200).send(persona) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

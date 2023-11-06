@@ -10,7 +10,7 @@ const listarTipoNotificaciones = async(req,res)=>{
             })
             .then(tipo_notificacion=>
                 {
-                    if (tipo_notificacion ? res.status(200).json({tipo_notificacion}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (tipo_notificacion ? res.status(200).json(tipo_notificacion) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -36,7 +36,7 @@ const buscarDetalleNotificacion = async(req,res) =>{
             }
         })
         .then(detalle_notificacion =>{
-            if (detalle_notificacion ? res.status(200).send({detalle_notificacion}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (detalle_notificacion ? res.status(200).send(detalle_notificacion) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error."});

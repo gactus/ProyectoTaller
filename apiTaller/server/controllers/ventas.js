@@ -72,7 +72,7 @@ const listarVentasAdmin = async(req,res) =>{
             attributes: [['id', 'idVenta'],['personaId','idPersona'],['valor_venta','valorVenta'],['fecha','fechaVenta'],['estado','estadoVenta']],
         })
         .then(venta=>{
-            if (venta ? res.status(200).json({venta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+            if (venta ? res.status(200).json(venta) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -90,7 +90,7 @@ const buscarVenta = async(req,res) =>{
             where: {id: idVenta}
         })
         .then(venta=>{
-            if (venta ? res.status(200).json({venta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+            if (venta ? res.status(200).json(venta) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -157,7 +157,7 @@ const listarVentasInsumos = async(req,res) =>{
             })
             .then(ventas_insumo=>
                 {
-                    if (ventas_insumo ? res.status(200).send({ventas_insumo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                    if (ventas_insumo ? res.status(200).send(ventas_insumo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});

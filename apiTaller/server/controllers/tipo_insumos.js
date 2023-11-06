@@ -10,7 +10,7 @@ const listarTiposInsumos = async(req,res) =>{
         })
         .then(tipo_insumo=>
             {
-                if (tipo_insumo ? res.status(200).send({tipo_insumo}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (tipo_insumo ? res.status(200).send(tipo_insumo) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -31,7 +31,7 @@ const listarTiposInsumosGeneral = async(req,res) =>{
         })
         .then(tipo_insumo=>
             {
-                if (tipo_insumo ? res.status(200).send({tipo_insumo}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (tipo_insumo ? res.status(200).send(tipo_insumo) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -53,7 +53,7 @@ const buscarTipoInsumo = async(req,res) =>{
             where: {id: idTipoInsumo}
         })
         .then(tipo_insumo =>{
-            if (tipo_insumo ? res.status(200).send({tipo_insumo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (tipo_insumo ? res.status(200).send(tipo_insumo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

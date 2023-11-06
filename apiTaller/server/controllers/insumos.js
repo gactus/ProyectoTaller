@@ -7,13 +7,13 @@ const listarInsumos = async(req,res) =>{
         {
             attributes: 
                 [
-                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                    'id','codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
                 ],
             where:{estadoInsumo: 1}
         })
         .then(insumoVw=>
             {
-                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (insumoVw ? res.status(200).send(insumoVw) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -29,12 +29,12 @@ const listarInsumosGeneral = async(req,res) =>{
         {
             attributes: 
                 [
-                    ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                    'id','codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
                 ]
         })
         .then(insumoVw=>
             {
-                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (insumoVw ? res.status(200).send(insumoVw) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -51,7 +51,7 @@ const buscarInsumo = async(req,res) =>{
         {
             attributes: 
             [
-                ['id','idInsumo'],'codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                'id','codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
             ],
             where: 
             {
@@ -61,7 +61,7 @@ const buscarInsumo = async(req,res) =>{
         })
         .then(insumoVw=>
             {
-                if (insumoVw ? res.status(200).send({insumoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (insumoVw ? res.status(200).send(insumoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -76,9 +76,6 @@ const crearInsumo = async(req,res) =>{
         const datosInsumo = {
             codigo: req.body.codigoInsumo,
             descripcion: req.body.descripcion,
-            cantidad: req.body.cantidad,
-            precio_compra: req.body.precioCompra,
-            precio_venta: req.body.precioVenta,
             tipoInsumoId: req.body.idTipoInsumo,
             estado: 1
         }
@@ -111,9 +108,6 @@ const editarInsumo = async(req,res) =>{
         const datosInsumo = { //Recojo los datos enviados y asigno a un objeto
             codigo: req.body.codigoInsumo,
             descripcion: req.body.descripcion,
-            cantidad: req.body.cantidad,
-            precio_compra: req.body.precioCompra,
-            precio_venta: req.body.precioVenta,
             tipoInsumoId: req.body.idTipoInsumo
         }
         await insumos.findByPk(idInsumo) //Verificamos si el registro existe

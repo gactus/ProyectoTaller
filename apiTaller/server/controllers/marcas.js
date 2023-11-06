@@ -9,7 +9,7 @@ const listarMarcas = async(req,res) =>{
                 where: {estado: 1}
             })
             .then(marca =>{
-                if (marca ? res.status(200).send({marca}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (marca ? res.status(200).send(marca) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -26,7 +26,7 @@ const listarMarcasGeneral = async(req,res) =>{
                 attributes: [['id','idMarca'],['descripcion','nombreMarca'],'estado'],
             })
             .then(marca =>{
-                if (marca ? res.status(200).send({marca}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (marca ? res.status(200).send(marca) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -48,7 +48,7 @@ const buscarMarca = async(req,res) =>{
                 }
             })
             .then(marca =>{
-                if (marca ? res.status(200).send({marca}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (marca ? res.status(200).send(marca) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error."});

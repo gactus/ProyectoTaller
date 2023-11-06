@@ -118,7 +118,7 @@ const buscarUsuario = async(req,res)=>{
             where:{idUsuario: idUsuario}
         })
         .then(usuarioVw =>{
-            if (usuarioVw ? res.status(200).send({usuarioVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+            if (usuarioVw ? res.status(200).send(usuarioVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -132,7 +132,7 @@ const listarUsuarios = async(req,res) =>{
     try{
         await usuariosVw.findAll()
         .then(usuarioVw=>{
-            if (usuarioVw ? res.status(200).send({usuarioVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+            if (usuarioVw ? res.status(200).send(usuarioVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ha ocurrido un error."});

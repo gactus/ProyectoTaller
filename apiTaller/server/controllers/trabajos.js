@@ -74,7 +74,7 @@ const listarTrabajosMecanico = async(req, res) =>{
             where:{idUsuario: idUsuario},
         })
         .then(listadoTrabajos =>{
-            if (listadoTrabajos ? res.status(200).send({listadoTrabajos}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (listadoTrabajos ? res.status(200).send(listadoTrabajos) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -90,11 +90,11 @@ const listarTrabajosAdmin = async(req, res) =>{
             attributes: 
                 [
                     ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
-                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil'
+                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil','idEstadoTrabajo','estadoTrabajo'
                 ]
         })
         .then(listadoTrabajos =>{
-            if (listadoTrabajos ? res.status(200).send({listadoTrabajos}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (listadoTrabajos ? res.status(200).send(listadoTrabajos) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -117,7 +117,7 @@ const crearDetalleTrabajo = async(req,res) =>{
         if (!existe){
             detalle_trabajo.create(req.body)
             .then(detalle_trabajo=>{
-                res.status(200).send({detalle_trabajo});
+                res.status(200).send(detalle_trabajo);
             })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
@@ -155,7 +155,7 @@ const listarDetalleTrabajos = async(req,res) =>{
             if (detalle_trabajo ? res.status(200).send({detalle_trabajo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
-            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+            res.status(500).send({message:"Atención: Ha ocurrido un error."});
         });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -172,14 +172,11 @@ const datosDashBoard = async(req,res) =>{
         await trabajos.findAll({
             attributes:[ [sequelize.fn('COUNT', '*'), 'totalRegistros']],
             where: {
-                fecha_trabajo: {
-                  [Op.between]: [fechaConsulta, fechaActual]
-                },
                 estadoTrabajoId: idEstadoTrabajo //Con esto solo usamos 1 solo metodo, para obtener los registros
             }
         })
         .then(datosDashboard =>{
-            if (datosDashboard ? res.status(200).send({datosDashboard}) : res.status(200).send({totalRegistros: 0}));
+            if (datosDashboard ? res.status(200).send(datosDashboard) : res.status(200).send({totalRegistros: 0}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

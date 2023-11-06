@@ -9,7 +9,7 @@ const listarTipoCuentas = async(req,res)=>{
             })
             .then(tipo_cuenta=>
                 {
-                    if (tipo_cuenta ? res.status(200).json({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (tipo_cuenta ? res.status(200).json(tipo_cuenta) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -27,7 +27,7 @@ const listarTipoCuentasGeneral = async(req,res)=>{
             })
             .then(tipo_cuenta=>
                 {
-                    if (tipo_cuenta ? res.status(200).json({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                    if (tipo_cuenta ? res.status(200).json(tipo_cuenta) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -49,7 +49,7 @@ const buscarTipoCuenta = async(req,res) =>{
             where: {id: idTipoCuenta}
         })
         .then(tipo_cuenta =>{
-            if (tipo_cuenta ? res.status(200).send({tipo_cuenta}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (tipo_cuenta ? res.status(200).send(tipo_cuenta) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error."});

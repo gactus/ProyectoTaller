@@ -13,18 +13,6 @@ module.exports=(sequelize,DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: false,
         },
-        cantidad:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        precio_compra:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        precio_venta:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
         tipoInsumoId:{
             type: DataTypes.INTEGER,
             allowNull: false,

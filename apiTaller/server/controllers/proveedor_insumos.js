@@ -76,7 +76,7 @@ const listarProveedorInsumos = async(req,res) =>{
             })
             .then(proveedorInsumoVw=>
                 {
-                    if (proveedorInsumoVw ? res.status(200).send({proveedorInsumoVw}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                    if (proveedorInsumoVw ? res.status(200).send(proveedorInsumoVw) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
                 })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -98,7 +98,7 @@ const buscarProveedorInsumo = async(req,res) => {
             where: {id: idProveedorInsumo}
         })
         .then(proveedor_insumo=>{
-            if (proveedor_insumo ? res.status(200).send({proveedor_insumo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (proveedor_insumo ? res.status(200).send(proveedor_insumo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -121,7 +121,7 @@ const buscarProveedorInsumoByIdProv = async(req,res) => {
             where: {proveedoreId: idProveedor}
         })
         .then(proveedor_insumo=>{
-            if (proveedor_insumo ? res.status(200).send({proveedor_insumo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (proveedor_insumo ? res.status(200).send(proveedor_insumo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});

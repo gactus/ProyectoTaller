@@ -10,7 +10,7 @@ const listarEstadosTrabajos = async(req,res) =>{
         })
         .then(estado_trabajo=>
             {
-                if (estado_trabajo ? res.status(200).json({estado_trabajo}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (estado_trabajo ? res.status(200).json(estado_trabajo) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -28,7 +28,7 @@ const listarEstadosTrabajosGeneral = async(req,res) =>{
         })
         .then(estado_trabajo=>
             {
-                if (estado_trabajo ? res.status(200).json({estado_trabajo}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (estado_trabajo ? res.status(200).json(estado_trabajo) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -50,7 +50,7 @@ const buscarEstadoTrabajo = async(req,res) =>{
             where: {id: idEstadoTrabajo}
         })
         .then(estado_trabajo =>{
-            if (estado_trabajo ? res.status(200).send({estado_trabajo}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (estado_trabajo ? res.status(200).send(estado_trabajo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error."});

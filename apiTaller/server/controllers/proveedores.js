@@ -11,9 +11,9 @@ const listarProveedores = async(req, res) =>{
                 'idBanco','nombreBanco','idTipoCuenta','tipoCuentaBancaria','numeroCuenta','idInsumo','nombreInsumo'
             ]
         })
-        .then(proveedor=>
+        .then((proveedor)=>
             {
-                if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (proveedor ? res.status(200).send(proveedor) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -36,7 +36,7 @@ const buscarProveedor = async(req,res) =>{
             where: {id: idProveedor}
         })
         .then(proveedor =>{
-            if (proveedor ? res.status(200).send({proveedor}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+            if (proveedor ? res.status(200).json(proveedor) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
         })
         .catch(err =>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

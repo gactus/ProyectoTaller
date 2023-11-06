@@ -70,7 +70,7 @@ const buscarVehiculoxPatente = async(req,res) =>{
                 }
             })
             .then(vehiculoVw =>{
-                if (vehiculoVw ? res.status(200).send({vehiculoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
@@ -95,7 +95,7 @@ const buscarVehiculo = async(req,res) =>{
                 }
             })
             .then(vehiculoVw =>{
-                if (vehiculoVw ? res.status(200).send({vehiculoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
@@ -119,7 +119,7 @@ const listarVehiculos = async(req,res) =>{
                 }
             })
             .then(vehiculoVw =>{
-                if (vehiculoVw ? res.status(200).send({vehiculoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
@@ -139,7 +139,7 @@ const listarVehiculosGeneral = async(req,res) =>{
                 ]
             })
             .then(vehiculoVw =>{
-                if (vehiculoVw ? res.status(200).send({vehiculoVw}) : res.status(200).send({message:"Atención: no existen registros asociados."}));
+                if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});

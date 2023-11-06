@@ -11,28 +11,52 @@ function Proveedores() {
   const [razonSocial, setRazonSocial] = useState("");
   const [direccion, setDireccion] = useState("");
   const [telefono, setTelefono] = useState("");
+  const [email, setEmail] = useState("");
   const [rut, setRut] = useState("");
   const [banco, setBanco] = useState("");
   const [numeroCuenta, setNumeroCuenta] = useState("");
   const [tipoCuenta, setTipoCuenta] = useState("");
   const [id, setId] = useState();
   const [proveedorList, setProveedores] = useState([]);
+  const [bancosList, setBancos] = useState([]);
+  const [tipoCuentasList, setTipoCuentas] = useState([]);
   const [editar, setEditar] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     getProveedores();
+    listarBancos();
+    listarTipoCuentas();
   }, []);
 
-  const registrarProvedores = () => {
-    Axios.post("http://localhost:3001/create", {
-      razonSocial: razonSocial,
-      direccion: direccion,
-      telefono: telefono,
-      rut: rut,
-      banco: banco,
-      numeroCuenta: numeroCuenta,
-      tipoCuenta: tipoCuenta,
-    })
+  /* Obtenemos los datos Bancarios */
+const listarBancos = async() =>{
+    await Axios.get("http://localhost:8010/api/bancos",{headers: {'Authorization': token,},})
+    .then((response) => {setBancos(response.data);})
+    .catch((error) => {console.error("Hubo un error al obtener la lista de bancos:", error.response);});
+};
+const listarTipoCuentas = async() =>{
+  await Axios.get("http://localhost:8010/api/tipoCuentas",{headers: {'Authorization': token,},})
+  .then((response) => {setTipoCuentas(response.data);})
+  .catch((error) => {console.error("Hubo un error al obtener la lista de Tipo de Cuentas Bancarias:", error.response);});
+
+};
+
+  /* Fin */
+  const registrarProvedores = async() => {
+      const datosProveedor = {
+          rut: rut,
+          razonSocial: razonSocial,
+          direccion: direccion,
+          telefono: telefono,
+          email: email,
+          banco: banco,
+          numeroCuenta: numeroCuenta,
+          tipoCuenta: tipoCuenta,
+      }
+      await Axios.post("http://localhost:8010/api/proveedores",{headers: {'Content-Type': 'application/json', 'Authorization': token,},
+        datosProveedor
+      })
       .then(() => {
         getProveedores();
         limpiarCampos();
@@ -47,6 +71,13 @@ function Proveedores() {
         });
       })
       .catch((error) => {
+        Swal.fire({
+          title: "<strong>Error</strong>",
+          html:
+              "<i>Atención: Hubo un problema al registrar el proveedor</i>",
+          icon: "error",
+          timer: 3000,
+        });
         console.error("Hubo un error al registrar:", error.response);
       });
   };
@@ -63,12 +94,8 @@ function Proveedores() {
     }).then(() => {
       getProveedores();
       limpiarCampos();
-      Swal.fire({
-        title: "<strong>Actualizado con Existo!!</strong>",
-        html:
-          "<i>El Proveedor <strong>" +
-          razonSocial +
-          "</strong> fue Actualizado con Existo!!</i>",
+      Swal.fire({title: "<strong>Actualizado con Existo!!</strong>",
+        html:"<i>El Proveedor <strong>" + razonSocial + "</strong> fue Actualizado con Existo!!</i>",
         icon: "success",
         timer: 3000,
       });
@@ -79,6 +106,7 @@ function Proveedores() {
     setRazonSocial("");
     setDireccion("");
     setTelefono("");
+    setEmail("");
     setRut("");
     setBanco("");
     setNumeroCuenta("");
@@ -90,14 +118,15 @@ function Proveedores() {
   const editarProveedor = (val) => {
     setEditar(true);
 
-    setRazonSocial(val.razon_social);
-    setDireccion(val.direccion);
-    setTelefono(val.telefono);
-    setRut(val.rut);
-    setBanco(val.banco);
-    setNumeroCuenta(val.numero_cuenta);
-    setTipoCuenta(val.tipo_cuenta);
-    setId(val.id);
+    setRazonSocial(val.razonSocial);
+    setDireccion(val.direccionProveedor);
+    setTelefono(val.telefonoProveedor);
+    setEmail(val.emailProveedor);
+    setRut(val.rutProveedor);
+    setBanco(val.idBanco);
+    setNumeroCuenta(val.numeroCuenta);
+    setTipoCuenta(val.idTipoCuenta);
+    setId(val.idProveedor);
   };
 
   const deleteProve = (id) => {
@@ -119,25 +148,20 @@ function Proveedores() {
         console.error("Hubo un error al actualizar:", error.response);
       });
   };
-
-  const getProveedores = () => {
-    Axios.get("http://localhost:8010/api/proveedores")
-      .then((response) => {
-        setProveedores(response.data);
-      })
-      .catch((error) => {
-        console.error("Hubo un error al obtener proveedores:", error.response);
-      });
+  const getProveedores = async() => {
+      await Axios.get("http://localhost:8010/api/proveedores",{headers: {'Authorization': token,},})
+      .then((response) => {setProveedores(response.data);})
+      .catch((error) => {console.error("Hubo un error al obtener proveedores:", error.response);});
   };
 
   return (
     <main>
       <div className="container">
-        <div class="card text-center">
+        <div className="card text-center">
           <div className="card-header">REGISTRAR PROVEEDORES</div>
           <div className="card-body">
-            <div className="input-group">
-              <span className="input-group-text row-cols-2" id="basic-addon1">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
                 Razon Social:
               </span>
               <input
@@ -148,13 +172,13 @@ function Proveedores() {
                 className="form-control"
                 value={razonSocial}
                 placeholder="Ingrese Razon Social "
-                aria-label="Username"
+                aria-label="RazonSocial"
                 aria-describedby="basic-addon1"
               />
             </div>
             <div className="datos-proveedores">
               <div className="input-group mb-3">
-                <span className="input-group-text row-cols-2" id="basic-addon1">
+                <span className="input-group-text" id="basic-addon1">
                   Direccion:
                 </span>
                 <input
@@ -165,7 +189,7 @@ function Proveedores() {
                   className="form-control"
                   value={direccion}
                   placeholder="Ingrese Direccion "
-                  aria-label="Username"
+                  aria-label="Direccion"
                   aria-describedby="basic-addon1"
                 />
               </div>
@@ -181,7 +205,23 @@ function Proveedores() {
                   className="form-control"
                   value={telefono}
                   placeholder="Ingrese Telefono "
-                  aria-label="Username"
+                  aria-label="Telefono"
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+              <div className="input-group mb-3">
+                <span className="input-group-text" id="basic-addon1">
+                  Email:
+                </span>
+                <input
+                  type="text"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                  className="form-control"
+                  value={email}
+                  placeholder="email@dominio.cl"
+                  aria-label="Email"
                   aria-describedby="basic-addon1"
                 />
               </div>
@@ -205,70 +245,39 @@ function Proveedores() {
                 <span className="input-group-text" id="basic-addon1">
                   Banco:
                 </span>
-                <input
-                  type="text"
-                  onChange={(event) => {
-                    setBanco(event.target.value);
-                  }}
-                  className="form-control"
-                  value={banco}
-                  placeholder="Ingrese Banco "
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
+                <select className="form-control" onChange={(event) => {setBanco(event.target.value);}}
+                    aria-label="Dropdown" aria-describedby="select-addon1">
+                  <option value="">--SELECCIONE--</option>
+                  {bancosList.map((val) => {
+                    return (
+                      <option value={val.idBanco} key={val.idBanco}>{val.nombreBanco}</option>
+                      );
+                    })}
+                  </select>
               </div>
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   Numero Cuenta:
                 </span>
-                <input
-                  type="text"
-                  onChange={(event) => {
-                    setNumeroCuenta(event.target.value);
-                  }}
-                  className="form-control"
-                  value={numeroCuenta}
-                  placeholder="Ingrese Numero Cuenta "
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
+                <input type="text" onChange={(event) => {setNumeroCuenta(event.target.value);}}
+                  className="form-control" value={numeroCuenta} placeholder="Ingrese Numero Cuenta "
+                  aria-label="Username" aria-describedby="numeroCuenta" maxLength={15}/>
               </div>
 
               <div className="input-group mb-3">
                 <span className="input-group-text" id="basic-addon1">
                   Tipo Cuenta:
                 </span>
-                <input
-                  type="text"
-                  onChange={(event) => {
-                    setTipoCuenta(event.target.value);
-                  }}
-                  className="form-control"
-                  value={tipoCuenta}
-                  placeholder="Ingrese Tipo de Cuenta "
-                  aria-label="Username"
-                  aria-describedby="basic-addon1"
-                />
-                <div>
-                </div>
-                <div className="input-group mb-3">
-                  <span className="input-group-text" id="select-addon1">
-                    Tipo Insumo Proveedor:
-                  </span>
-                  <select
-                    className="form-control"
-                    onChange={(event) => {
-                      // Aquí puedes manejar el cambio de la selección si es necesario
-                      console.log(event.target.value);
-                    }}
-                    aria-label="Dropdown"
-                    aria-describedby="select-addon1"
-                  >
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                    <option value="opcion4">Opción 4</option>
+                <select className="form-control" onChange={(event) => {setTipoCuenta(event.target.value);}}
+                aria-label="Dropdown" aria-describedby="tipoCuenta">
+                  <option value="">--SELECCIONE--</option>
+                  {tipoCuentasList.map((val) => {
+                    return (
+                      <option value={val.idTipoCuenta} key={val.idTipoCuenta}>{val.tipoCuenta}</option>
+                      );
+                    })}
                   </select>
+                <div>
                 </div>
               </div>
               <div>
@@ -295,70 +304,73 @@ function Proveedores() {
               </div>
             </div>
           </div>
-          <div class="card-footer text-body-secondary"></div>
+          <div className="card-footer text-body-secondary"></div>
         </div>
         <br></br>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Razon Social</th>
-              <th scope="col">Direccion</th>
-              <th scope="col">Telefono</th>
-              <th scope="col">Rut</th>
-              <th scope="col">Banco</th>
-              <th scope="col">Numero Cuenta</th>
-              <th scope="col">Tipo Cuenta</th>
-              <th scope="col">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proveedorList.map((val) => {
-              return (
-                <tr key={val.id}>
-                  <th scope="row">{val.id}</th>
-                  <td>{val.razon_social}</td>
-                  <td>{val.direccion}</td>
-                  <td>{val.telefono}</td>
-                  <td>{val.rut}</td>
-                  <td>{val.banco}</td>
-                  <td>{val.numero_cuenta}</td>
-                  <td>{val.tipo_cuenta}</td>
-                  <td>
-                    <div
-                      className="btn-group"
-                      role="group"
-                      aria-label="Basic example"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => {
-                          editarProveedor(val);
-                        }}
-                        className="btn btn-info"
+        <div>
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Razon Social</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Rut</th>
+                <th scope="col">Banco</th>
+                <th scope="col">Numero Cuenta</th>
+                <th scope="col">Tipo Cuenta</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {proveedorList.map((val) => {
+                return (
+                  <tr key={val.idProveedor}>
+                    <th scope="row">{val.idProveedor}</th>
+                    <td>{val.razonSocial}</td>
+                    <td>{val.direccionProveedor}</td>
+                    <td>{val.telefonoProveedor}</td>
+                    <td>{val.rutProveedor}</td>
+                    <td>{val.nombreBanco}</td>
+                    <td>{val.numeroCuenta}</td>
+                    <td>{val.tipoCuentaBancaria}</td>
+                    <td>
+                      <div
+                        className="btn-group"
+                        role="group"
+                        aria-label="Basic example"
                       >
-                        {" "}
-                        Editar
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          deleteProve(val.id);
-                        }}
-                        className="btn btn-danger"
-                      >
-                        Eliminar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            editarProveedor(val);
+                          }}
+                          className="btn btn-info"
+                        >
+                          {" "}
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            deleteProve(val.idProveedor);
+                          }}
+                          className="btn btn-danger"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </main>
   );
 }
 
 export default Proveedores;
+

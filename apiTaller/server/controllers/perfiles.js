@@ -9,7 +9,7 @@ const listarTiposPerfiles = async(req,res) =>{
                 where:{estado: 1}
             })
             .then(tipo_perfil=>{
-                if (tipo_perfil ? res.status(200).send({tipo_perfil}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+                if (tipo_perfil ? res.status(200).send(tipo_perfil) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err=>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -36,7 +36,7 @@ const rutasTipoPerfil = async(req,res) =>{
             }
         })
         .then(perfil_ruta=>{
-            if (perfil_ruta ? res.status(200).send({perfil_ruta}) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+            if (perfil_ruta ? res.status(200).send(perfil_ruta) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ha ocurrido un error." + err});

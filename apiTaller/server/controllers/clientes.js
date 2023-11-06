@@ -13,7 +13,7 @@ const listarClientes = async(req,res) =>{
         })
         .then(clienteVw=>
             {
-                if (clienteVw ? res.status(200).json({clienteVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (clienteVw ? res.status(200).json(clienteVw) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -35,7 +35,7 @@ const listarClientesGeneral = async(req,res) =>{
         })
         .then(clienteVw=>
             {
-                if (clienteVw ? res.status(200).json({clienteVw}) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
+                if (clienteVw ? res.status(200).json(clienteVw) : res.status(200).send({message:"Atención: no existen registros para mostrar."}));
             })
         .catch(err=>{
             res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
@@ -154,7 +154,7 @@ const buscarCliente = async(req,res) =>{
                 }
             })
             .then(cliente =>{
-                if (cliente ? res.status(200).send({cliente}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
+                if (cliente ? res.status(200).send(cliente) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
@@ -180,7 +180,7 @@ const buscarClienteRut = async(req,res) =>{
                 }
             })
             .then(cliente =>{
-                if (cliente ? res.status(200).send({cliente}) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
+                if (cliente ? res.status(200).send(cliente) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
             })
             .catch(err =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
