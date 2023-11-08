@@ -85,14 +85,12 @@ function ListadoTrabajosDashBoard(){
               })}
                 </tbody>
                 <tfoot>
-
+                    <button>Incio</button>
+                    <button>Anterior</button>
+                    <button>Siguiente</button>
+                    <button>Final</button>
                 </tfoot>
             </table>
-            <button>Incio</button>
-            <button>Anterior</button>
-            <button>Siguiente</button>
-            <button>Final</button>
-
         </div>
     )
 }

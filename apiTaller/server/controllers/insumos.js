@@ -1,4 +1,6 @@
 const {insumos, insumosVw} = require('../models');
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 /*  Listamos todos los insumos activos */
 const listarInsumos = async(req,res) =>{
@@ -148,12 +150,32 @@ const eliminarInsumo = async(req,res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
 }
-
+/* Realizamos un conteo de insumos con stock menor a 10 */
+const insumosBajoStock = async(req,res) =>{
+    try{
+        await insumosVw.findAll({
+            attributes:[ [sequelize.fn('COUNT', '*'), 'totalRegistros']],
+            where: {
+               estadoInsumo: 1, //solo insumos activos
+               cantidadInsumos: { [Op.lte] : 9 }
+            }
+        })
+        .then(insumoVw =>{
+            if (insumoVw ? res.status(200).send(insumoVw) : res.status(200).send({totalRegistross: 0}));
+        })
+        .catch(err =>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error." });
+        });
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+    }
+}
 module.exports ={
     listarInsumos,
     buscarInsumo,
     crearInsumo,
     editarInsumo,
     listarInsumosGeneral,
-    eliminarInsumo
+    eliminarInsumo,
+    insumosBajoStock
 }

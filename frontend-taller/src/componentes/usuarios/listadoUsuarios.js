@@ -79,7 +79,14 @@ function ListadoUsuarios(){
                     <td>{val.emailUsuario}</td>
                     <td>{val.tipoPerfil}</td>
                     <td>{val.estadoUsuario  ? <span className="fa fa-check-circle-o text-success"></span> : <span className="fa fa-times-circle text-bg-danger"></span>}</td>
-                    <td><a href="#"><span className="fa fa-pencil-square-o"></span></a> / <a href="#"><span className="fa fa-trash"></span></a></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td className="espaciado"><button className="btn-edit"><span className="fa fa-pencil-square-o"></span></button></td>
+                                <td className="espaciado"><button className="btn-delete"><span className="fa fa-trash"></span></button></td>
+                            </tr>
+                        </table>
+                    </td>
                   </tr>
                 );
               })}
@@ -88,11 +95,14 @@ function ListadoUsuarios(){
 
                 </tfoot>
             </table>
-            <button>Incio</button>
-            <button>Anterior</button>
-            <button>Siguiente</button>
-            <button>Final</button>
-
+            <table align="center">
+                <tr>
+                    <td><button onClick={()=> tabla.setPageIndex(0)} className="enlaces"><span className="fa fa-step-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.previousPage()} className="enlaces"><span className="fa fa-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.nextPage()} className="enlaces"><span className="fa fa-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="enlaces"><span className="fa fa-step-forward"></span></button></td>
+                </tr>
+            </table>
         </div>
     )
 }

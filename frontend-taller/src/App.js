@@ -10,6 +10,7 @@ import Gastos from './componentes/Gastos';
 import Sidebar from './componentes/Sidebar';
 import Login from './componentes/Login';
 import Usuarios from './componentes/Usuarios';
+import EditarUsuario from './componentes/EditarUsuario';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,6 +47,7 @@ function App() {
                         <Route path="/inventario" element={<Inventario />} />
                         <Route path="/gastos" element={<Gastos />} />
                         <Route path="/usuarios" element={<Usuarios />} />
+                        <Route path="/editarUsuario" element={<EditarUsuario />} />
                     </Routes>
                 </div>
             ) : (

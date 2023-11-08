@@ -223,3 +223,31 @@ link:hover{
     background-size: 200%;
     transition: .5s;
 }
+
+.btn-edit { 
+    color: #FFF; 
+    background-color: #F69100; 
+    border-color: #333;
+    border-radius: 6px 6px 6px 6px;
+    width: 60px;
+    text-align: center;
+}
+.btn-delete { 
+    color: #FFF; 
+    background-color: #C20000; 
+    border-color: #333;
+    border-radius: 6px 6px 6px 6px;
+    width: 60px;
+    text-align: center;
+}
+.btn-agregar { 
+    color: #FFF; 
+    background-color: #1b1b1b; 
+    border-color: #333;
+    border-radius: 6px 6px 6px 6px;
+    width: 150px;
+    text-align: center;
+}
+.espaciado{
+    padding: 0px 2px 0px 2px;
+}

@@ -9,7 +9,7 @@ function TrabajosEspera(){
         trabajosEspera();
     }, []);
     const trabajosEspera = async() =>{
-        await Axios.get("http://localhost:8010/api/datosDashboard/2",{headers: {'Authorization': token,},})
+        await Axios.get("http://localhost:8010/api/datosDashboard/trabajos/2",{headers: {'Authorization': token,},})
         .then((response) => {setTrabajosEspera(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener el conteo de trabajos", error.response);});
     };
@@ -25,7 +25,7 @@ function TrabajosEspera(){
                         <h1>
                         {getTrabajosEspera.map((val) => {
                             return (
-                                <span key={val.id}>
+                                <span key="1">
                                     {val.totalRegistros}
                                 </span>
                                 );

@@ -3,9 +3,11 @@ import '../styleesheets/Dashboard.css';
 import TrabajosCurso from './Dashboard/TrabajosCurso';
 import TrabajosEspera from './Dashboard/TrabajosEspera';
 import TrabajosFinalizados from './Dashboard/TrabajosFinalizados';
-import ListadoTrabajosDashBoard from './Dashboard/ListadoTrabajosDashBoard';
+import ListadoTrabajosDashBoard from './Dashboard/ListadoTrabajosDashBoard'; 
+import InsumosStock from './Dashboard/InsumosStock';
 
 function Dashboard() {
+
     return (
         <main>
             <div className='row'>
@@ -27,6 +29,12 @@ function Dashboard() {
                                     <TrabajosFinalizados/>
                                 </div>
                                 <div className="col-sm-3 col-md-3 col-lg-3"></div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-sm-12 col-md-12 col-lg-12 text-center'>
+                                    <br/>
+                                    <InsumosStock/>
+                                </div>
                             </div>
                         </div>
                     </div>

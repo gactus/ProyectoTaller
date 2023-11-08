@@ -9,6 +9,7 @@ const perfilesController = require('../controllers').perfiles;
 const bancosController = require('../controllers').bancos;
 const tipoCuentasController = require('../controllers').tipo_cuentas;
 const notificacionesController = require('../controllers').notificaciones;
+const insumosController = require('../controllers').insumos;
 const mdAuth = require('../authenticated/authenticated');
 
 module.exports=(app)=>{
@@ -41,7 +42,8 @@ module.exports=(app)=>{
     app.put('/api/estadoTrabajos/:id',mdAuth.auth,estadoTrabajosController.editarEstadoTrabajo);
     app.put('/api/estadoTrabajos/delete/:id',mdAuth.auth,estadoTrabajosController.eliminarEstadoTrabajo); //Dar de baja
 /*  Dashboard */
-    app.get('/api/datosDashBoard/:id',mdAuth.auth,trabajosController.datosDashBoard);
+    app.get('/api/datosDashBoard/trabajos/:id',mdAuth.auth,trabajosController.datosDashBoard);
+    app.get('/api/datosDashBoard/insumos/',mdAuth.auth,insumosController.insumosBajoStock)
 /*  Rutas para tipo de perfil (solo mecánicos y Admin) */
     app.get('/api/rutasPerfil/:id',mdAuth.auth,perfilesController.rutasTipoPerfil);
 /*  Bancos */

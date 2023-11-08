@@ -9,7 +9,7 @@ function TrabajosCurso(){
         dashboardTrabajos();
     }, []);
     const dashboardTrabajos = async() =>{
-        await Axios.get("http://localhost:8010/api/datosDashboard/1",{headers: {'Authorization': token,},})
+        await Axios.get("http://localhost:8010/api/datosDashboard/trabajos/1",{headers: {'Authorization': token,},})
         .then((response) => {setTrabajos(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener el conteo de trabajos:", error.response);});
     };
@@ -25,7 +25,7 @@ function TrabajosCurso(){
                         <h1>
                         {getTrabajos.map((val) => {
                             return (
-                                <span key={val.id}>
+                                <span key="1">
                                     {val.totalRegistros}
                                 </span>
                                 );

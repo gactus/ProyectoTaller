@@ -41,7 +41,6 @@ const listarTipoCuentas = async() =>{
   .catch((error) => {console.error("Hubo un error al obtener la lista de Tipo de Cuentas Bancarias:", error.response);});
 
 };
-
   /* Fin */
   const registrarProvedores = async() => {
       const datosProveedor = {
@@ -74,7 +73,7 @@ const listarTipoCuentas = async() =>{
         Swal.fire({
           title: "<strong>Error</strong>",
           html:
-              "<i>Atención: Hubo un problema al registrar el proveedor</i>",
+              "<i>Atención: Hubo un problema al registrar el proveedor</i>" + token,
           icon: "error",
           timer: 3000,
         });
