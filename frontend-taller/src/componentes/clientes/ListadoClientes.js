@@ -40,14 +40,29 @@ function ListadoClientes(){
         listarClientes();
     }, []);
 
+    const buscarcliente = async(rutCliente) =>{
+        await Axios.get("http://localhost:8010/api/clientes/general/" + rutCliente,{headers: {'Authorization': token,},})
+        .then((response) => {setClientes(response.data);})
+        .catch((error) => {console.error("Hubo un error al obtener la lista de clientes:", error.response);});
+    };
     const listarClientes = async() =>{
-        await Axios.get("http://localhost:8010/api/clientes",{headers: {'Authorization': token,},})
+        await Axios.get("http://localhost:8010/api/listadoClientes",{headers: {'Authorization': token,},})
         .then((response) => {setClientes(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener la lista de clientes:", error.response);});
     };
     const tabla = useReactTable({data: clientesList,columns: columnas, getCoreRowModel: getCoreRowModel(), getPaginationRowModel: getPaginationRowModel()});
     return(
         <div>
+            <div>
+                <span className="textos"><span className="fa fa-search"></span>&nbsp;Buscar rut:</span> <input list="rutsClientes" className="textosCajas textosNormal" placeholder="11111111-1"/>
+                <datalist id="rutsClientes">
+                    {clientesList.map((val) => {
+                    return (
+                        <option value={val.rutCliente}></option>
+                        );
+                    })}
+                </datalist>
+            </div>
             <table className="table table-hover table-responsive-lg"> 
                 <thead>
                     {
@@ -68,12 +83,12 @@ function ListadoClientes(){
                 {clientesList.map((val) => {
                 return (
                   <tr key={val.idCliente} className="">
-                    <th scope="row">{val.idCliente}</th>
-                    <td>{val.nombreCompletoCliente}</td>
-                    <td>{val.rutCliente}</td>
-                    <td>{val.telefonoCliente}</td>
-                    <td>{val.emailCliente}</td>
-                    <td>{val.estadoCliente  ? <h3><span className="fa fa-check-circle-o text-success" title="Activo"></span></h3> : <span className="fa fa-times-circle text-danger" title="Inactivo"></span>} </td>
+                    <th scope="row"><span className="textos">{val.idCliente}</span></th>
+                    <td><span className="textosNormal">{val.nombreCompletoCliente}</span></td>
+                    <td><span className="textosNormal">{val.rutCliente}</span></td>
+                    <td><span className="textosNormal">+{val.telefonoCliente}</span></td>
+                    <td><span className="textosNormal">{val.emailCliente}</span></td>
+                    <td>{val.estadoCliente  ? <h3><span className="fa fa-check-circle-o text-success" title="Activo"></span></h3> : <h3><span className="fa fa-times-circle text-danger" title="Inactivo"></span></h3>} </td>
                     <td>
                         <table>
                             <tr>

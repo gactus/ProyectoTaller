@@ -72,13 +72,13 @@ function ListadoUsuarios(){
                 {usuariosList.map((val) => {
                 return (
                   <tr key={val.id} className="">
-                    <th scope="row">{val.id}</th>
-                    <td>{val.nombreCompletoUsuario}</td>
-                    <td>{val.rutUsuario}</td>
-                    <td>{val.telefonoUsuario}</td>
-                    <td>{val.emailUsuario}</td>
-                    <td>{val.tipoPerfil}</td>
-                    <td>{val.estadoUsuario  ? <span className="fa fa-check-circle-o text-success"></span> : <span className="fa fa-times-circle text-bg-danger"></span>}</td>
+                    <th scope="row"><span className="textosNormal">{val.id}</span></th>
+                    <td><span className="textosNormal">{val.nombreCompletoUsuario}</span></td>
+                    <td><span className="textosNormal">{val.rutUsuario}</span></td>
+                    <td><span className="textosNormal">{val.telefonoUsuario}</span></td>
+                    <td><span className="textosNormal">{val.emailUsuario}</span></td>
+                    <td><span className="textosNormal">{val.tipoPerfil}</span></td>
+                    <td>{val.estadoUsuario  ? <h3><span className="fa fa-check-circle-o text-success"></span></h3> : <h3><span className="fa fa-times-circle text-bg-danger"></span></h3>}</td>
                     <td>
                         <table>
                             <tr>

@@ -18,7 +18,7 @@ function TrabajosCurso(){
             <div className="col-sm-12 col-md-12 col-lg-12"></div>
             <div className='card'>
                 <div className='card-header'>
-                   <span className='fa fa fa-wrench'></span>&nbsp;Trabajos en Curso
+                   <span className='fa fa fa-wrench textos'></span>&nbsp;Trabajos en Curso
                 </div>
                 <div className='card-body'>
                     <span className="text-center">

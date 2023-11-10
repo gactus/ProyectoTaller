@@ -59,25 +59,24 @@ const crearProveedor = async(req,res) =>{
             tipoCuentaId: req.body.idTipoCuenta,
             estado: 1
         }
-        await proveedores.findOne(
+        const existe = await proveedores.findOne(
             {
                 where: {rut: datosProveedor.rut}
             })
-        .then(existe=>{
+            console.log(existe)
             if (!existe){
                 proveedores.create(datosProveedor)
                 .then(()=>{
                     res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true})
                 })
                 .catch(err=>{
-                    res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro",registroCreado:false})
+                    res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro" + err,registroCreado:false})
                 });
             }else{
                 res.status(200).send({message:"Atención: el registro ya existe.",registroCreado:false})
-            }
-        })
+            } 
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
     }
 }
 /* Editamos un proveedor */

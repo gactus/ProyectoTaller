@@ -72,14 +72,14 @@ function ListadoTrabajosDashBoard(){
                 {trabajosList.map((val) => {
                 return (
                   <tr key={val.idTrabajo} className="">
-                    <th scope="row">{val.idTrabajo}</th>
-                    <td>{val.detalleTrabajo}</td>
-                    <td>{val.fechaTrabajo}</td>
-                    <td>{val.fechaProxMantencion}</td>
-                    <td>{val.requiereNotificacion ? "SI" : "NO"}</td>
-                    <td>$ {val.costoTotal}</td>
-                    <td>{val.nombreMecanico}</td>
-                    <td>{val.estadoTrabajo} </td>
+                    <th scope="row"><span className="textosNormal">{val.idTrabajo}</span></th>
+                    <td><span className="textosNormal">{val.detalleTrabajo}</span></td>
+                    <td><span className="textosNormal">{val.fechaTrabajo}</span></td>
+                    <td><span className="textosNormal">{val.fechaProxMantencion}</span></td>
+                    <td><span className="textosNormal">{val.requiereNotificacion ? "SI" : "NO"}</span></td>
+                    <td><span className="textosNormal">$ {val.costoTotal}</span></td>
+                    <td><span className="textosNormal">{val.nombreMecanico}</span></td>
+                    <td><span className="textosNormal">{val.estadoTrabajo}</span></td>
                   </tr>
                 );
               })}

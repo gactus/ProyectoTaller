@@ -12,14 +12,6 @@ function Clientes() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const registrarCliente = ()=>{
-        Swal.fire({
-            title: "<strong>Error</strong>",
-            html:
-                <RegistrarClientes/>,
-            icon: "error",
-          });
-    }
     return (
         <main>
             <div className='row'>

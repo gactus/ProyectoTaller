@@ -49,22 +49,18 @@ const listarTipoCuentas = async() =>{
           direccion: direccion,
           telefono: telefono,
           email: email,
-          banco: banco,
           numeroCuenta: numeroCuenta,
-          tipoCuenta: tipoCuenta,
+          idBanco: banco,
+          idTipoCuenta: tipoCuenta,
       }
-      await Axios.post("http://localhost:8010/api/proveedores",{headers: {'Content-Type': 'application/json', 'Authorization': token,},
-        datosProveedor
-      })
+      await Axios.post("http://localhost:8010/api/proveedores",datosProveedor,{headers:{'Content-Type':'application/json','Authorization': token}})
       .then(() => {
         getProveedores();
         limpiarCampos();
         Swal.fire({
           title: "<strong>Registrado con Existo!!</strong>",
           html:
-            "<i>El Proveedor <strong>" +
-            razonSocial +
-            "</strong> fue Registrado con Existo!!</i>",
+            "<i>El Proveedor fue Registrado con Existo!!</i>",
           icon: "success",
           timer: 3000,
         });
@@ -73,7 +69,7 @@ const listarTipoCuentas = async() =>{
         Swal.fire({
           title: "<strong>Error</strong>",
           html:
-              "<i>Atención: Hubo un problema al registrar el proveedor</i>" + token,
+              "<i>Atención: Hubo un problema al registrar el proveedor</i>",
           icon: "error",
           timer: 3000,
         });
@@ -81,16 +77,18 @@ const listarTipoCuentas = async() =>{
       });
   };
   const update = () => {
-    Axios.put("http://localhost:3001/update", {
-      id: id,
-      razonSocial: razonSocial,
-      direccion: direccion,
-      telefono: telefono,
-      rut: rut,
-      banco: banco,
-      numeroCuenta: numeroCuenta,
-      tipoCuenta: tipoCuenta,
-    }).then(() => {
+      const datosProveedor = {  
+          rut: rut,
+          razonSocial: razonSocial,
+          direccion: direccion,
+          telefono: telefono,
+          email: email,
+          numeroCuenta: numeroCuenta,
+          idBanco: banco,
+          idTipoCuenta: tipoCuenta,
+      }
+    Axios.put("http://localhost:8010/api/proveedores/" + id, datosProveedor, {headers:{'Content-Type':'application/json','Authorization': token}})
+    .then(() => {
       getProveedores();
       limpiarCampos();
       Swal.fire({title: "<strong>Actualizado con Existo!!</strong>",
@@ -136,9 +134,7 @@ const listarTipoCuentas = async() =>{
         Swal.fire({
           title: "<strong>Eliminado con Éxito!</strong>",
           html:
-            "<i>El Proveedor <strong>" +
-            razonSocial +
-            "</strong> fue Eliminado con Existo!!</i>",
+            "<i>El Proveedor fue Eliminado con Existo!!</i>",
           icon: "success",
           timer: 3000,
         });

@@ -84,14 +84,14 @@ function ListadoInsumos(){
                 {insumosList.map((val) => {
                 return (
                   <tr key={val.id} className="">
-                    <th scope="row">{val.id}</th>
-                    <td>{val.nombreInsumo}</td>
-                    <td>{val.codigoInsumo}</td>
+                    <th scope="row"><span className="textosNormal">{val.id}</span></th>
+                    <td><span className="textosNormal">{val.nombreInsumo}</span></td>
+                    <td><span className="textosNormal">{val.codigoInsumo}</span></td>
                     <td>{val.cantidadInsumos <10 ? <span className="text-danger">{val.cantidadInsumos}</span> : <span className="text-success">{val.cantidadInsumos}</span>}</td>
-                    <td>$ {val.precioCompra}</td>
-                    <td>$ {val.precioVenta}</td>
-                    <td>{val.tipoInsumo}</td>
-                    <td>{val.estadoInsumo  ? <span className="fa fa-check-circle-o text-success"></span> : <span className="fa fa-times-circle text-danger"></span>} </td>
+                    <td><span className="textosNormal">$ {val.precioCompra}</span></td>
+                    <td><span className="textosNormal">$ {val.precioVenta}</span></td>
+                    <td><span className="textosNormal">{val.tipoInsumo}</span></td>
+                    <td>{val.estadoInsumo  ? <h3><span className="fa fa-check-circle-o text-success"></span></h3> : <h3><span className="fa fa-times-circle text-danger"></span></h3>} </td>
                     <td>
                         <table>
                             <tr>

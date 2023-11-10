@@ -76,6 +76,7 @@ const editarUsuario = async(req,res)=>{
                 })
                 .then((perfil)=>{
                     datosPerfil = {
+                        personaId: idPersona,
                         tipoPerfilId: req.body.IdTipoPerfil
                     }
                     perfil.update(datosPerfil)
