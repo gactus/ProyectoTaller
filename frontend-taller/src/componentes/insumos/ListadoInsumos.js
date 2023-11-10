@@ -71,7 +71,7 @@ function ListadoInsumos(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id}>
+                                        <th key={header.id} className="textos">
                                             {header.column.columnDef.header}
                                         </th>
                                     ))
@@ -87,7 +87,7 @@ function ListadoInsumos(){
                     <th scope="row"><span className="textosNormal">{val.id}</span></th>
                     <td><span className="textosNormal">{val.nombreInsumo}</span></td>
                     <td><span className="textosNormal">{val.codigoInsumo}</span></td>
-                    <td>{val.cantidadInsumos <10 ? <span className="text-danger">{val.cantidadInsumos}</span> : <span className="text-success">{val.cantidadInsumos}</span>}</td>
+                    <td>{val.cantidadInsumos <10 ? <span className="text-danger textosNormal">{val.cantidadInsumos}</span> : <span className="text-success textosNormal">{val.cantidadInsumos}</span>}</td>
                     <td><span className="textosNormal">$ {val.precioCompra}</span></td>
                     <td><span className="textosNormal">$ {val.precioVenta}</span></td>
                     <td><span className="textosNormal">{val.tipoInsumo}</span></td>

@@ -23,7 +23,7 @@ function InsumosStock(){
                                 <div className="col-sm-3 col-md-3 col-lg-3"></div>
                                 <div className="col-sm-6 col-md-6 col-lg-6">
                                     <div className="alert alert-danger">
-                                        <h4><span className="text-danger"><strong>Atención:</strong> Existen {val.totalRegistros} insumos con bajo stock!</span></h4>
+                                        <h5><span className="text-danger"><strong>Atención:</strong> Existen {val.totalRegistros} insumos con bajo stock!</span></h5>
                                     </div>
                                 </div>
                                 <div className="col-sm-3 col-md-3 col-lg-3"></div>

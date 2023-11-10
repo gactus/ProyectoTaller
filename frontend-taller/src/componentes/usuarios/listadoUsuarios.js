@@ -59,7 +59,7 @@ function ListadoUsuarios(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id}>
+                                        <th key={header.id} className="textos">
                                             {header.column.columnDef.header}
                                         </th>
                                     ))

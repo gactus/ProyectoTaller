@@ -40,11 +40,6 @@ function ListadoClientes(){
         listarClientes();
     }, []);
 
-    const buscarcliente = async(rutCliente) =>{
-        await Axios.get("http://localhost:8010/api/clientes/general/" + rutCliente,{headers: {'Authorization': token,},})
-        .then((response) => {setClientes(response.data);})
-        .catch((error) => {console.error("Hubo un error al obtener la lista de clientes:", error.response);});
-    };
     const listarClientes = async() =>{
         await Axios.get("http://localhost:8010/api/listadoClientes",{headers: {'Authorization': token,},})
         .then((response) => {setClientes(response.data);})
@@ -54,7 +49,7 @@ function ListadoClientes(){
     return(
         <div>
             <div>
-                <span className="textos"><span className="fa fa-search"></span>&nbsp;Buscar rut:</span> <input list="rutsClientes" className="textosCajas textosNormal" placeholder="11111111-1"/>
+                <span className="textos"><span className="fa fa-search"></span>&nbsp;Buscar rut:</span> <input list="rutsClientes" className="textosCajas textosNormal" placeholder="11111111-1" />
                 <datalist id="rutsClientes">
                     {clientesList.map((val) => {
                     return (
@@ -70,7 +65,7 @@ function ListadoClientes(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id}>
+                                        <th key={header.id} className="textos">
                                             {header.column.columnDef.header}
                                         </th>
                                     ))

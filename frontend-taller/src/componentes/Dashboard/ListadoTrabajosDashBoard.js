@@ -59,7 +59,7 @@ function ListadoTrabajosDashBoard(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id}>
+                                        <th key={header.id} className="textos">
                                             {header.column.columnDef.header}
                                         </th>
                                     ))
@@ -85,11 +85,15 @@ function ListadoTrabajosDashBoard(){
               })}
                 </tbody>
                 <tfoot>
-                    <button>Incio</button>
-                    <button>Anterior</button>
-                    <button>Siguiente</button>
-                    <button>Final</button>
                 </tfoot>
+            </table>
+            <table align="center">
+                <tr>
+                    <td><button onClick={()=> tabla.setPageIndex(0)} className="enlaces"><span className="fa fa-step-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.previousPage()} className="enlaces"><span className="fa fa-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.nextPage()} className="enlaces"><span className="fa fa-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="enlaces"><span className="fa fa-step-forward"></span></button></td>
+                </tr>
             </table>
         </div>
     )
