@@ -37,11 +37,7 @@ function Clientes() {
                     </div>
                 </div>
             </div>
-            <Modal
-        show={show}
-        onHide={handleClose}
-        style={{ maxWidth: '100%' }}
-      >
+            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
             <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>

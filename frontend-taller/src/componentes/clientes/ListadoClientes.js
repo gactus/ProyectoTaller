@@ -1,63 +1,105 @@
 import React from "react";
-import { useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
-import { useState, useEffect } from "react";    
+import 
+    { 
+        useReactTable, getCoreRowModel, 
+        getPaginationRowModel, flexRender,
+        getSortedRowModel, getFilteredRowModel
+    } from "@tanstack/react-table";
+import { useState, useEffect } from "react";  
+import { Modal } from 'react-bootstrap';
+import EditarClientes from "./EditarClientes";
 import Axios from "axios";
 
 function ListadoClientes(){
     const [clientesList, setClientes] = useState([]);
+    const [sorting, setSorting] = useState([]);
+    const [idCliente, setIdCliente] = useState(0);
+    const [filtering, setFiltering] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem('token');
     const columnas = [
         {
-            header: "ID",
-            accesorKey: 'idCliente'
-        },
-        {
             header: "Nombre",
-            accesorKey: 'nombreCompletoCliente'
+            accessorKey: 'nombreCompletoCliente'
         },
         {
             header: "Rut",
-            accesorKey: 'rutCliente'
+            accessorKey: 'rutCliente'
         },
         {
             header: "Teléfono",
-            accesorKey: 'telefonoCliente'
+            accessorKey: 'telefonoCliente'
         },
         {
             header: "Email",
-            accesorKey: 'emailCliente'
+            accessorKey: 'emailCliente'
         },
         {
             header: "Estado",
-            accesorKey: 'estadoCliente'
+            accessorKey: 'estadoCliente',
+            cell:(fila)=>{
+                return(
+                    (fila.getValue('idTrabajo') ? 
+                        <span className="textosNormal"><span className="fa fa-check-circle-o text-success"></span></span> : 
+                        <span className="textosNormal"><span className="fa fa-times-circle text-bg-danger"></span></span>
+                    )
+                )
+            }
         },
         {
             header: "Editar/Eliminar",
-            accesorKey: ''
-        }
+            accessorKey: 'idCliente',
+            cell: (fila) => {
+                return (
+                    <table>
+                        <tr>
+                            <td>
+                                <button className="botonAccion" onClick={() => editarCliente(fila.getValue('idCliente'))}>
+                                    <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button className="botonCancelar">
+                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                );
+            },
+        },
     ]
     useEffect(() => {
         listarClientes();
     }, []);
 
+    const editarCliente = (idCliente)=>{
+        setIdCliente(idCliente);
+        setShowModal(true);
+    }
+
     const listarClientes = async() =>{
-        await Axios.get("http://localhost:8010/api/listadoClientes",{headers: {'Authorization': token,},})
+        await Axios.get("http://localhost:8010/api/clientes",{headers: {'Authorization': token,},})
         .then((response) => {setClientes(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener la lista de clientes:", error.response);});
     };
-    const tabla = useReactTable({data: clientesList,columns: columnas, getCoreRowModel: getCoreRowModel(), getPaginationRowModel: getPaginationRowModel()});
+    const tabla = useReactTable(
+        {
+            data: clientesList,columns: columnas, getCoreRowModel: getCoreRowModel(), 
+            getPaginationRowModel: getPaginationRowModel(), getSortedRowModel: getSortedRowModel(),
+            getFilteredRowModel: getFilteredRowModel(),
+            state: {
+                sorting,
+                globalFilter: filtering
+            },
+            onSortingChange: setSorting,
+            onGlobalFilterChange: setFiltering,
+        });
     return(
         <div>
-            <div>
-                <span className="textos"><span className="fa fa-search"></span>&nbsp;Buscar rut:</span> <input list="rutsClientes" className="textosCajas textosNormal" placeholder="11111111-1" />
-                <datalist id="rutsClientes">
-                    {clientesList.map((val) => {
-                    return (
-                        <option value={val.rutCliente}></option>
-                        );
-                    })}
-                </datalist>
-            </div>
+            <span className="textos"><span className="fa fa-search"></span>&nbsp;Consultar:</span>&nbsp;
+            <input type="text" value={filtering} className="textosCajas textosNormal text-uppercase"
+            onChange={e=>setFiltering(e.target.value)}/>
             <table className="table table-hover table-responsive-lg"> 
                 <thead>
                     {
@@ -65,8 +107,15 @@ function ListadoClientes(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id} className="textos">
-                                            {header.column.columnDef.header}
+                                        <th key={header.id} 
+                                            onClick={header.column.getToggleSortingHandler()}>
+                                            {
+                                                flexRender(header.column.columnDef.header, header.getContext())}
+                                                {
+                                                {
+                                                    'asc' : "⬆", 'desc' : "⬇"
+                                                }[header.column.getIsSorted() ?? null]
+                                                }
                                         </th>
                                     ))
                                 }
@@ -75,26 +124,13 @@ function ListadoClientes(){
                     }
                 </thead>
                 <tbody>
-                {clientesList.map((val) => {
-                return (
-                  <tr key={val.idCliente} className="">
-                    <th scope="row"><span className="textos">{val.idCliente}</span></th>
-                    <td><span className="textosNormal">{val.nombreCompletoCliente}</span></td>
-                    <td><span className="textosNormal">{val.rutCliente}</span></td>
-                    <td><span className="textosNormal">+{val.telefonoCliente}</span></td>
-                    <td><span className="textosNormal">{val.emailCliente}</span></td>
-                    <td>{val.estadoCliente  ? <h3><span className="fa fa-check-circle-o text-success" title="Activo"></span></h3> : <h3><span className="fa fa-times-circle text-danger" title="Inactivo"></span></h3>} </td>
-                    <td>
-                        <table>
-                            <tr>
-                                <td className="espaciado"><button className="btn-edit"><span className="fa fa-pencil-square-o"></span></button></td>
-                                <td className="espaciado"><button className="btn-delete"><span className="fa fa-trash"></span></button></td>
-                            </tr>
-                        </table>
-                    </td>
+                {tabla.getRowModel().rows.map(row => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map(cell => (
+                      <td key={cell.id} className="textosNormal">{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                    ))}
                   </tr>
-                );
-              })}
+                ))}
                 </tbody>
                 <tfoot>
 
@@ -102,12 +138,19 @@ function ListadoClientes(){
             </table>
             <table align="center">
                 <tr>
-                    <td><button onClick={()=> tabla.setPageIndex(0)} className="enlaces"><span className="fa fa-step-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.previousPage()} className="enlaces"><span className="fa fa-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.nextPage()} className="enlaces"><span className="fa fa-forward"></span></button></td>
-                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="enlaces"><span className="fa fa-step-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(0)} className="btnPaginadorA"><span className="fa fa-step-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.previousPage()} className="btnPaginadorCentral"><span className="fa fa-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.nextPage()} className="btnPaginadorCentral"><span className="fa fa-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
                 </tr>
             </table>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <EditarClientes id={idCliente}/>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }

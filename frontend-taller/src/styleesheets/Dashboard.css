@@ -263,7 +263,7 @@ link:hover{
   }
   .textosNormal{
     font-family: "tahoma";
-    font-size: 10pt;
+    font-size: 11pt;
     font-color: #6e6e6e;
     /*font-weight: bold;*/
     padding: 2px 2px 5px 2px;
@@ -326,7 +326,7 @@ link:hover{
     border-color: #dedede;
     border-style: solid;
     border-width: 2px;
-    width: 200px;
+    width: 356px;
     height: 30px;
     opacity: 95%;
   }
@@ -371,19 +371,39 @@ link:hover{
     background-color: #FF5733;
     opacity: 0.90;
   }
-  .botonVer{
+  .btnVer {
     font-family: "tahoma";
     font-weight: bold;
-    font-size: 8pt;
+    font-size: 12pt;
     text-align: center;
-    color:#f2f2f2;
-    padding: 5px 5px 5px 5px;
-    border-radius: 20px;
-    border-color: #f2f2f2;
-    border-style: solid;
-    border-width: 1px;
-    width: 60px;
-    height: 32px;
-    background-color: #576c80;
-    opacity: 0.90;
-  }
+    color: #FFF; 
+    background-color: #576c80; 
+    border-color: #333;
+    border-radius: 6px 6px 6px 6px;
+    width: 50px;
+    text-align: center;
+}
+  .btnPaginadorA { 
+    color: #FFF; 
+    background-color: #1b1b1b; 
+    border-color: #333;
+    border-radius: 6px 0px 0px 6px;
+    width: 50px;
+    text-align: center;
+}
+.btnPaginadorCentral { 
+    color: #FFF; 
+    background-color: #1b1b1b; 
+    border-color: #333;
+    border-radius: 6px 6px 6px 6px;
+    width: 50px;
+    text-align: center;
+}
+.btnPaginadorB { 
+    color: #FFF; 
+    background-color: #1b1b1b; 
+    border-color: #333;
+    border-radius: 0px 6px 6px 0px;
+    width: 50px;
+    text-align: center;
+}

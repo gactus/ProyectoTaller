@@ -40,7 +40,6 @@ function RegistrarClientes(){
         console.log(datosCliente)
         await Axios.post("http://localhost:8010/api/clientes",datosCliente,{headers:{'Content-Type':'application/json','Authorization': token}})
         .then(() => {
-            registrarCliente();
             limpiarCampos();
             setShow(false);
             Swal.fire({
@@ -85,7 +84,7 @@ function RegistrarClientes(){
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-id-card-o"></span></span></div>
                         <div className="col-sm-5 col-md-5 col-lg-5">
                             <input id="rut" name="rut" type="text" placeholder="Rut" class="textosCajas textosNormal text-uppercase"
-                            onChange={(event) => {setRut(event.target.value);}}/>
+                            onChange={(event) => {setRut(event.target.value);}} maxLength={11}/>
                         </div>
                         <div className='col-sm-5 col-md-5 col-lg-5'><span className="textos">Ej.: 11111111-1</span></div>
                     </div>
