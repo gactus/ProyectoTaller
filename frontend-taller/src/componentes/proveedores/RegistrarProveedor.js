@@ -141,7 +141,7 @@ function RegistrarProveedor(){
                         </div>
                     </div>
                     <div className='row espaciadoVertical'>
-                        <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-money"></span></span></div>
+                        <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-credit-card-alt"></span></span></div>
                         <div className="col-sm-5 col-md-5 col-lg-5">
                             <input id="telefono" name="telefono" type="text" placeholder="Nº Cuenta" class="textosCajas textosNormal text-uppercase"
                             onChange={(event) => {setNumeroCuenta(event.target.value);}}/>

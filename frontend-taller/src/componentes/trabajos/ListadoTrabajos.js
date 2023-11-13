@@ -1,5 +1,10 @@
 import React from "react";
-import { useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
+import 
+    { 
+        useReactTable, getCoreRowModel, 
+        getPaginationRowModel, flexRender,
+        getSortedRowModel, getFilteredRowModel
+    } from "@tanstack/react-table";
 import { useState, useEffect } from "react";    
 import Axios from "axios";
 
@@ -7,44 +12,71 @@ import Axios from "axios";
 function ListadoTrabajos(){
     const [trabajosList, setTrabajos] = useState([]);
     const [datosTrabajo, setDatosTrabajo] = useState([]);
+    const [sorting, setSorting] = useState([]);
+    const [filtering, setFiltering] = useState("");
+    const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem('token');
     const columnas = [
         {
-            header: "ID",
-            accesorKey: 'id'
+            header: "Descripción",
+            accessorKey: 'detalleTrabajo'
         },
         {
-            header: "Detalle",
-            accesorKey: 'detalleTrabajo'
-        },
-        {
-            header: "Fecha",
-            accesorKey: 'fechaTrabajo'
+            header: "Fecha Trabajo",
+            accessorKey: 'fechaTrabajo'
         },
         {
             header: "Prox. Mantención",
-            accesorKey: 'fechaProxMantencion'
+            accessorKey: 'fechaProxMantencion',
+            cell:(fila)=>{
+                return(
+                    (fila.getValue('fechaProxMantencion') === '01-01-1900' ? "No Requiere" : "")
+                )
+            }
         },
         {
-            header: "Rq. Notificación",
-            accesorKey: 'requiereNotificacion'
+            header: "Req. Notificación",
+            accessorKey: 'requiereNotificacion',
+            cell:(fila)=>{
+                return(
+                    (fila.getValue('idTrabajo') ? "Si" : "NO")
+                )
+            }
         },
         {
             header: "Costo Trabajo",
-            accesorKey: 'costoTotal'
+            accessorKey: 'costoTotal'
         },
         {
             header: "Mecánico",
-            accesorKey: 'nombreMecanico'
+            accessorKey: 'nombreMecanico'
         },
         {
             header: "Estado",
-            accesorKey: 'estadoTrabajo'
+            accessorKey: 'estadoTrabajo'
         },
         {
-            header: "Ver",
-            accesorKey: ''
-        }
+            header: "Revisar",
+            accessorKey: 'idTrabajo',
+            cell: (fila) => {
+                return (
+                    <table>
+                        <tr>
+                            <td>
+                                <button className="botonAccion">
+                                    <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button className="botonCancelar">
+                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                );
+            },
+        },
     ]
     useEffect(() => {
         listarTrabajos();
@@ -61,9 +93,23 @@ function ListadoTrabajos(){
         .catch((error) => {console.error("Hubo un error al obtener la lista de insumos:", error.response);});
     } */
 
-    const tabla = useReactTable({data: trabajosList,columns: columnas, getCoreRowModel: getCoreRowModel(), getPaginationRowModel: getPaginationRowModel()});
+    const tabla = useReactTable(
+        {
+            data: trabajosList,columns: columnas, getCoreRowModel: getCoreRowModel(), 
+            getPaginationRowModel: getPaginationRowModel(), getSortedRowModel: getSortedRowModel(),
+            getFilteredRowModel: getFilteredRowModel(),
+            state: {
+                sorting,
+                globalFilter: filtering
+            },
+            onSortingChange: setSorting,
+            onGlobalFilterChange: setFiltering,
+        });
     return(
         <div>
+            <span className="textos"><span className="fa fa-search"></span>&nbsp;Consultar:</span>&nbsp;
+            <input type="text" value={filtering} className="textosCajas textosNormal text-uppercase"
+            onChange={e=>setFiltering(e.target.value)}/>
             <table className="table table-hover table-responsive-lg"> 
                 <thead>
                     {
@@ -71,8 +117,15 @@ function ListadoTrabajos(){
                             <tr key={headerGroup.id}>
                                 {
                                     headerGroup.headers.map(header=>(
-                                        <th key={header.id} className="textos">
-                                            {header.column.columnDef.header}
+                                        <th key={header.id} 
+                                            onClick={header.column.getToggleSortingHandler()}>
+                                            {
+                                                flexRender(header.column.columnDef.header, header.getContext())}
+                                                {
+                                                {
+                                                    'asc' : "⬆", 'desc' : "⬇"
+                                                }[header.column.getIsSorted() ?? null]
+                                                }
                                         </th>
                                     ))
                                 }
@@ -81,41 +134,24 @@ function ListadoTrabajos(){
                     }
                 </thead>
                 <tbody>
-                {
-                trabajosList.length > 0 ? (  
-                    trabajosList.map((val) => {
-                    return (
-                        <tr key={val.idTrabajo} className="">
-                            <th scope="row"><span className="textosNormal">{val.idTrabajo}</span></th>
-                                <td><span className="textosNormal">{val.detalleTrabajo}</span></td>
-                                <td><span className="textosNormal">{val.fechaTrabajo}</span></td>
-                                <td><span className="textosNormal">{val.fechaProxMantencion}</span></td>
-                                <td><span className="textosNormal">{val.requiereNotificacion ? "SI" : "NO"}</span></td>
-                                <td><span className="textosNormal">$ {val.costoTotal}</span></td>
-                                <td><span className="textosNormal">{val.nombreMecanico}</span></td>
-                                <td><span className="textosNormal">{val.estadoTrabajo}</span></td>
-                                <td><button className="botonVer"><span className="fa fa-eye"></span></button></td>
-                            </tr>
-                    );
-                    })) : 
-                    (
-                        <tr>
-                            <td colSpan={9}>
-                                <span className="textos">No existen Registros para mostrar</span>
-                            </td>
-                        </tr>
-                    )
-                }
+                {tabla.getRowModel().rows.map(row => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map(cell => (
+                      <td key={cell.id} className="textosNormal">{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                    ))}
+                  </tr>
+                ))}
                 </tbody>
                 <tfoot>
+
                 </tfoot>
             </table>
             <table align="center">
                 <tr>
-                    <td><button onClick={()=> tabla.setPageIndex(0)} className="enlaces"><span className="fa fa-step-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.previousPage()} className="enlaces"><span className="fa fa-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.nextPage()} className="enlaces"><span className="fa fa-forward"></span></button></td>
-                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="enlaces"><span className="fa fa-step-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(0)} className="btnPaginadorA"><span className="fa fa-step-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.previousPage()} className="btnPaginadorCentral"><span className="fa fa-backward"></span></button></td>
+                    <td><button onClick={()=> tabla.nextPage()} className="btnPaginadorCentral"><span className="fa fa-forward"></span></button></td>
+                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
                 </tr>
             </table>
         </div>
