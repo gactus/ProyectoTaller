@@ -1,4 +1,6 @@
 const {perfil,tipo_perfiles, perfil_rutas} = require('../models');
+const sequelize = require('sequelize');
+const Op = sequelize.Op;
 
 /* Listo los tipos de perfiles activos */
 const listarTiposPerfiles = async(req,res) =>{
@@ -6,7 +8,7 @@ const listarTiposPerfiles = async(req,res) =>{
         await tipo_perfiles.findAll(
             {
                 attributes: [['id','idPerfil'],['descripcion','nombrePerfil']],
-                where:{estado: 1}
+                where:{estado: 1, id: {[Op.notIn]: [3]}}
             })
             .then(tipo_perfil=>{
                 if (tipo_perfil ? res.status(200).send(tipo_perfil) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
@@ -15,7 +17,7 @@ const listarTiposPerfiles = async(req,res) =>{
                 res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
             });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error Interno."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error Interno." + err});
     }
 }
 /*Obtengo las rutas, dependiendo del tipo de perfil*/

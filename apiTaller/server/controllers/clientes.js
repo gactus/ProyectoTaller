@@ -75,13 +75,13 @@ const crearCliente = async(req,res) =>{
                 })
             })
             .catch(err=>{
-                res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro",registroCreado:false,err})
+                res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro",registroCreado:false})
             });
         }else{
             res.status(200).send({message: "El cliente ya existe.",registroCreado: false});
         }
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
 /* Editamos un cliente */

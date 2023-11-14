@@ -1,6 +1,14 @@
 import React from "react";
 import ListadoUsuarios from "./usuarios/listadoUsuarios";
+import RegistrarUsuario from "./usuarios/RegistrarUsuario";
+import { useState, useEffect } from "react";  
+import { Modal, Button } from 'react-bootstrap';  
+
 function Usuarios() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <main>
             <div className='row'>
@@ -12,7 +20,7 @@ function Usuarios() {
                                     <h3><span className='fa fa-group'></span>&nbsp;Datos de Usuarios</h3>
                                 </div>
                                 <div className='col-sm-2 col-md-2 col-lg-2'>
-                                    <button className='btn-agregar'><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
+                                    <button onClick={handleShow} className='btn-agregar'><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
                                 </div>
                             </div>
                         </div>
@@ -22,6 +30,13 @@ function Usuarios() {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
+            <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <RegistrarUsuario/>
+                </Modal.Body>
+            </Modal>
         </main>
     )
 }

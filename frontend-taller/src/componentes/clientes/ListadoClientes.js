@@ -39,7 +39,7 @@ function ListadoClientes(){
             accessorKey: 'estadoCliente',
             cell:(fila)=>{
                 return(
-                    (fila.getValue('idTrabajo') ? 
+                    (fila.getValue('estadoCliente') ? 
                         <span className="textosNormal"><span className="fa fa-check-circle-o text-success"></span></span> : 
                         <span className="textosNormal"><span className="fa fa-times-circle text-bg-danger"></span></span>
                     )

@@ -44,6 +44,8 @@ module.exports=(app)=>{
 /*  Dashboard */
     app.get('/api/datosDashBoard/trabajos/:id',mdAuth.auth,trabajosController.datosDashBoard);
     app.get('/api/datosDashBoard/insumos/',mdAuth.auth,insumosController.insumosBajoStock)
+/* Tipos de PErfil */
+    app.get('/api/tipoPerfil',mdAuth.auth,perfilesController.listarTiposPerfiles);
 /*  Rutas para tipo de perfil (solo mecánicos y Admin) */
     app.get('/api/rutasPerfil/:id',mdAuth.auth,perfilesController.rutasTipoPerfil);
 /*  Bancos */

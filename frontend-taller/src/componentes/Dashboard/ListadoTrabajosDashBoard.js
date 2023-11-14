@@ -8,10 +8,12 @@ import
 import { useState, useEffect } from "react";  
 import Modal from 'react-bootstrap/Modal'; 
 import Axios from "axios";
+import DetalleTrabajo from '../trabajos/DetalleTrabajo'
 
 function ListadoTrabajosDashBoard(){
     const [trabajosList, setTrabajos] = useState([]);
     const [sorting, setSorting] = useState([]);
+    const [idTrabajo, setIdTrabajo] = useState(0);
     const [filtering, setFiltering] = useState("");
     const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem('token');
@@ -70,6 +72,7 @@ function ListadoTrabajosDashBoard(){
         listarTrabajos();
     }, []);
     const detalleTrabajo = (idTrabajo)=>{
+        setIdTrabajo(idTrabajo);
         setShowModal(true);
     }
     const listarTrabajos = async() =>{
@@ -140,16 +143,10 @@ function ListadoTrabajosDashBoard(){
             </table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Detalles del trabajo</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <span></span>
+                    <DetalleTrabajo id={idTrabajo}/>
                 </Modal.Body>
-                <Modal.Footer>
-                    <button variant="secondary" onClick={() => setShowModal(false)}>
-                        Cerrar
-                    </button>
-                </Modal.Footer>
             </Modal>
         </div>
     )

@@ -16,6 +16,9 @@ module.exports=(sequelize,DataTypes)=>{
         },
         NombreUsuario:{
             type: DataTypes.STRING,
+        },
+        idTipoPerfil:{
+            type: DataTypes.INTEGER,
         }
     });
     return loginVw;

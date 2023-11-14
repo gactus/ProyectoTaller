@@ -109,21 +109,21 @@ function RegistrarProveedor(){
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa fa-building"></span></span></div>
                         <div className="col-sm-10 col-md-10 col-lg-10">
                             <input id="direccion" name="direccion" type="text" placeholder="Dirección" class="textosCajas2 textosNormal text-uppercase"
-                            onChange={(event) => {setDireccion(event.target.value);}}/>
+                            onChange={(event) => {setDireccion(event.target.value);}} maxLength={100}/>
                         </div>
                     </div>
                     <div className='row espaciadoVertical'>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-envelope"></span></span></div>
                         <div className="col-sm-10 col-md-10 col-lg-10">
                             <input id="email" name="email" type="text" placeholder="Email" class="textosCajas2 textosNormal text-uppercase"
-                            onChange={(event) => {setEmail(event.target.value);}}/>
+                            onChange={(event) => {setEmail(event.target.value);}} maxLength={100}/>
                         </div>
                     </div>
                     <div className='row espaciadoVertical'>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-phone-square"></span></span></div>
                         <div className="col-sm-10 col-md-10 col-lg-10">
                             <input id="telefono" name="telefono" type="text" placeholder="56991231234" class="textosCajas textosNormal text-uppercase"
-                            onChange={(event) => {setTelefono(event.target.value);}}/>
+                            onChange={(event) => {setTelefono(event.target.value);}} maxLength={11}/>
                         </div>
                     </div>
                     <div className='row espaciadoVertical'>
@@ -144,7 +144,7 @@ function RegistrarProveedor(){
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'><span className="textos"><span className="fa fa-credit-card-alt"></span></span></div>
                         <div className="col-sm-5 col-md-5 col-lg-5">
                             <input id="telefono" name="telefono" type="text" placeholder="Nº Cuenta" class="textosCajas textosNormal text-uppercase"
-                            onChange={(event) => {setNumeroCuenta(event.target.value);}}/>
+                            onChange={(event) => {setNumeroCuenta(event.target.value);}} maxLength={12}/>
                         </div>
                         <div className='col-sm-5 col-md-5 col-lg-5'><span className="textos">Ej.: 00001234566</span></div>
                     </div>

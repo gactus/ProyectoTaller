@@ -9,7 +9,7 @@ const loginUsuario = async(req,res) =>{
     }
     try{
         const existe = await loginVw.findOne({
-            attributes: [['id','idUsuario'],'contrasenaUsuario'],
+            attributes: [['id','idUsuario'],'idTipoPerfil','contrasenaUsuario'],
             where:{
                 rutUsuario: datosLogin.usuario,
             },

@@ -1,11 +1,9 @@
 import React from "react";
-import { useReactTable, getCoreRowModel, getPaginationRowModel } from "@tanstack/react-table";
 import { useState, useEffect } from "react";    
 import Axios from "axios";
 import Swal from "sweetalert2";
 
 function RegistrarClientes(){
-    const [trabajosList, setTrabajos] = useState([]);
     const [nombresCliente, setNombres] = useState("");
     const [apellidosCliente, setApellidos] = useState("");
     const [rutCliente, setRut] = useState("");
@@ -42,27 +40,24 @@ function RegistrarClientes(){
         .then(() => {
             limpiarCampos();
             setShow(false);
-            Swal.fire({
-            title: "<strong>Registrado con Existo!!</strong>",
-            html:
-                "<i>El Proveedor fue Registrado con Existo!!</i>",
-            icon: "success",
-            timer: 3000,
+            Swal.fire({title: "<strong>Atención</strong>",
+                html:"<i>El cliente fue registrado con éxito!!</i>",
+                icon: "success",
+                timer: 3000,
             });
         })
         .catch((error) => {
             Swal.fire({
-            title: "<strong>Error</strong>",
-            html:
-                "<i>Atención: Hubo un problema al registrar el proveedor</i>",
-            icon: "error",
-            timer: 3000,
+                title: "<strong>Error</strong>",
+                html: "<i>Atención: Hubo un problema al registrar el Cliente</i>",
+                icon: "error",
+                timer: 3000,
             });
             console.error("Hubo un error al registrar:", error.response);
         });
     };
     return(
-        <div className='card'>
+    <div className='card'>
         <div className='card-header'>
             <h3><span className='fa fa-address-book'></span>&nbsp;Registrar Cliente</h3>
         </div>

@@ -8,6 +8,7 @@ import
 import { useState, useEffect } from "react";  
 import { Modal } from 'react-bootstrap';
 import Axios from "axios";
+import EditarProveedor from "./EditarProveedor";
 
 function ListadoProveedores(){
     const [razonSocial, setRazonSocial] = useState("");
@@ -18,7 +19,7 @@ function ListadoProveedores(){
     const [banco, setBanco] = useState("");
     const [numeroCuenta, setNumeroCuenta] = useState("");
     const [tipoCuenta, setTipoCuenta] = useState("");
-    const [id, setId] = useState();
+    const [idProveedor, setIdProveedor] = useState();
     const [proveedorList, setProveedores] = useState([]);
     const [bancosList, setBancos] = useState([]);
     const [tipoCuentasList, setTipoCuentas] = useState([]);
@@ -81,7 +82,8 @@ function ListadoProveedores(){
         .catch((error) => {console.error("Hubo un error al obtener proveedores:", error.response);});
     };
     const editarProveedor = async(idProveedor)=>{
-
+        setIdProveedor(idProveedor);
+        setShowModal(true);
     }
     const tabla = useReactTable(
         {
@@ -144,6 +146,13 @@ function ListadoProveedores(){
                     <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
                 </tr>
             </table>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <EditarProveedor id={idProveedor}/>
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }

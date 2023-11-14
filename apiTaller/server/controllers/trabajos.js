@@ -103,6 +103,30 @@ const listarTrabajosAdmin = async(req, res) =>{
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
+/* Mostramos el detalle de un trabajo */
+const buscarTrabajo = async(req, res) =>{
+    try{
+        const idTrabajo = req.params.id;
+        await trabajosVw.findAll({
+            attributes: 
+                [
+                    ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
+                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil','idEstadoTrabajo','estadoTrabajo'
+                ],
+            where:{
+                id: idTrabajo
+            }
+        })
+        .then(detalleTrabajo =>{
+            if (detalleTrabajo ? res.status(200).send(detalleTrabajo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
+        })
+        .catch(err =>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        });
+    }catch(err){
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+    }
+}
 /*  Sección Detalle del Trabajo */
 /* Creamos el detalle de un trabajo */
 const crearDetalleTrabajo = async(req,res) =>{
@@ -193,5 +217,6 @@ module.exports = {
     listarDetalleTrabajos,
     datosDashBoard,
     listarTrabajosMecanico,
-    listarTrabajosAdmin
+    listarTrabajosAdmin,
+    buscarTrabajo
 }

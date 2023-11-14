@@ -8,7 +8,6 @@ import
 import { useState, useEffect } from "react";    
 import Axios from "axios";
 
-
 function ListadoTrabajos(){
     const [trabajosList, setTrabajos] = useState([]);
     const [datosTrabajo, setDatosTrabajo] = useState([]);

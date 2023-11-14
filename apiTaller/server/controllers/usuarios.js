@@ -76,7 +76,6 @@ const editarUsuario = async(req,res)=>{
                 })
                 .then((perfil)=>{
                     datosPerfil = {
-                        personaId: idPersona,
                         tipoPerfilId: req.body.IdTipoPerfil
                     }
                     perfil.update(datosPerfil)
@@ -91,21 +90,21 @@ const editarUsuario = async(req,res)=>{
                                 res.status(200).send({message:"Atención: Registro actualizado con éxito.",registroActualizado:true})
                             })
                             .catch(err=>{
-                                res.status(500).send({message:"Atención: El registro no pudo ser actualizado.",registroActualizado: false});
+                                res.status(500).send({message:"Atención: El registro no pudo ser actualizado." + err,registroActualizado: false});
                             })
                         })
                     })
                 })
             })
             .catch(err=>{
-                res.status(500).send({message: "Atención: El registro no pudo ser actualizado."});
+                res.status(500).send({message: "Atención: El registro no pudo ser actualizado." + err});
             })
         })
         .catch(err=>{
             res.status(500).send({message: "Atención: No existen registros para ser actualizados."});
         })
     }catch(err){
-        res.status(500).send({message: "Atención: El registro no pudo ser actualizado."});
+        res.status(500).send({message: "Atención: El registro no pudo ser actualizado." + err});
     }
 }
 /*  Buscamos a un usuario especificio, y obtengo todos sus datos (excepto la contraseña) */
@@ -115,7 +114,7 @@ const buscarUsuario = async(req,res)=>{
         await usuariosVw.findOne(
         {
             attributes:         
-            [['id','idPersona'],'nombreUsuario','apellidoUsuario','nombreCompletoUsuario','telefonoUsuario','emailUsuario','estadoUsuario','idTipoPerfil'],
+            [['id','idPersona'],'rutUsuario','nombreUsuario','apellidoUsuario','nombreCompletoUsuario','telefonoUsuario','emailUsuario','estadoUsuario','idTipoPerfil'],
             where:{idUsuario: idUsuario}
         })
         .then(usuarioVw =>{
