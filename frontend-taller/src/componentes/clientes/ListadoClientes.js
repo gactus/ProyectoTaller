@@ -60,7 +60,12 @@ function ListadoClientes(){
                             </td>
                             <td>
                                 <button className="botonCancelar">
-                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                    <span className="textosNormal"><span className="fa fa-car"></span></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button className="botonCancelar">
+                                    <span className="textosNormal"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>
