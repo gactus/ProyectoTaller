@@ -21,22 +21,22 @@ module.exports=(app)=>{
     app.put('/api/marcas/:id',mdAuth.auth,marcasController.editarMarca);
     app.get('/api/marcas/:id',mdAuth.auth,marcasController.buscarMarca);
 /*  modelos */
-    app.get('/api/modelos',mdAuth.auth,modelosController.listarModelos);
     app.get('/api/modelos/general',mdAuth.auth,modelosController.listarModelosGeneral);
     app.put('/api/modelos/delete/:id',mdAuth.auth,modelosController.eliminarModelo); //Dar de baja
-    app.post('/api/modelos',mdAuth.auth,modelosController.crearModelo);
+    app.get('/api/modelos/marca/:id',mdAuth.auth,modelosController.listarModelos);
+    app.post('/api/modelos/',mdAuth.auth,modelosController.crearModelo);
     app.get('/api/modelos/:id',mdAuth.auth,modelosController.buscarModelo);
     app.put('/api/modelos/:id',mdAuth.auth,modelosController.editarModelo);
 /* Tipo de Insumos */
-    app.get('/api/tipoInsumos',mdAuth.auth,tipoInsumosController.listarTiposInsumos);
-    app.get('/api/tipoInsumos/general',mdAuth.auth,tipoInsumosController.listarTiposInsumosGeneral);
+    app.get('/api/tipoInsumos/',mdAuth.auth,tipoInsumosController.listarTiposInsumos);
+    app.get('/api/tipoInsumos/general/',mdAuth.auth,tipoInsumosController.listarTiposInsumosGeneral);
     app.put('/api/tipoInsumos/delete/:id',mdAuth.auth,tipoInsumosController.editarTipoInsumo);
-    app.post('/api/tipoInsumos',mdAuth.auth,tipoInsumosController.crearTipoInsumo);
+    app.post('/api/tipoInsumos/',mdAuth.auth,tipoInsumosController.crearTipoInsumo);
     app.get('/api/tipoInsumos/:id',mdAuth.auth,tipoInsumosController.buscarTipoInsumo);
     app.put('/api/tipoInsumos/:id',mdAuth.auth,tipoInsumosController.editarTipoInsumo);
 /* Estados Trabajos */
     app.get('/api/estadoTrabajos',mdAuth.auth,estadoTrabajosController.listarEstadosTrabajos)
-    app.get('/api/estadoTrabajos/general',mdAuth.auth,estadoTrabajosController.listarEstadosTrabajosGeneral)
+    app.get('/api/estadoTrabajos/general/',mdAuth.auth,estadoTrabajosController.listarEstadosTrabajosGeneral)
     app.put('/api/estadoTrabajos/delete/:id',mdAuth.auth,estadoTrabajosController.eliminarEstadoTrabajo); //Dar de baja
     app.post('/api/estadoTrabajos',mdAuth.auth,estadoTrabajosController.crearEstadoTrabajo);
     app.put('/api/estadoTrabajos/:id',mdAuth.auth,estadoTrabajosController.editarEstadoTrabajo);
@@ -44,26 +44,28 @@ module.exports=(app)=>{
 /*  Dashboard */
     app.get('/api/datosDashBoard/trabajos/:id',mdAuth.auth,trabajosController.datosDashBoard);
     app.get('/api/datosDashBoard/insumos/',mdAuth.auth,insumosController.insumosBajoStock)
+    app.get('/api/datosDashBoard/notificaciones',mdAuth.auth,notificacionesController.trabajosNotificarDashboard)
 /* Tipos de PErfil */
     app.get('/api/tipoPerfil',mdAuth.auth,perfilesController.listarTiposPerfiles);
 /*  Rutas para tipo de perfil (solo mecánicos y Admin) */
     app.get('/api/rutasPerfil/:id',mdAuth.auth,perfilesController.rutasTipoPerfil);
 /*  Bancos */
-    app.get('/api/bancos',mdAuth.auth,bancosController.listarBancos);
-    app.get('/api/bancos/general',mdAuth.auth,bancosController.listarBancosGeneral); //Ruta para el matendor de Bancos
+    app.get('/api/bancos/',mdAuth.auth,bancosController.listarBancos);
+    app.get('/api/bancos/general/',mdAuth.auth,bancosController.listarBancosGeneral); //Ruta para el matendor de Bancos
     app.put('/api/bancos/delete/:id',mdAuth.auth,bancosController.eliminarBanco); //Dar de baja
-    app.post('/api/bancos',mdAuth.auth,bancosController.crearBanco);
+    app.post('/api/bancos/',mdAuth.auth,bancosController.crearBanco);
     app.get('/api/bancos/:id',mdAuth.auth,bancosController.buscarBanco);
     app.put('/api/bancos/:id',mdAuth.auth,bancosController.editarBanco);
 /*  Tipo de Cuentas Bancarias */
     app.get('/api/tipoCuentas',mdAuth.auth,tipoCuentasController.listarTipoCuentas);
     app.get('/api/tipoCuentas/general',mdAuth.auth,tipoCuentasController.listarTipoCuentasGeneral); //Ruta para el matendor de Tipo Cuentas (a futuro)
     app.put('/api/tipoCuentas/delete/:id',mdAuth.auth,tipoCuentasController.eliminarTipoCuenta); //Dar de baja
-    app.post('/api/tipoCuentas',mdAuth.auth,tipoCuentasController.crearTipoCuenta);
+    app.post('/api/tipoCuentas/',mdAuth.auth,tipoCuentasController.crearTipoCuenta);
     app.get('/api/tipoCuentas/:id',mdAuth.auth,tipoCuentasController.buscarTipoCuenta);
     app.put('/api/tipoCuentas/:id',mdAuth.auth,tipoCuentasController.editarTipoCuenta);
 /* Notificaciones */
     app.get('/api/tipoNotificacion',mdAuth.auth,notificacionesController.listarTipoNotificaciones);
+    app.get('/api/notificacion/trabajos/',mdAuth.auth,notificacionesController.listarTrabajosNotificar);
     app.get('/api/notificacion/:id',mdAuth.auth,notificacionesController.buscarDetalleNotificacion);
 /*  Logs */
     app.post('/api/logs',mdAuth.auth,registroLogsController.registrarLog);

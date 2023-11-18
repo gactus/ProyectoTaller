@@ -6,7 +6,8 @@ const listarMarcas = async(req,res) =>{
         await marcas.findAll(
             {
                 attributes: [['id','idMarca'],['descripcion','nombreMarca']],
-                where: {estado: 1}
+                where: {estado: 1},
+                order: [['descripcion', 'ASC']]
             })
             .then(marca =>{
                 if (marca ? res.status(200).send(marca) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));

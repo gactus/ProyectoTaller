@@ -18,7 +18,7 @@ function InsumosStock(){
             <div className="col-sm-12 col-md-12 col-lg-12">
                 {getStock.map((val) => {
                     return (
-                        val.totalRegistros < 10 ? 
+                        val.totalRegistros != 0 ? 
                             <div className="row">
                                 <div className="col-sm-3 col-md-3 col-lg-3"></div>
                                 <div className="col-sm-6 col-md-6 col-lg-6">

@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { Modal } from 'react-bootstrap';
 import EditarClientes from "./EditarClientes";
 import Axios from "axios";
+import VehiculosCliente from "./VehiculosCliente";
+import RegistrarVehiculoCliente from "./RegistrarVehiculoCliente";
 
 function ListadoClientes(){
     const [clientesList, setClientes] = useState([]);
@@ -16,6 +18,7 @@ function ListadoClientes(){
     const [idCliente, setIdCliente] = useState(0);
     const [filtering, setFiltering] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
     const token = localStorage.getItem('token');
     const columnas = [
         {
@@ -59,7 +62,7 @@ function ListadoClientes(){
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
+                                <button className="botonCancelar" onClick={() => asociarVehiculo(fila.getValue('idCliente'))}>
                                     <span className="textosNormal"><span className="fa fa-car"></span></span>
                                 </button>
                             </td>
@@ -77,10 +80,21 @@ function ListadoClientes(){
     useEffect(() => {
         listarClientes();
     }, []);
+    const cerrarModal = ()=>{
+        listarClientes();
+        setShowModal(false);
+    }
+    const cerrarModal2 = ()=>{
+        setShowModal2(false);
+    }
 
     const editarCliente = (idCliente)=>{
         setIdCliente(idCliente);
         setShowModal(true);
+    }
+    const asociarVehiculo = (idCliente)=>{
+        setIdCliente(idCliente);
+        setShowModal2(true);
     }
 
     const listarClientes = async() =>{
@@ -150,11 +164,22 @@ function ListadoClientes(){
                 </tr>
             </table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-                </Modal.Header>
                 <Modal.Body>
                     <EditarClientes id={idCliente}/>
                 </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+                <Modal.Body>
+                    <RegistrarVehiculoCliente id={idCliente}/>
+                    <hr/>
+                    <VehiculosCliente id={idCliente}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal2()}>Cerrar</button>
+                </Modal.Footer>
             </Modal>
         </div>
     )

@@ -3,22 +3,28 @@ const {modelos,marcas} = require('../models');
 /* Listamos solo los modelos activos (usado en mantenedores) */
 const listarModelos = async(req,res) =>{
     try{
+        const idMarca = req.params.id;
         await modelos.findAll(
             {
                 attributes: 
                 [
-                    ['id','idModelo'],['descripcion','nombreModelo']
+                    ['id','idModelo'],['descripcion','nombreModelo'],'marcaId'
                 ],
-                where:{estado: 1}
+                where:
+                {
+                    estado: 1, 
+                    marcaId: idMarca
+                },
+                order: [['descripcion', 'ASC']]
             })
             .then(modelo =>{
                 if (modelo ? res.status(200).send(modelo) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
             })
             .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error."});
+                res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
             });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
 }
 /* Listamos todos los modelos, usado en su propio mantenedor */

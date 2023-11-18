@@ -75,7 +75,10 @@ function ListadoProveedores(){
     useEffect(() => {
         listarProveedores();
     }, []);
-
+    const cerrarModal = ()=>{
+        listarProveedores();
+        setShowModal(false);
+    }
     const listarProveedores = async() =>{
         await Axios.get("http://localhost:8010/api/proveedores",{headers: {'Authorization': token,},})
         .then((response) => {setProveedores(response.data);})
@@ -147,11 +150,12 @@ function ListadoProveedores(){
                 </tr>
             </table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-                </Modal.Header>
                 <Modal.Body>
                     <EditarProveedor id={idProveedor}/>
                 </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
+                </Modal.Footer>
             </Modal>
         </div>
     )

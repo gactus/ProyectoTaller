@@ -130,7 +130,7 @@ const getDatosUsuario = async () => {
                                 <option value="">--SELECCIONE--</option>
                                 {tipoPerfilesList.map((val) => {
                                     return (
-                                        <option value={val.idPerfil} key={val.idPerfil}>{val.nombrePerfil}</option>
+                                        <option value={val.idPerfil} key={val.idPerfil} selected={val.idPerfil === idTipoPerfil ? 'selected' : ''}>{val.nombrePerfil}</option>
                                     );
                                 })}
                             </select>

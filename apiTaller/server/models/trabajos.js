@@ -31,7 +31,15 @@ module.exports=(sequelize,DataTypes)=>{
         },
         estadoTrabajoId:{
             type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
+        },
+        perfileId:{
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        notificado:{
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
         estado:{
             type: DataTypes.BOOLEAN,

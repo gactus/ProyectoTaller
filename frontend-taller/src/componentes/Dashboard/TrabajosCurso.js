@@ -14,7 +14,7 @@ function TrabajosCurso(){
         .catch((error) => {console.error("Hubo un error al obtener el conteo de trabajos:", error.response);});
     };
     return(
-        <div className="row">
+        <div className="row espaciado">
             <div className="col-sm-12 col-md-12 col-lg-12"></div>
             <div className='card'>
                 <div className='card-header'>

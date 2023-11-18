@@ -94,7 +94,7 @@ function RegistrarProveedor(){
                         <div className='col-sm-2 col-md-2 col-lg-2'><span className="textos"><span className="fa fa-id-card"></span></span></div>
                         <div className="col-sm-10 col-md-10 col-lg-10">
                             <input id="razonSocial" name="razonSocial" type="text" placeholder="Razón Social" class="textosCajas2 textosNormal text-uppercase"
-                            onChange={(event) => {setRazonSocial(event.target.value);}} required/>
+                            onChange={(event) => {setRazonSocial(event.target.value);}} required maxLength={100}/>
                         </div>
                     </div>
                     <div className='row espaciadoVertical'>

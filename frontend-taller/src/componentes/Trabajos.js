@@ -1,8 +1,15 @@
 import React from 'react';
 import '../styleesheets/Dashboard.css';
 import ListadoTrabajos from './trabajos/ListadoTrabajos';
+import RegistrarTrabajo from './trabajos/RegistrarTrabajo';
+import { Modal, Button } from 'react-bootstrap';  
+import { useState, useEffect } from "react";  
 
 function Trabajos() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return (
         <main>
             <div className='row'>
@@ -14,7 +21,7 @@ function Trabajos() {
                                 <div className='col-lg-3'>
                                 <div className="row">
                                     <div className="col-sm-12 col-md-12 col-lg-12">
-                                        <button className='btn-agregar'><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
+                                    <button className='btn-agregar' onClick={handleShow}><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
                                     </div>
                                 </div>
                                 </div>
@@ -51,6 +58,16 @@ function Trabajos() {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <RegistrarTrabajo/>
+                </Modal.Body>
+                <Modal.Footer>
+
+                </Modal.Footer>
+            </Modal>
         </main>
     );
     

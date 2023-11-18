@@ -3,7 +3,8 @@ import '../styleesheets/Dashboard.css';
 import TrabajosCurso from './Dashboard/TrabajosCurso';
 import TrabajosEspera from './Dashboard/TrabajosEspera';
 import TrabajosFinalizados from './Dashboard/TrabajosFinalizados';
-import ListadoTrabajosDashBoard from './Dashboard/ListadoTrabajosDashBoard'; 
+import ListadoTrabajosDashBoard from './Dashboard/ListadoTrabajosDashBoard';
+import ProximasNotificaciones from './Dashboard/ProximasNotificaciones';
 import InsumosStock from './Dashboard/InsumosStock';
 
 function Dashboard() {
@@ -18,7 +19,7 @@ function Dashboard() {
                         </div>
                         <div className='card-body'>
                             <div className='row'>
-                                <div className="col-sm-3 col-md-3 col-lg-3"></div>
+                                <div className="col-sm-2 col-md-2 col-lg-2"></div>
                                 <div className='col-lg-2'>
                                     <TrabajosCurso/>
                                 </div>
@@ -28,7 +29,10 @@ function Dashboard() {
                                 <div className='col-lg-2'>
                                     <TrabajosFinalizados/>
                                 </div>
-                                <div className="col-sm-3 col-md-3 col-lg-3"></div>
+                                <div className='col-lg-2'>
+                                    <ProximasNotificaciones/>
+                                </div>
+                                <div className="col-sm-2 col-md-2 col-lg-2"></div>
                             </div>
                             <div className='row'>
                                 <div className='col-sm-12 col-md-12 col-lg-12 text-center'>

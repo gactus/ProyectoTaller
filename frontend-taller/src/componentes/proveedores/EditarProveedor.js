@@ -9,9 +9,9 @@ function EditarProveedor({id}){
     const [telefono, setTelefono] = useState("");
     const [email, setEmail] = useState("");
     const [rut, setRut] = useState("");
-    const [banco, setBanco] = useState(0);
+    const [idBanco, setBanco] = useState(0);
     const [numeroCuenta, setNumeroCuenta] = useState("");
-    const [tipoCuenta, setTipoCuenta] = useState(0);
+    const [idTipoCuenta, setTipoCuenta] = useState(0);
     const [idProveedor, setIdProveedor] = useState();
     const [bancosList, setBancos] = useState([]);
     const [tipoCuentasList, setTipoCuentas] = useState([]);
@@ -65,36 +65,12 @@ function EditarProveedor({id}){
         console.error("Atención: Hubo un problema al recuperar los datos del proveedor.")
     });
 };
-
-    const registrarProveedor = async() => {
-        const datosProveedor = {
-            rut: rut, razonSocial: razonSocial, direccion: direccion,
-            telefono: telefono, email: email, numeroCuenta: numeroCuenta, idBanco: banco,
-            idTipoCuenta: tipoCuenta,
-        }
-        await Axios.post("http://localhost:8010/api/proveedores",datosProveedor,{headers:{'Content-Type':'application/json','Authorization': token}})
-        .then(() => {
-            limpiarCampos();
-            Swal.fire({
-            title: "<strong>Registrado con Existo!!</strong>",
-            html: "<i>El Proveedor fue Registrado con Existo!!</i>",
-            icon: "success", timer: 3000,
-            });
-        })
-        .catch((error) => {Swal.fire({
-            title: "<strong>Error</strong>",
-            html: "<i>Atención: Hubo un problema al registrar el proveedor</i>",
-            icon: "error", timer: 3000,
-            });
-            console.error("Hubo un error al registrar:", error.response);
-        });
-    };
 /*  Editamos al proveedor */
     const editarProveedor = async() => {
         const datosProveedor = {
             rut: rut, razonSocial: razonSocial, direccion: direccion,
-            telefono: telefono, email: email, numeroCuenta: numeroCuenta, idBanco: banco,
-            idTipoCuenta: tipoCuenta,
+            telefono: telefono, email: email, numeroCuenta: numeroCuenta, idBanco: idBanco,
+            idTipoCuenta: idTipoCuenta,
         }
         await Axios.put("http://localhost:8010/api/proveedores/" + id,datosProveedor,{headers:{'Content-Type':'application/json','Authorization': token}})
         .then(() => {
@@ -166,7 +142,7 @@ function EditarProveedor({id}){
                                 <option value="">--SELECCIONE--</option>
                                 {bancosList.map((val) => {
                                     return (
-                                        <option value={val.idBanco} key={val.idBanco}>{val.nombreBanco}</option>
+                                        <option value={val.idBanco} key={val.idBanco} selected={val.idBanco === idBanco ? 'selected' : ''}>{val.nombreBanco}</option>
                                     );
                                 })}
                             </select>
@@ -188,7 +164,7 @@ function EditarProveedor({id}){
                                 <option value="">--SELECCIONE--</option>
                                 {tipoCuentasList.map((val) => {
                                     return (   
-                                        <option value={val.idTipoCuenta} key={val.idTipoCuenta}>{val.tipoCuenta}</option>
+                                        <option value={val.idTipoCuenta} key={val.idTipoCuenta} selected={val.idTipoCuenta === idTipoCuenta ? 'selected' : ''}>{val.tipoCuenta}</option>
                                     );
                                 })}
                             </select>

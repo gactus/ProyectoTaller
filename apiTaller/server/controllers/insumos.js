@@ -53,11 +53,11 @@ const buscarInsumo = async(req,res) =>{
         {
             attributes: 
             [
-                'id','codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','tipoInsumo','estadoInsumo'
+                'id','codigoInsumo','nombreInsumo','cantidadInsumos','precioCompra','precioVenta','idTipoInsumo','estadoInsumo'
             ],
             where: 
             {
-                estado: 1,
+                estadoInsumo: 1,
                 id: idInsumo
             }
         })
@@ -66,10 +66,10 @@ const buscarInsumo = async(req,res) =>{
                 if (insumoVw ? res.status(200).send(insumoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
         .catch(err=>{
-            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos."});
+            res.status(500).send({message:"Atención: Ocurrió un problema al recuperar los datos." + err});
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
     }
 }
 /*  Creamos un nuevo insumo */
@@ -93,14 +93,14 @@ const crearInsumo = async(req,res) =>{
                     res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true})
                 })
                 .catch(err=>{
-                    res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro",registroCreado:false})
+                    res.status(500).send({message:"Atención: Ocurrió un problema al crear el registro" + err,registroCreado:false})
                 })
             }else{
                 res.status(200).send({message:"Atención: el registro ya existe.",registroCreado:false})
             }
         })
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno."})
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err})
     }
 }
 /*  Editamos un insumo */
@@ -110,16 +110,17 @@ const editarInsumo = async(req,res) =>{
         const datosInsumo = { //Recojo los datos enviados y asigno a un objeto
             codigo: req.body.codigoInsumo,
             descripcion: req.body.descripcion,
-            tipoInsumoId: req.body.idTipoInsumo
+            tipoInsumoId: req.body.idTipoInsumo, 
+            estado: req.body.estado
         }
         await insumos.findByPk(idInsumo) //Verificamos si el registro existe
         .then(insumo=>{
             insumo.update(datosInsumo) //Si existe, actualizo el registro
             .then(()=>{
-                res.status(200).send({registroActualizado: true});
+                res.status(200).send({message: "Atención: El registro fue actualizado con éxito.", registroActualizado: true});
             })
             .catch(err=>{
-                res.status(500).send({registroActualizado: false});
+                res.status(500).send({message: "Atención: Ocurrió un problema al actualizar el registro." + err,registroActualizado: false});
             })
         })
     }catch(err){

@@ -6,6 +6,8 @@ import
         getSortedRowModel, getFilteredRowModel
     } from "@tanstack/react-table";
 import { useState, useEffect } from "react";    
+import { Modal } from 'react-bootstrap';
+import EditarInsumo from "./EditarInsumo";
 import Axios from "axios";
 
 
@@ -14,6 +16,8 @@ function ListadoInsumos(){
     const [datoInsumo, setDatoInsumo] = useState([]);
     const [filtering, setFiltering] = useState("");
     const [sorting, setSorting] = useState([]);
+    const [idInsumo, setIdInsumo] = useState(0);
+    const [showModal, setShowModal] = useState(false);
     const token = localStorage.getItem('token');
     const columnas = [
         {
@@ -26,7 +30,15 @@ function ListadoInsumos(){
         },
         {
             header: "Stock",
-            accessorKey: 'cantidadInsumos'
+            accessorKey: 'cantidadInsumos',
+            cell:(fila)=>{
+                return(
+                    (fila.getValue('cantidadInsumos') < 10 ? 
+                        <span className="text-danger">{fila.getValue('cantidadInsumos')}</span> : 
+                        <span className="text-success">{fila.getValue('cantidadInsumos')}</span>
+                    )
+                )
+            }
         },
         {
             header: "Precio Compra",
@@ -47,20 +59,20 @@ function ListadoInsumos(){
                 return(
                     (fila.getValue('estadoInsumo') ? 
                         <span className="textosNormal"><span className="fa fa-check-circle-o text-success"></span></span> : 
-                        <span className="textosNormal"><span className="fa fa-times-circle text-bg-danger"></span></span>
+                        <span className="textosNormal"><span className="fa fa-times-circle-o text-danger"></span></span>
                     )
                 )
             }
         },
         {
             header: "Editar/Eliminar",
-            accessorKey: 'idCliente',
+            accessorKey: 'id',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion">
+                                <button className="botonAccion" onClick={() => editarInsumo(fila.getValue('id'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
@@ -78,9 +90,16 @@ function ListadoInsumos(){
     useEffect(() => {
         listarInsumos();
     }, []);
-
+    const cerrarModal = ()=>{
+        listarInsumos();
+        setShowModal(false);
+    }
+    const editarInsumo = async(idInsumo)=>{
+        setIdInsumo(idInsumo);
+        setShowModal(true);
+    }
     const listarInsumos = async() =>{
-        await Axios.get("http://localhost:8010/api/insumos",{headers: {'Authorization': token,},})
+        await Axios.get("http://localhost:8010/api/insumos/general",{headers: {'Authorization': token,},})
         .then((response) => {setInsumos(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener la lista de insumos:", error.response);});
     };
@@ -151,7 +170,14 @@ function ListadoInsumos(){
                     <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
                 </tr>
             </table>
-
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Body>
+                    <EditarInsumo id={idInsumo}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

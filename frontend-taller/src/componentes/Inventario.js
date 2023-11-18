@@ -1,8 +1,15 @@
 import React from 'react';
 import '../styleesheets/Dashboard.css';
 import ListadoInsumos from './insumos/ListadoInsumos';
+import RegistrarInsumo from './insumos/RegistrarInsumo';
+import { useState, useEffect } from "react";  
+import { Modal, Button } from 'react-bootstrap'; 
 
 function Inventario() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return (
         <main>
             <div className='row'>
@@ -14,7 +21,7 @@ function Inventario() {
                                     <h3><span className='fa fa fa-cubes'></span>&nbsp;Inventario de insumos</h3>
                                 </div>
                                 <div className='col-sm-2 col-md-2 col-lg-2'>
-                                    <button className='btn-agregar'><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
+                                    <button className='btn-agregar' onClick={handleShow}><span className='fa fa-plus-square'></span>&nbsp;Nuevo</button>
                                 </div>
                             </div>
                         </div>
@@ -24,6 +31,14 @@ function Inventario() {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
+                <Modal.Body>
+                    <RegistrarInsumo/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className='btn'>Cerrar</button>
+                </Modal.Footer>
+            </Modal>
         </main>
     );
     

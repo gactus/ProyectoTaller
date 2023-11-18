@@ -12,6 +12,8 @@ import Login from './componentes/Login';
 import Usuarios from './componentes/Usuarios';
 import EditarUsuario from './componentes/EditarUsuario';
 import Reportes from './componentes/Reportes';
+import Vehiculos from './componentes/Vehiculos';
+import Notificaciones from './componentes/Notificaciones'; 
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,11 +45,13 @@ function App() {
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/clientes" element={<Clientes />} />
                         <Route path="/trabajos" element={<Trabajos />} />
+                        <Route path="/notificaciones" element={<Notificaciones />} />
                         <Route path="/proveedores" element={<Proveedores />} />
                         <Route path="/registrarusuario" element={<RegistrarUsuario />} />
                         <Route path="/inventario" element={<Inventario />} />
                         <Route path="/gastos" element={<Gastos />} />
                         <Route path="/usuarios" element={<Usuarios />} />
+                        <Route path="/vehiculos" element={<Vehiculos />} />
                         <Route path="/editarUsuario" element={<EditarUsuario />} />
                         <Route path="/reportes" element={<Reportes />} />
                     </Routes>
