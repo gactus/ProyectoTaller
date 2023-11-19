@@ -65,20 +65,20 @@ function ListadoInsumos(){
             }
         },
         {
-            header: "Editar/Eliminar",
+            header: "Acciones",
             accessorKey: 'id',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion" onClick={() => editarInsumo(fila.getValue('id'))}>
+                                <button className="transparent-button" onClick={() => editarInsumo(fila.getValue('id'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
-                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                <button className="transparent-button">
+                                <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>
@@ -175,7 +175,7 @@ function ListadoInsumos(){
                     <EditarInsumo id={idInsumo}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
                 </Modal.Footer>
             </Modal>
         </div>

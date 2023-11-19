@@ -24,7 +24,7 @@ const crearVehiculo = async(req,res) =>{
             res.status(200).send({message:"Atención: el registro ya existe.",registroCreado:false})
         }
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno."})
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err})
     }
 }
 /* Editamos los datos del trabajo */
@@ -58,23 +58,23 @@ const editarVehiculo = async(req,res) => {
 const buscarVehiculoxPatente = async(req,res) =>{
     try{
         const nroPatente = req.params.nroPatente;
-        await vehiculosVw.findAll(
+        await vehiculosVw.findOne(
+        {
+            attributes: 
+            [
+                ['id','idVehiculo'],'nroPatente', 'rutDueno','nombreDueno','modeloVehiculo','fechaRegistro','estadoVehiculo'
+            ],
+            where: 
             {
-                attributes: 
-                [
-                    ['id','idVehiculo'],'nroPatente', 'rutDueno','nombreDueno','modeloVehiculo','fechaRegistro','estadoVehiculo'
-                ],
-                where: 
-                {
-                    patente: nroPatente,
-                }
-            })
-            .then(vehiculoVw =>{
-                if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
-            })
-            .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
-            });
+                nroPatente: nroPatente,
+            }
+        })
+        .then(vehiculoVw =>{
+            if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));   
+        })
+        .catch(err =>{
+            res.status(500).send({message:"Atención: Ha ocurrido un error al consultar el registro."});
+        });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
@@ -87,7 +87,8 @@ const buscarVehiculo = async(req,res) =>{
             {
                 attributes: 
                 [
-                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idModelo','nombreModelo','fechaRegistro','estadoVehiculo'
+                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idMarca','marcaVehiculo',
+                    'idModelo','modeloVehiculo','fechaRegistro','estadoVehiculo'
                 ],
                 where: 
                 {
@@ -98,31 +99,34 @@ const buscarVehiculo = async(req,res) =>{
                 if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
+                res.status(500).send({message:"Atención: Ha ocurrido un error al consultar el registro." + err});
             });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
     }
 }
-/* Listamos todos los vehiculos activos*/
+/* Listamos todos los vehiculos activos para un usuario*/
 const listarVehiculos = async(req,res) =>{
     try{
+        const idUsuario = req.params.id;
         await vehiculosVw.findAll(
             {
                 attributes: 
                 [
-                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idModelo','nombreModelo','fechaRegistro','estadoVehiculo'
+                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idMarca','marcaVehiculo',
+                    'idModelo','modeloVehiculo','fechaRegistro','estadoVehiculo'
                 ],
                 where: 
                 {
-                    estado: 1,
+                    estadoVehiculo: 1,
+                    idDueno: idUsuario
                 }
             })
             .then(vehiculoVw =>{
                 if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
+                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro." + err});
             });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});
@@ -135,14 +139,15 @@ const listarVehiculosGeneral = async(req,res) =>{
             {
                 attributes: 
                 [
-                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idModelo','nombreModelo','fechaRegistro','estadoVehiculo'
+                    ['id','idVehiculo'],'nroPatente', 'idDueno','rutDueno','nombreDueno','idMarca','marcaVehiculo',
+                    'idModelo','modeloVehiculo','fechaRegistro','estadoVehiculo'
                 ]
             })
             .then(vehiculoVw =>{
                 if (vehiculoVw ? res.status(200).send(vehiculoVw) : res.status(200).send({message:"Atención: no existen registros asociados."}));
             })
             .catch(err =>{
-                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro."});
+                res.status(500).send({message:"Atención: Ha ocurrido un error la consultar el registro." + err});
             });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error interno."});

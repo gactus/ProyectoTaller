@@ -15,7 +15,6 @@ function EditarClientes({id, listaClientes}){
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(true);
 
-
     useEffect(() => {
         getDatosCliente()
         return () =>{

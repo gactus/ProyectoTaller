@@ -13,6 +13,12 @@ module.exports=(sequelize,DataTypes)=>{
         fechaProxMantencion:{
             type: DataTypes.STRING,
         },
+        fechaTrabajoFormato:{
+            type: DataTypes.DATE,
+        },
+        fechaProxMantencionFormato:{
+            type: DataTypes.DATE,
+        },
         requiereNotificacion:{
             type: DataTypes.BOOLEAN,
         },  
@@ -37,6 +43,18 @@ module.exports=(sequelize,DataTypes)=>{
         idTipoPerfil:{
             type: DataTypes.INTEGER,
         },
+        observacionTrabajo: {
+            type: DataTypes.STRING, 
+        },
+        idVehiculo: {
+            type: DataTypes.INTEGER, 
+        },
+        patenteVehiculo: {
+            type: DataTypes.STRING, 
+        },
+        detalleVehiculo: {
+            type: DataTypes.STRING, 
+        },       
         tipoPerfil:{
             type: DataTypes.STRING,
         },

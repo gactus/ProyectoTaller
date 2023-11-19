@@ -53,8 +53,13 @@ function ListadoNotificaciones(){
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion">
-                                    <span className="textosNormal"><span className="fa fa-envelope"></span></span>
+                                <button className="transparent-button">
+                                    <span className="textosNormal text-primary"><span className="fa fa-envelope"></span></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button className="transparent-button">
+                                    <span className="textosNormal text-success"><span className="fa fa-whatsapp"></span></span>
                                 </button>
                             </td>
                         </tr>

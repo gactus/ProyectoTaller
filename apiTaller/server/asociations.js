@@ -5,7 +5,6 @@ const {personas, usuarios, trabajos, perfiles, tipo_perfiles, tipo_notificacione
 personas.hasOne(usuarios);
 personas.hasOne(perfiles);
 usuarios.belongsTo(personas);
-trabajos.belongsTo(personas);
 trabajos.hasMany(detalle_trabajos);
 trabajos.belongsTo(estado_trabajos);
 trabajos.belongsTo(perfiles);

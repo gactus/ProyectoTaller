@@ -57,7 +57,6 @@ const buscarInsumo = async(req,res) =>{
             ],
             where: 
             {
-                estadoInsumo: 1,
                 id: idInsumo
             }
         })

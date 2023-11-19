@@ -11,6 +11,9 @@ function DetalleTrabajo({id}){
     const [costoManoObra, setCostoManoObra] = useState(0);
     const [costoInsumos, setCostoInsumos] = useState(0);
     const [costoTotal, setCostoTotal] = useState(0);
+    const [detalleVehiculo, setDetalleVehiculo] = useState("");
+    const [patenteVehiculo, setPatenteVehiculo] = useState("");
+    const [observacionTrabajo, setObservacion] = useState("");
     const [nombreMecanico, setNombreMecanico] = useState("");
     const [estadoTrabajo, setEstadoTrabajo] = useState("");
     useEffect(() => {
@@ -26,6 +29,9 @@ function DetalleTrabajo({id}){
             setCostoManoObra(response.data.costoManoObra)
             setCostoInsumos(response.data.costoInsumos)
             setCostoTotal(response.data.costoTotal)
+            setObservacion(response.data.observacionTrabajo)
+            setDetalleVehiculo(response.data.detalleVehiculo)
+            setPatenteVehiculo(response.data.patenteVehiculo)
             setNombreMecanico(response.data.nombreMecanico)
             setEstadoTrabajo(response.data.estadoTrabajo)
         })
@@ -56,14 +62,14 @@ function DetalleTrabajo({id}){
                         <div className='row espaciadoVertical'>
                             <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-calendar"></span>&nbsp;Prox. Mantención:</span></div>
                             <div className="col-sm-5 col-md-5 col-lg-5">
-                                <span className="textosNormal">{proximaMantencion}</span>
+                                <span className="textosNormal">{proximaMantencion === '01-01-1900' ? "No Informada" : proximaMantencion}</span>
                             </div>
                             <div className='col-sm-2 col-md-2 col-lg-2'></div>
                         </div>
                         <div className='row espaciadoVertical'>
                             <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-envelope"></span>&nbsp;Req. Notificación:</span></div>
                             <div className="col-sm-5 col-md-5 col-lg-5">
-                                <span className="textosNormal">{requiereNotificacion}</span>
+                                <span className="textosNormal">{requiereNotificacion ? "SI" : "NO"}</span>
                             </div>
                             <div className='col-sm-2 col-md-2 col-lg-2'></div>
                         </div>
@@ -85,6 +91,27 @@ function DetalleTrabajo({id}){
                             <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-money"></span>&nbsp;Costo Total:</span></div>
                             <div className="col-sm-5 col-md-5 col-lg-5">
                                 <span className="textosNormal">$ {costoTotal}</span>
+                            </div>
+                            <div className='col-sm-2 col-md-2 col-lg-2'></div>
+                        </div>
+                        <div className='row espaciadoVertical'>
+                            <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-car"></span>&nbsp;Vehículo:</span></div>
+                            <div className="col-sm-5 col-md-5 col-lg-5">
+                                <span className="textosNormal">{detalleVehiculo}</span>
+                            </div>
+                            <div className='col-sm-2 col-md-2 col-lg-2'></div>
+                        </div>
+                        <div className='row espaciadoVertical'>
+                            <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-address-card"></span>&nbsp;Patente:</span></div>
+                            <div className="col-sm-5 col-md-5 col-lg-5">
+                                <span className="textosNormal">{patenteVehiculo}</span>
+                            </div>
+                            <div className='col-sm-2 col-md-2 col-lg-2'></div>
+                        </div>
+                        <div className='row espaciadoVertical'>
+                            <div className='col-sm-5 col-md-5 col-lg-5 text-left'><span className="textos"><span className="fa fa-pencil-square"></span>&nbsp;Observaciones:</span></div>
+                            <div className="col-sm-5 col-md-5 col-lg-5">
+                                <span className="textosNormal">{observacionTrabajo}</span>
                             </div>
                             <div className='col-sm-2 col-md-2 col-lg-2'></div>
                         </div>

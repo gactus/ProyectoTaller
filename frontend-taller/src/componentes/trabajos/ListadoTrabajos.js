@@ -5,12 +5,15 @@ import
         getPaginationRowModel, flexRender,
         getSortedRowModel, getFilteredRowModel
     } from "@tanstack/react-table";
-import { useState, useEffect } from "react";    
+import { useState, useEffect } from "react";  
+import { Modal } from 'react-bootstrap';  
 import Axios from "axios";
+import EditarTrabajo from "./EditarTrabajo";
 
 function ListadoTrabajos(){
     const [trabajosList, setTrabajos] = useState([]);
     const [datosTrabajo, setDatosTrabajo] = useState([]);
+    const [idTrabajo, setIdTrabajo] = useState(0);
     const [sorting, setSorting] = useState([]);
     const [filtering, setFiltering] = useState("");
     const [showModal, setShowModal] = useState(false);
@@ -29,7 +32,7 @@ function ListadoTrabajos(){
             accessorKey: 'fechaProxMantencion',
             cell:(fila)=>{
                 return(
-                    (fila.getValue('fechaProxMantencion') === '01-01-1900' ? "No Requiere" : "")
+                    (fila.getValue('fechaProxMantencion') === '01-01-1900' ? "No Requiere" : fila.getValue('fechaProxMantencion'))
                 )
             }
         },
@@ -44,7 +47,12 @@ function ListadoTrabajos(){
         },
         {
             header: "Costo Trabajo",
-            accessorKey: 'costoTotal'
+            accessorKey: 'costoTotal',
+            cell:(fila)=>{
+                return(
+                    ("$ " + fila.getValue('costoTotal'))
+                )
+            }
         },
         {
             header: "Mecánico",
@@ -55,20 +63,25 @@ function ListadoTrabajos(){
             accessorKey: 'estadoTrabajo'
         },
         {
-            header: "Revisar",
+            header: "Acciones",
             accessorKey: 'idTrabajo',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion">
+                                <button className="transparent-button" onClick={() => editarTrabajo(fila.getValue('idTrabajo'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
-                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                <button className="transparent-button">
+                                    <span className="textosNormal text-danger"><span className="fa fa-flask"></span></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button className="transparent-button">
+                                    <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>
@@ -81,6 +94,14 @@ function ListadoTrabajos(){
         listarTrabajos();
     }, []);
 
+    const cerrarModal = ()=>{
+        listarTrabajos();
+        setShowModal(false);
+    }
+    const editarTrabajo = async(idTrabajo)=>{
+        setIdTrabajo(idTrabajo);
+        setShowModal(true);
+    }
     const listarTrabajos = async() =>{
         await Axios.get("http://localhost:8010/api/trabajos/listadoTrabajosAdmin",{headers: {'Authorization': token,},})
         .then((response) => {setTrabajos(response.data);})
@@ -153,6 +174,14 @@ function ListadoTrabajos(){
                     <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
                 </tr>
             </table>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal.Body>
+                    <EditarTrabajo id={idTrabajo}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

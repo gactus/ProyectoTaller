@@ -50,25 +50,25 @@ function ListadoClientes(){
             }
         },
         {
-            header: "Editar/Eliminar",
+            header: "Acciones",
             accessorKey: 'idCliente',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion" onClick={() => editarCliente(fila.getValue('idCliente'))}>
+                                <button className="transparent-button" onClick={() => editarCliente(fila.getValue('idCliente'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar" onClick={() => asociarVehiculo(fila.getValue('idCliente'))}>
-                                    <span className="textosNormal"><span className="fa fa-car"></span></span>
+                                <button className="transparent-button" onClick={() => asociarVehiculo(fila.getValue('idCliente'))}>
+                                    <span className="textosNormal textos"><span className="fa fa-car"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
-                                    <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                <button className="transparent-button">
+                                    <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>
@@ -168,17 +168,15 @@ function ListadoClientes(){
                     <EditarClientes id={idCliente}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
                 </Modal.Footer>
             </Modal>
             <Modal show={showModal2} onHide={() => setShowModal2(false)}>
                 <Modal.Body>
-                    <RegistrarVehiculoCliente id={idCliente}/>
-                    <hr/>
                     <VehiculosCliente id={idCliente}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={()=>cerrarModal2()}>Cerrar</button>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal2()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
                 </Modal.Footer>
             </Modal>
         </div>

@@ -6,10 +6,12 @@ import { useState, useEffect } from "react";
 import { Modal, Button } from 'react-bootstrap'; 
 
 function Inventario() {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const cerrarModal = ()=>{
+        setShowModal(false);
+    }
     return (
         <main>
             <div className='row'>
@@ -31,12 +33,12 @@ function Inventario() {
                     </div>
                 </div>
             </div>
-            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
+            <Modal show={showModal} onHide={handleClose} style={{ maxWidth: '100%' }}>
                 <Modal.Body>
                     <RegistrarInsumo/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className='btn'>Cerrar</button>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
                 </Modal.Footer>
             </Modal>
         </main>

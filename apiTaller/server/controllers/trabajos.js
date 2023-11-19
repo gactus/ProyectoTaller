@@ -9,23 +9,25 @@ const crearTrabajo = async(req,res) =>{
         const datosTrabajo = {
             detalle: req.body.descripcionTrabajo,
             fecha_trabajo: req.body.fechaTrabajo,
-            fecha_proxima_mantencion: req.body.proximaMantencion,
-            requiere_notificacion: req.body.requiereNotificacion,
-            conto_mano_obra: req.body.costoManoObra,
+            fecha_prox_mantencion: req.body.proximaMantencion,
+            requere_notificacion: req.body.requiereNotificacion,
+            costo_mano_obra: req.body.costoManoObra,
             vehiculoId: req.body.idVehiculo,
             estadoTrabajoId: req.body.idEstadoTrabajo,
             perfileId: req.body.idPerfil,
+            notificado: false,
+            observaciones: req.body.observacionTrabajo,
             estado: 1
         }
         await trabajos.create(datosTrabajo)
         .then(()=>{
-            res.status(200).send({message:"Atención: Registro creado con éxito.",registroCreado:true});
+            res.status(200).send({message:"Atención: Registro creado con éxito.", registroCreado:true});
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: Ocurrió un error al crear el registro.", registroCreado:false});
+            res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err, registroCreado:false});
         });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno.", registroCreado: false});
     }
 }
 /* Editamos los datos asociados a un trabajo */
@@ -41,23 +43,24 @@ const editarTrabajo = async(req, res) =>{
             vehiculoId: req.body.idVehiculo,
             estadoTrabajoId: req.body.idEstadoTrabajo,
             perfileId: req.body.idPerfil,
-            estado: req.body.idEstadoTrabajo
+            observaciones: req.body.observacionTrabajo,
+            estado: 1
         }
         await trabajos.findByPk(id)
         .then(trabajo=>{
             trabajo.update(datosTrabajo)
             .then(()=>{
-                res.status(200).send({message: "Atención Registro Actualizado con éxito.", registroActualizado: true});
+                res.status(200).send({message: "Atención: Registro Actualizado con éxito.", registroActualizado: true});
             })
             .catch(err=>{
                 res.status(500).send({message:"Atención: el registro no pudo ser actualizado.", registroActualizado: false});
             }); 
         })
         .catch(err=>{
-            res.status(500).send({message:"Atención: ocurrió un problema al consultar el registro.", registroActualizado: false});
+            res.status(500).send({message:"Atención: ocurrió un problema al consultar el registro." + err, registroActualizado: false});
         });
     }catch(err) {
-        res.status(500).send({message:"Atención: Ha ocurrido un error."});
+        res.status(500).send({message:"Atención: Ha ocurrido un error.", registroActualizado: false});
     }
 }
 //Listados
@@ -69,7 +72,7 @@ const listarTrabajosMecanico = async(req, res) =>{
             attributes: 
                 [
                     ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
-                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil'
+                    'costoInsumos','costoTotal','observacionTrabajo','idVehiculo','patenteVehiculo','detalleVehiculo','nombreMecanico','tipoPerfil','estadoTrabajo'
                 ],
             where:{idUsuario: idUsuario},
         })
@@ -77,10 +80,10 @@ const listarTrabajosMecanico = async(req, res) =>{
             if (listadoTrabajos ? res.status(200).send(listadoTrabajos) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
-            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+            res.status(500).send({message:"Atención: Ha ocurrido un error."});
         });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
 //Listamos los trabajos asociados a todos los perfiles (mecanico/admin) (utilizado solo por el admin)
@@ -90,14 +93,14 @@ const listarTrabajosAdmin = async(req, res) =>{
             attributes: 
                 [
                     ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
-                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil','idEstadoTrabajo','estadoTrabajo'
+                    'costoInsumos','costoTotal','observacionTrabajo','idVehiculo','patenteVehiculo','detalleVehiculo','nombreMecanico','tipoPerfil','estadoTrabajo'
                 ]
         })
         .then(listadoTrabajos =>{
             if (listadoTrabajos ? res.status(200).send(listadoTrabajos) : res.status(200).send({message:"Atención: no existen registros a mostrar."}));
         })
         .catch(err =>{
-            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+            res.status(500).send({message:"Atención: Ha ocurrido un error."});
         });
     }catch(err){
         res.status(500).send({message:"Atención: Ha ocurrido un error."});
@@ -107,11 +110,11 @@ const listarTrabajosAdmin = async(req, res) =>{
 const buscarTrabajo = async(req, res) =>{
     try{
         const idTrabajo = req.params.id;
-        await trabajosVw.findAll({
+        await trabajosVw.findOne({
             attributes: 
                 [
-                    ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','requiereNotificacion','costoManoObra',
-                    'costoInsumos','costoTotal','nombreMecanico','tipoPerfil','idEstadoTrabajo','estadoTrabajo'
+                    ['id','idTrabajo'],'detalleTrabajo','fechaTrabajo','fechaProxMantencion','fechaTrabajoFormato','fechaProxMantencionFormato','requiereNotificacion','costoManoObra',
+                    'costoInsumos','costoTotal','observacionTrabajo','idVehiculo','patenteVehiculo','detalleVehiculo','nombreMecanico','tipoPerfil','idEstadoTrabajo','estadoTrabajo'
                 ],
             where:{
                 id: idTrabajo
@@ -144,13 +147,13 @@ const crearDetalleTrabajo = async(req,res) =>{
                 res.status(200).send(detalle_trabajo);
             })
             .catch(err=>{
-                res.status(500).send({message:"Atención: Ocurrió un error al crear el registro." + err});
+                res.status(500).send({message:"Atención: Ocurrió un error al crear el registro.", registroCreado: true});
             });
         }else{
-            res.status(200).send({message: "El proveedor ya existe."});
+            res.status(200).send({message: "Atención: El registro ya existe.", registroCreado: false});
         }
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error interno." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error interno.", registroCreado: false});
     }
 }
 //Este apartado se refiere a los insumos asociados al trabajo
@@ -203,10 +206,10 @@ const datosDashBoard = async(req,res) =>{
             if (datosDashboard ? res.status(200).send(datosDashboard) : res.status(200).send({totalRegistros: 0}));
         })
         .catch(err =>{
-            res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+            res.status(500).send({message:"Atención: Ha ocurrido un error."});
         });
     }catch(err){
-        res.status(500).send({message:"Atención: Ha ocurrido un error." + err});
+        res.status(500).send({message:"Atención: Ha ocurrido un error."});
     }
 }
 

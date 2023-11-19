@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";    
 import Axios from "axios";
 import Swal from "sweetalert2";
+import notificaAccion from "../validaciones/Validaciones"
 
 function RegistrarVehiculoCliente({id}){
     const [patenteVehiculo, setPatente] = useState("");
@@ -34,13 +35,16 @@ function RegistrarVehiculoCliente({id}){
 /*  Fin */
     const registrarVehiculo = async() => {
         const datosVehiculo = {
-            patente: patenteVehiculo,
-            marca: marcaVehiculo,
-            modelo: modeloVehiculo
+            idPersona: id,
+            patenteVehiculo: patenteVehiculo,
+            idModelo: modeloVehiculo
         }
-        await Axios.post("http://localhost:8010/api/usuarios",datosVehiculo,{headers:{'Content-Type':'application/json','Authorization': token}})
-        .then(() => {
+        await Axios.post("http://localhost:8010/api/vehiculos",datosVehiculo,{headers:{'Content-Type':'application/json','Authorization': token}})
+        .then((response) => {
             limpiarCampos();
+            const icono =  (response.data.registroCreado ? "succes" : "error");
+            const mensaje = response.data.message;
+
             Swal.fire({title: "<strong>Atención</strong>",
                 html:"<i>El usuario fue registrado con éxito!!</i>",
                 icon: "success",

@@ -50,20 +50,20 @@ function ListadoProveedores(){
             accessorKey: 'emailProveedor'
         },
         {
-            header: "Editar/Eliminar",
+            header: "Acciones",
             accessorKey: 'idProveedor',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion" onClick={() => editarProveedor(fila.getValue('idProveedor'))}>
+                                <button className="transparent-button" onClick={() => editarProveedor(fila.getValue('idProveedor'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
-                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                <button className="transparent-button">
+                                <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>

@@ -6,10 +6,12 @@ import { Modal, Button } from 'react-bootstrap';
 import { useState, useEffect } from "react";  
 
 function Trabajos() {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const cerrarModal = ()=>{
+        setShowModal(false);
+    }
     return (
         <main>
             <div className='row'>
@@ -58,14 +60,12 @@ function Trabajos() {
                     </div>
                 </div>
             </div>
-            <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
-                <Modal.Header closeButton>
-                </Modal.Header>
+            <Modal show={showModal} onHide={handleClose} style={{ maxWidth: '100%' }}>
                 <Modal.Body>
                     <RegistrarTrabajo/>
                 </Modal.Body>
                 <Modal.Footer>
-
+                   <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
                 </Modal.Footer>
             </Modal>
         </main>

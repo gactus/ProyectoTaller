@@ -31,7 +31,7 @@ function ListadoTrabajosDashBoard(){
             accessorKey: 'fechaProxMantencion',
             cell:(fila)=>{
                 return(
-                    (fila.getValue('fechaProxMantencion') === '01-01-1900' ? "No Requiere" : "")
+                    (fila.getValue('fechaProxMantencion') === '01-01-1900' ? "No Requiere" : fila.getValue('fechaProxMantencion'))
                 )
             }
         },
@@ -46,7 +46,12 @@ function ListadoTrabajosDashBoard(){
         },
         {
             header: "Costo Trabajo",
-            accessorKey: 'costoTotal'
+            accessorKey: 'costoTotal',
+            cell:(fila)=>{
+                return(
+                    ("$ " + fila.getValue('costoTotal'))
+                )
+            }
         },
         {
             header: "Mecánico",
@@ -61,8 +66,8 @@ function ListadoTrabajosDashBoard(){
             accessorKey: 'idTrabajo',
             cell: (fila) => {
                 return (
-                    <button className="btnVer" onClick={() => detalleTrabajo(fila.getValue('idTrabajo'))}>
-                        <span className="fa fa-eye"></span>
+                    <button className="transparent-button" onClick={() => detalleTrabajo(fila.getValue('idTrabajo'))}>
+                        <span className="textosNormal textos"><span className="fa fa-eye"></span></span>
                     </button>
                 );
             },

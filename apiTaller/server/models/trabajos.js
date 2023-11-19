@@ -15,10 +15,10 @@ module.exports=(sequelize,DataTypes)=>{
         },
         fecha_prox_mantencion:{
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         requere_notificacion:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         costo_mano_obra:{
@@ -40,6 +40,10 @@ module.exports=(sequelize,DataTypes)=>{
         notificado:{
             type: DataTypes.BOOLEAN,
             allowNull: false,
+        },
+        observaciones: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         estado:{
             type: DataTypes.BOOLEAN,

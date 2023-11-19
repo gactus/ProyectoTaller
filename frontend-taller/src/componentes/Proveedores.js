@@ -11,24 +11,14 @@ import RegistrarProveedor from "./proveedores/RegistrarProveedor";
 import { Modal, Button } from 'react-bootstrap';  
 
 function Proveedores() {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [razonSocial, setRazonSocial] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [email, setEmail] = useState("");
-  const [rut, setRut] = useState("");
-  const [banco, setBanco] = useState("");
-  const [numeroCuenta, setNumeroCuenta] = useState("");
-  const [tipoCuenta, setTipoCuenta] = useState("");
-  const [id, setId] = useState();
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   const [proveedorList, setProveedores] = useState([]);
-  const [bancosList, setBancos] = useState([]);
-  const [tipoCuentasList, setTipoCuentas] = useState([]);
-  const [editar, setEditar] = useState(false);
   const token = localStorage.getItem('token');
-
+  const cerrarModal = ()=>{
+    setShowModal(false);
+}
   useEffect(() => {
     getProveedores();
   }, []);
@@ -67,12 +57,15 @@ function Proveedores() {
               </div>
           </div>
       </div>
-      <Modal show={show} onHide={handleClose} style={{ maxWidth: '100%' }}>
+      <Modal show={showModal} onHide={handleClose} style={{ maxWidth: '100%' }}>
         <Modal.Header closeButton>
           </Modal.Header>
             <Modal.Body>
               <RegistrarProveedor/>
             </Modal.Body>
+            <Modal.Footer>
+                    <button className="btn btn-primary" onClick={()=>cerrarModal()}><span className='textosNormal'><span className='fa fa-close'></span>&nbsp;Cerrar</span></button>
+                </Modal.Footer>
       </Modal>
     </main>
   );

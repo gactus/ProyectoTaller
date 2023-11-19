@@ -44,7 +44,6 @@ function RegistrarProveedor(){
     await Axios.get("http://localhost:8010/api/tipoCuentas",{headers: {'Authorization': token,},})
     .then((response) => {setTipoCuentas(response.data);})
     .catch((error) => {console.error("Hubo un error al obtener la lista de Tipo de Cuentas Bancarias:", error.response);});
-
     };
   /* Fin */
 
@@ -165,7 +164,7 @@ function RegistrarProveedor(){
                     <div className='row espaciadoVertical'>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'></div>
                         <div className="col-sm-8 col-md-8 col-lg-8 text-center">
-                            <button type="submit" className="botonAccion" onClick={registrarProveedor}><h5><span className="fa fa-floppy-o"></span></h5>&nbsp;REGISTRAR</button>
+                            <button type="submit" className="btn-agregar" onClick={registrarProveedor}><span className="fa fa-floppy-o"></span>&nbsp;Guardar</button>
                         </div>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'></div>
                     </div>

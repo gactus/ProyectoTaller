@@ -314,6 +314,22 @@ link:hover{
     height: 30px;
     opacity: 95%;
   }
+  .textosCajasArea{
+    font-family: "tahoma";
+    size: 9pt;
+    color:#7a7a7a;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+    border-color: #dedede;
+    border-style: solid;
+    border-width: 2px;
+    width: 356px;
+    height: 100px;
+    opacity: 95%;
+  }
   .textosSelect{
     font-family: "tahoma";
     size: 10pt;
@@ -406,4 +422,15 @@ link:hover{
     border-radius: 0px 6px 6px 0px;
     width: 50px;
     text-align: center;
+}
+.transparent-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007BFF; /* color del texto */
+    font-size: 18px; /* tamaño de la fuente */
+    width: auto;
+} 
+.transparent-button:hover {
+    text-decoration: underline; /* subraya el texto al pasar el cursor sobre el botón */
 }

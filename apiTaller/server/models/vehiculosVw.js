@@ -19,6 +19,12 @@ module.exports=(sequelize,DataTypes)=>{
         nombreDueno:{
             type: DataTypes.STRING
         },
+        idMarca:{
+            type: DataTypes.INTEGER,
+        },
+        marcaVehiculo:{
+            type: DataTypes.STRING
+        },
         idModelo:{
             type: DataTypes.INTEGER,
         },

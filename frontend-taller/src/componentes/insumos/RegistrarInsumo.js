@@ -89,7 +89,7 @@ function RegistrarInsumo(){
                     <div className='row espaciadoVertical'>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'></div>
                         <div className="col-sm-8 col-md-8 col-lg-8 text-center">
-                            <button type="submit" className="btn-agregar" onClick={registrarInsumo}><h5><span className="fa fa-floppy-o"></span></h5>&nbsp;REGISTRAR</button>
+                            <button type="submit" className="btn-agregar" onClick={registrarInsumo}><span className="fa fa-floppy-o"></span>&nbsp;Guardar</button>
                         </div>
                         <div className='col-sm-2 col-md-2 col-lg-2 text-left'></div>
                     </div>

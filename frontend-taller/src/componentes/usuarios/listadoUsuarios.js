@@ -51,20 +51,20 @@ function ListadoUsuarios(){
             }
         },
         {
-            header: "Editar/Eliminar",
+            header: "Acciones",
             accessorKey: 'idUsuario',
             cell: (fila) => {
                 return (
                     <table>
                         <tr>
                             <td>
-                                <button className="botonAccion" onClick={() => editarUsuario(fila.getValue('idUsuario'))}>
+                                <button className="transparent-button" onClick={() => editarUsuario(fila.getValue('idUsuario'))}>
                                     <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="botonCancelar">
-                                <span className="textosNormal"><span className="fa fa-trash"></span></span>
+                                <button className="transparent-button">
+                                <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
                                 </button>
                             </td>
                         </tr>

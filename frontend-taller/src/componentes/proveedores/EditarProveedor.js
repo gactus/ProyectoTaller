@@ -26,15 +26,6 @@ function EditarProveedor({id}){
         return () =>{
         }
     }, []);
-
-    const limpiarCampos = () => {
-        setRut("");
-        setRazonSocial("");
-        setDireccion("");
-        setTelefono("");
-        setEmail("");
-        setRut("");
-      };
   /* Obtenemos los datos Bancarios */
     const listarBancos = async() =>{
         await Axios.get("http://localhost:8010/api/bancos",{headers: {'Authorization': token,},})
@@ -74,7 +65,6 @@ function EditarProveedor({id}){
         }
         await Axios.put("http://localhost:8010/api/proveedores/" + id,datosProveedor,{headers:{'Content-Type':'application/json','Authorization': token}})
         .then(() => {
-            limpiarCampos();
             Swal.fire({
             title: "<strong>Antención!!</strong>",
             html: "<i>El Proveedor fue actualizado con éxito!!</i>",
