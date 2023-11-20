@@ -10,7 +10,7 @@ import { Modal } from 'react-bootstrap';
 import Axios from "axios";
 import EditarTrabajo from "./EditarTrabajo";
 
-function ListadoTrabajos(){
+function ListadoTrabajos({showList}){
     const [trabajosList, setTrabajos] = useState([]);
     const [datosTrabajo, setDatosTrabajo] = useState([]);
     const [idTrabajo, setIdTrabajo] = useState(0);
@@ -92,7 +92,7 @@ function ListadoTrabajos(){
     ]
     useEffect(() => {
         listarTrabajos();
-    }, []);
+    }, [showList]);
 
     const cerrarModal = ()=>{
         listarTrabajos();

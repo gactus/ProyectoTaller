@@ -26,6 +26,7 @@ require('./server/routes/clientes')(app);
 require('./server/routes/proveedores')(app);
 require('./server/routes/ventas')(app);
 require('./server/routes/vehiculos')(app);
+require('./server/routes/cambiarContrasena')(app);
 app.get('*',(req,res)=>{
     res.status(200).send({message: "Bienvenido al server Node.js"})
 });

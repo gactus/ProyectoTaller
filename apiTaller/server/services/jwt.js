@@ -4,9 +4,9 @@ var secret = config.token_secret;
 
 exports.createToken=(usuario)=>{
     var params = {
-        sub:usuario.id,
-        usuario: usuario.personaId,
+        idUsuario:usuario.dataValues.idUsuario,
     }
+
     var jwt = njwt.create(params,secret);
 
     var fechaExpiracion = new Date();
@@ -16,4 +16,4 @@ exports.createToken=(usuario)=>{
     var token = jwt.compact();
 
     return token;
-}
+} 

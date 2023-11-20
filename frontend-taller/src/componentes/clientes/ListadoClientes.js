@@ -12,7 +12,7 @@ import Axios from "axios";
 import VehiculosCliente from "./VehiculosCliente";
 import RegistrarVehiculoCliente from "./RegistrarVehiculoCliente";
 
-function ListadoClientes(){
+function ListadoClientes({showList}){
     const [clientesList, setClientes] = useState([]);
     const [sorting, setSorting] = useState([]);
     const [idCliente, setIdCliente] = useState(0);
@@ -79,7 +79,7 @@ function ListadoClientes(){
     ]
     useEffect(() => {
         listarClientes();
-    }, []);
+    }, [showList]);
     const cerrarModal = ()=>{
         listarClientes();
         setShowModal(false);

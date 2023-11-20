@@ -56,18 +56,20 @@ function ListadoUsuarios(){
             cell: (fila) => {
                 return (
                     <table>
-                        <tr>
-                            <td>
-                                <button className="transparent-button" onClick={() => editarUsuario(fila.getValue('idUsuario'))}>
-                                    <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
-                                </button>
-                            </td>
-                            <td>
-                                <button className="transparent-button">
-                                <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
-                                </button>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button className="transparent-button" onClick={() => editarUsuario(fila.getValue('idUsuario'))}>
+                                        <span className="textosNormal"><span className="fa fa-pencil-square-o"></span></span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button className="transparent-button">
+                                    <span className="textosNormal text-danger"><span className="fa fa-trash"></span></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 );
             },
@@ -139,12 +141,14 @@ function ListadoUsuarios(){
                 </tfoot>
             </table>
             <table align="center">
-                <tr>
-                    <td><button onClick={()=> tabla.setPageIndex(0)} className="btnPaginadorA"><span className="fa fa-step-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.previousPage()} className="btnPaginadorCentral"><span className="fa fa-backward"></span></button></td>
-                    <td><button onClick={()=> tabla.nextPage()} className="btnPaginadorCentral"><span className="fa fa-forward"></span></button></td>
-                    <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td><button onClick={()=> tabla.setPageIndex(0)} className="btnPaginadorA"><span className="fa fa-step-backward"></span></button></td>
+                        <td><button onClick={()=> tabla.previousPage()} className="btnPaginadorCentral"><span className="fa fa-backward"></span></button></td>
+                        <td><button onClick={()=> tabla.nextPage()} className="btnPaginadorCentral"><span className="fa fa-forward"></span></button></td>
+                        <td><button onClick={()=> tabla.setPageIndex(tabla.getPageCount()-1)} className="btnPaginadorB"><span className="fa fa-step-forward"></span></button></td>
+                    </tr>
+                </tbody>
             </table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton>

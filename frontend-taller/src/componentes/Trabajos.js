@@ -9,8 +9,10 @@ function Trabajos() {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+    const [showList, setShowList] = useState(false);
     const cerrarModal = ()=>{
         setShowModal(false);
+        setShowList(!showList);
     }
     return (
         <main>
@@ -55,7 +57,7 @@ function Trabajos() {
                             </div>
                         </div>
                         <div className='card-body'>
-                            <ListadoTrabajos/>
+                            <ListadoTrabajos showList={showList}/>
                         </div>
                     </div>
                 </div>

@@ -51,7 +51,7 @@ const buscarVehiculo = (nroPatente) =>{
         const datosTrabajo = {
             descripcionTrabajo: detalleTrabajo,
             fechaTrabajo: fechaTrabajo,
-            proximaMantencion: proxMantencion,
+            proximaMantencion: (proxMantencion === '' ? '1900-01-01' : proxMantencion),
             requiereNotificacion: requiereNotificacion,
             costoManoObra: manoObra,
             idVehiculo: idVehiculo,

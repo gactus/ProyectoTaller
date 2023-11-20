@@ -1,7 +1,7 @@
 const {personas, usuarios, trabajos, perfiles, tipo_perfiles, tipo_notificaciones,
     detalle_notificaciones, tipo_insumos, insumos, marcas, modelos,detalle_trabajos,
     estado_trabajos, proveedores, bancos, tipo_cuentas} = require('./models');
-
+/*
 personas.hasOne(usuarios);
 personas.hasOne(perfiles);
 usuarios.belongsTo(personas);
@@ -25,4 +25,4 @@ estado_trabajos.hasOne(trabajos);
 bancos.hasOne(proveedores);
 tipo_cuentas.hasOne(proveedores);
 proveedores.belongsTo(bancos);
-proveedores.belongsTo(tipo_cuentas);
+proveedores.belongsTo(tipo_cuentas); */

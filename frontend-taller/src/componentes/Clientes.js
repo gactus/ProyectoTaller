@@ -10,8 +10,10 @@ function Clientes() {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
+    const [showList, setShowList] = useState(false);
     const cerrarModal = ()=>{
         setShowModal(false);
+        setShowList(!showList);
     }
     return (
         <main>
@@ -31,7 +33,7 @@ function Clientes() {
                         <div className='card-body'>
                             <div className="row">
                                 <div className="col-sm-12 col-md-12 col-lg-12">
-                                    <ListadoClientes/>
+                                    <ListadoClientes showList={showList}/>
                                 </div>
                             </div>
                         </div>

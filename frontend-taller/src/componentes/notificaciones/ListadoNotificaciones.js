@@ -8,6 +8,7 @@ import
 import { useState, useEffect } from "react";  
 import { Modal } from 'react-bootstrap';
 import Axios from "axios";
+import NotificarWhatsapp from "./NotificarWhatsapp";
 
 function ListadoNotificaciones(){
     const [idTrabajo, setIdTrabajo] = useState();
@@ -53,12 +54,12 @@ function ListadoNotificaciones(){
                     <table>
                         <tr>
                             <td>
-                                <button className="transparent-button">
+                                <button className="transparent-button" onClick={() => notificarWhatsapp()}>
                                     <span className="textosNormal text-primary"><span className="fa fa-envelope"></span></span>
                                 </button>
                             </td>
                             <td>
-                                <button className="transparent-button">
+                                <button className="transparent-button" onClick={() => notificarWhatsapp()}>
                                     <span className="textosNormal text-success"><span className="fa fa-whatsapp"></span></span>
                                 </button>
                             </td>
@@ -69,13 +70,17 @@ function ListadoNotificaciones(){
         },
     ]
     useEffect(() => {
-        listarProveedores();
+        listarNotificaciones();
     }, []);
     const cerrarModal = ()=>{
-        listarProveedores();
+        listarNotificaciones();
         setShowModal(false);
     }
-    const listarProveedores = async() =>{
+    const notificarWhatsapp = async()=>{
+        //setIdUsuario(idUsuario);
+        setShowModal(true);
+    }
+    const listarNotificaciones = async() =>{
         await Axios.get("http://localhost:8010/api/notificacion/trabajos/",{headers: {'Authorization': token,},})
         .then((response) => {setTrabajosNotificar(response.data);})
         .catch((error) => {console.error("Hubo un error al obtener proveedores:", error.response);});
@@ -143,7 +148,7 @@ function ListadoNotificaciones(){
             </table>
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Body>
-                    
+                    <NotificarWhatsapp/>
                 </Modal.Body>
                 <Modal.Footer>
                     <button className="btn btn-primary" onClick={()=>cerrarModal()}>Cerrar</button>
