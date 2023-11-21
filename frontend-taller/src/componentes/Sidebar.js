@@ -17,6 +17,7 @@ const dashboardItemsAdmin = [
   { iconPath: 'icons-inventario.png', altText: 'Inventario', buttonText: 'Inventario', path: '/inventario', classIcon: 'fa fa-cubes', classTextos: 'enlaces' },
   { iconPath: 'icons-gastos.png', altText: 'Gastos', buttonText: 'Gastos', path: '/gastos', classIcon: 'fa fa-money', classTextos: 'enlaces' },
   { iconPath: 'icons-gastos.png', altText: 'Reportería', buttonText: 'Reportes', path: '/reportes', classIcon: 'fa fa-print', classTextos: 'enlaces' },
+  { iconPath: 'icons-gastos.png', altText: 'Varios', buttonText: 'Parametrías Varias', path: '/varios', classIcon: 'fa fa-cogs', classTextos: 'enlaces' },
   { iconPath: 'icons-gastos.png', altText: 'Contraseña', buttonText: 'Cambiar Contraseña', path: '/editarUsuario', classIcon: 'fa fa-unlock-alt', classTextos: 'enlaces' }
 ];
 const dashboardItemsMecanico = [

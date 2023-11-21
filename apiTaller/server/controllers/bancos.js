@@ -4,7 +4,7 @@ const listarBancos = async(req,res)=>{
     try{
         await bancos.findAll(
             {
-                attributes: [['id', 'idBanco'],['nombre','nombreBanco']],
+                attributes: [['id', 'idBanco'],['nombre','nombreBanco'],'estado'],
                 where: {estado: 1}
             })
             .then(banco=>

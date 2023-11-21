@@ -13,6 +13,7 @@ import Usuarios from './componentes/Usuarios';
 import EditarUsuario from './componentes/EditarUsuario';
 import Reportes from './componentes/Reportes';
 import Vehiculos from './componentes/Vehiculos';
+import Varios from './componentes/Varios';
 import Notificaciones from './componentes/Notificaciones'; 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                         <Route path="/gastos" element={<Gastos />} />
                         <Route path="/usuarios" element={<Usuarios />} />
                         <Route path="/vehiculos" element={<Vehiculos />} />
+                        <Route path="/varios" element={<Varios />} />
                         <Route path="/editarUsuario" element={<EditarUsuario />} />
                         <Route path="/reportes" element={<Reportes />} />
                     </Routes>
