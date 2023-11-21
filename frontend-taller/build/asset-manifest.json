@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.becbf50a.css",
+    "main.js": "/static/js/main.a2b27828.js",
+    "static/media/fondo.png": "/static/media/fondo.b2188b15151380660d83.png",
+    "static/media/logo-container_v2.png": "/static/media/logo-container_v2.9217330ffe6f9053c730.png",
+    "static/media/logo-container.png": "/static/media/logo-container.2ffc0629d1d449c41411.png",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
+    "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/icons-perfil.png": "/static/media/icons-perfil.9f2595027f39dc8f7bd7.png",
+    "static/media/icons-gastos.png": "/static/media/icons-gastos.9a0121f5eb55c9f69d1b.png",
+    "static/media/icons-usuarios.png": "/static/media/icons-usuarios.13a25660e8adc173ae6f.png",
+    "static/media/icons-inventario.png": "/static/media/icons-inventario.6c0533ca88ad43dcb130.png",
+    "static/media/icons-proveedores.png": "/static/media/icons-proveedores.d5264610756bfa5eaad3.png",
+    "static/media/icons-cliente.png": "/static/media/icons-cliente.b8b90824eaf850f283d1.png",
+    "static/media/icons-tareas.png": "/static/media/icons-tareas.cf71baa350da71e3aa48.png",
+    "static/media/icons-cerrar-sesion.png": "/static/media/icons-cerrar-sesion.0c1c8488089e8dda73ab.png",
+    "index.html": "/index.html",
+    "main.becbf50a.css.map": "/static/css/main.becbf50a.css.map",
+    "main.a2b27828.js.map": "/static/js/main.a2b27828.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.becbf50a.css",
+    "static/js/main.a2b27828.js"
+  ]
+}
